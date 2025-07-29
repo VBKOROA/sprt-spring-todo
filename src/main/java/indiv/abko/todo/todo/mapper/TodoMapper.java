@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo;
+package indiv.abko.todo.todo.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
