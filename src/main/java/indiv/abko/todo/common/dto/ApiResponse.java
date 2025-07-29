@@ -16,4 +16,8 @@ public record ApiResponse<T> (
     public static <T> ApiResponse<T> error(ExceptionEnum e, T data) {
         return new ApiResponse<T>(e.getStatus(), e.getMessage(), data);
     }
+
+    public static <T> ApiResponse<T> created(T data) {
+        return new ApiResponse<T>(HttpStatus.CREATED, "", data);
+    }
 }
