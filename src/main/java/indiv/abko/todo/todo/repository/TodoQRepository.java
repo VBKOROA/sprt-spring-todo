@@ -1,8 +1,10 @@
 package indiv.abko.todo.todo.repository;
 
-import indiv.abko.todo.todo.dto.TodoListResp;
+import java.util.List;
+
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
+import indiv.abko.todo.todo.entity.Todo;
 
 public interface TodoQRepository {
-    TodoListResp fetchFilteredTodos(TodoSearchCondition condition);
+    List<Todo> fetchFilteredTodos(TodoSearchCondition condition);
 }
