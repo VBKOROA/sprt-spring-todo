@@ -86,7 +86,7 @@ public class TodoService {
         var todo = findOrThrow(id);
         var hasAuth = encrypt.isHashEqual(updateReq.password(), todo.getPassword());
         if(hasAuth == false) {
-            throw new BusinessException(ExceptionEnum.TODO_UPDATE_UNAUTHORIZED);
+            throw new BusinessException(ExceptionEnum.TODO_PERMISSION_DENIED);
         }
         todo.update(updateReq.title(), updateReq.author());
         return todoMapper.toTodoResp(todo);
