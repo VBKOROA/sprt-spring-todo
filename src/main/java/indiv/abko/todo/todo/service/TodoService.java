@@ -76,7 +76,7 @@ public class TodoService {
     /**
      * 주어진 ID에 해당하는 Todo 항목을 업데이트한다.
      * 
-     * @param id 업데이트할 {@link Todo} 항목의 ID
+     * @param id        업데이트할 {@link Todo} 항목의 ID
      * @param updateReq 업데이트 요청 데이터
      * @return 업데이트된 Todo 항목의 응답 객체
      * @throws BusinessException 비밀번호가 일치하지 않아 권한이 없을 경우 발생
@@ -84,14 +84,30 @@ public class TodoService {
     @Transactional
     public TodoResp updateTodo(Long id, TodoUpdateReq updateReq) {
         var todo = findOrThrow(id);
-        if(hasAuth(todo, updateReq.password()) == false) {
-            throw new BusinessException(ExceptionEnum.TODO_PERMISSION_DENIED);
-        }
+        hasAuthOrThrow(todo, updateReq.password());
         todo.update(updateReq.title(), updateReq.author());
         return todoMapper.toTodoResp(todo);
     }
 
-    private boolean hasAuth(Todo todo, String password) {
-        return encrypt.isHashEqual(password, todo.getPassword());
+    /**
+     * 주어진 ID와 비밀번호를 사용하여 Todo를 삭제한다.
+     * 
+     * @param id       삭제할 {@link Todo}의 고유 ID
+     * @param password Todo 삭제를 위한 인증 비밀번호
+     * @throws BusinessException - 주어진 ID에 해당하는 Todo가 존재하지 않을 경우
+     *                           - 비밀번호가 일치하지 않을 경우
+     */
+    @Transactional
+    public void deleteTodo(Long id, String password) {
+        var todo = findOrThrow(id);
+        hasAuthOrThrow(todo, password);
+        todoRepo.delete(todo);
+    }
+
+    private void hasAuthOrThrow(Todo todo, String password) {
+        var auth = encrypt.isHashEqual(password, todo.getPassword());
+        if (auth == false) {
+            throw new BusinessException(ExceptionEnum.TODO_PERMISSION_DENIED);
+        }
     }
 }
