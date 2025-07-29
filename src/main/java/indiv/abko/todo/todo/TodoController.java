@@ -38,17 +38,7 @@ public class TodoController {
     @GetMapping("")
     public ApiResponse<GetTodosResp> getTodosWithCondition(
             @ModelAttribute GetTodosCondition condition) {
-        GetTodosResp todos;
-
-        if (condition.isNull()) {
-            todos = todoService.getTodosOrderByModifiedAtDesc();
-        } else if (condition.orderBy().equals("modifiedAtDesc")) {
-            todos = todoService.getTodosByAuthorOrderByModifiedAtDesc(condition.author());
-        } else {
-            todos = todoService.getTodosOrderByModifiedAtDesc();
-        }
-
-        return ApiResponse.ok(todos);
+        return ApiResponse.ok(todoService.fetchFilteredTodos(condition));
     }
 
     @GetMapping("/{id}")
