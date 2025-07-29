@@ -5,8 +5,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.global.exception.ExceptionEnum;
+import indiv.abko.todo.global.util.Encrypt;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
+import indiv.abko.todo.todo.dto.TodoUpdateReq;
 import indiv.abko.todo.todo.entity.Todo;
 import indiv.abko.todo.todo.mapper.TodoMapper;
 import indiv.abko.todo.todo.repository.TodoRepository;
@@ -19,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class TodoService {
     private final TodoRepository todoRepo;
     private final TodoMapper todoMapper;
+    private final Encrypt encrypt;
 
     /**
      * 주어진 요청 데이터로 새로운 Todo 항목을 생성한다.
@@ -48,9 +51,13 @@ public class TodoService {
      * @throws BusinessException Todo를 찾을 수 없는 경우 발생
      */
     public TodoResp getTodo(Long id) {
-        var todo = todoRepo.findById(id)
-                .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
+        var todo = findOrThrow(id);
         return todoMapper.toTodoResp(todo);
+    }
+
+    private Todo findOrThrow(Long id) {
+        return todoRepo.findById(id)
+                .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
     }
 
     /**
@@ -64,5 +71,29 @@ public class TodoService {
         var todos = todoRepo.fetchFilteredTodos(condition);
         return new TodoListResp(
                 todos.stream().map(todoMapper::toTodoResp).toList());
+    }
+
+    /**
+     * 주어진 ID에 해당하는 Todo 항목을 업데이트한다.
+     * 
+     * @param id 업데이트할 {@link Todo} 항목의 ID
+     * @param updateReq 업데이트 요청 데이터
+     * @return 업데이트된 Todo 항목의 응답 객체
+     * @throws BusinessException 비밀번호가 일치하지 않아 권한이 없을 경우 발생
+     */
+    @Transactional
+    public TodoResp updateTodo(Long id, TodoUpdateReq updateReq) {
+        var todo = findOrThrow(id);
+        var hasAuth = encrypt.isHashEqual(updateReq.password(), todo.getPassword());
+        if(hasAuth == false) {
+            throw new BusinessException(ExceptionEnum.TODO_UPDATE_UNAUTHORIZED);
+        }
+        if(updateReq.title() != null) {
+            todo.updateTitle(updateReq.title());
+        }
+        if(updateReq.author() != null) {
+            todo.updateAuthor(updateReq.author());
+        }
+        return todoMapper.toTodoResp(todo);
     }
 }
