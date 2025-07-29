@@ -50,7 +50,7 @@ public class TodoService {
 
     @Transactional(readOnly = true)
     public GetTodosResp getTodosByAuthorOrderByModifiedAtDesc(String author) {
-        var todos = todoRepo.findByAuthorContainingOrderByModifiedAtDesc(author);
+        var todos = todoRepo.findByAuthorOrderByModifiedAtDesc(author);
 
         var todoDtos = todos.stream().map(todo -> {
             return new GetTodosResp.TodoDto(
