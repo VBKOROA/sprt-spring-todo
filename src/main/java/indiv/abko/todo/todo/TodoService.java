@@ -10,6 +10,7 @@ import indiv.abko.todo.common.exception.ExceptionEnum;
 import indiv.abko.todo.todo.dto.CreateTodoReq;
 import indiv.abko.todo.todo.dto.CreateTodoResp;
 import indiv.abko.todo.todo.dto.GetTodoResp;
+import indiv.abko.todo.todo.dto.GetTodosCondition;
 import indiv.abko.todo.todo.dto.GetTodosResp;
 
 import lombok.RequiredArgsConstructor;
@@ -40,25 +41,13 @@ public class TodoService {
         return response;
     } 
 
-    /**
-     * 지정한 작성자의 todo 목록을 수정일 기준 내림차순으로 가져온다.
-     *
-     * @param author todo를 조회할 작성자 이름 또는 아이디
-     * @return 해당 작성자의 todo 목록을 담은 {@link GetTodosResp} 객체 (최신 수정순)
-     */
     @Transactional(readOnly = true)
-    public GetTodosResp getTodosByAuthorOrderByModifiedAtDesc(String author) {
+    private GetTodosResp getTodosByAuthorOrderByModifiedAtDesc(String author) {
         var todos = todoRepo.findByAuthorOrderByModifiedAtDesc(author);
         return mapTodosToResponse(todos);
     }
 
-    /**
-     * 모든 Todo 항목을 수정일 기준 내림차순으로 조회한다.
-     *
-     * @return 수정일 기준(최신순)으로 정렬된 Todo 목록을 담은 {@link GetTodosResp} 객체
-     */
-    @Transactional(readOnly = true)
-    public GetTodosResp getTodosOrderByModifiedAtDesc() {
+    private GetTodosResp getTodosOrderByModifiedAtDesc() {
         var todos = todoRepo.findByOrderByModifiedAtDesc();
         return mapTodosToResponse(todos);
     }
@@ -80,5 +69,25 @@ public class TodoService {
         var todo = todoRepo.findById(id)
             .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
         return todoMapper.toGetTodoResp(todo);
+    }
+
+    /**
+     * 주어진 조건에 따라 할 일 목록을 조회한다.
+     * 
+     * 조건이 null이거나 orderBy 값이 "modifiedAtDesc"가 아니면 전체 할 일을 수정일 기준 내림차순으로 반환한다.
+     * orderBy 값이 "modifiedAtDesc"이고 author가 지정된 경우, 해당 작성자의 할 일을 수정일 기준 내림차순으로 반환한다.
+     *
+     * @param condition 할 일 조회 조건 객체
+     * @return 조건에 맞는 할 일 목록 응답 객체
+     */
+    @Transactional(readOnly = true)
+    public GetTodosResp fetchFilteredTodos(GetTodosCondition condition) {
+        if (condition.isNull()) {
+            return getTodosOrderByModifiedAtDesc();
+        } else if (condition.orderBy().equals("modifiedAtDesc")) {
+            return getTodosByAuthorOrderByModifiedAtDesc(condition.author());
+        } else {
+            return getTodosOrderByModifiedAtDesc();
+        }
     }
 }
