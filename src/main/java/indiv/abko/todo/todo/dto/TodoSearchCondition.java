@@ -1,6 +1,6 @@
 package indiv.abko.todo.todo.dto;
 
-public record GetTodosCondition(
+public record TodoSearchCondition(
     String orderBy,
     String author
 ) {

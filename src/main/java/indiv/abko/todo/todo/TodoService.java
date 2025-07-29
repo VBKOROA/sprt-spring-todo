@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import indiv.abko.todo.common.exception.BusinessException;
 import indiv.abko.todo.common.exception.ExceptionEnum;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
-import indiv.abko.todo.todo.dto.GetTodosCondition;
+import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.dto.TodoListResp;
 import indiv.abko.todo.todo.dto.TodoResp;
 import lombok.RequiredArgsConstructor;
@@ -79,7 +79,7 @@ public class TodoService {
      * @return 조건에 맞는 {@Link TodoListResp} 객체
      */
     @Transactional(readOnly = true)
-    public TodoListResp fetchFilteredTodos(GetTodosCondition condition) {
+    public TodoListResp fetchFilteredTodos(TodoSearchCondition condition) {
         if (condition.isNull()) {
             return getTodosOrderByModifiedAtDesc();
         } else if (condition.orderBy().equals("modifiedAtDesc")) {

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import indiv.abko.todo.common.dto.ApiResponse;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
-import indiv.abko.todo.todo.dto.GetTodosCondition;
+import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.dto.TodoListResp;
 import indiv.abko.todo.todo.dto.TodoResp;
 
@@ -36,7 +36,7 @@ public class TodoController {
     // @ModelAttribute: 여러 개의 파라미터를 객체로 바인딩 할 수 있음
     @GetMapping("")
     public ApiResponse<TodoListResp> getTodos(
-            @ModelAttribute GetTodosCondition condition) {
+            @ModelAttribute TodoSearchCondition condition) {
         return ApiResponse.ok(todoService.fetchFilteredTodos(condition));
     }
 
