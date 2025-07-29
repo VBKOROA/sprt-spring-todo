@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import indiv.abko.todo.common.util.Encrypt;
 import indiv.abko.todo.todo.dto.CreateTodoReq;
 import indiv.abko.todo.todo.dto.CreateTodoResp;
+import indiv.abko.todo.todo.dto.GetTodosResp;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -46,4 +47,21 @@ public class TodoService {
 
         return response;
     } 
+
+    @Transactional(readOnly = true)
+    public GetTodosResp getTodosWrittenByAuthor(String author) {
+        var todos = todoRepo.findByAuthorContainingOrderByModifiedAtDesc(author);
+
+        var todoDtos = todos.stream().map(todo -> {
+            return new GetTodosResp.TodoDto(
+                todo.getTitle(),
+                todo.getContent(),
+                todo.getAuthor(),
+                todo.getCreatedAt(),
+                todo.getModifiedAt()
+            );
+        }).toList();
+        
+        return new GetTodosResp(todoDtos);
+    }
 }
