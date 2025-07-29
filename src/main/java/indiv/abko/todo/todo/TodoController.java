@@ -37,6 +37,7 @@ public class TodoController {
         return new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
     }
 
+    // @ModelAttribute: 여러 개의 파라미터를 객체로 바인딩 할 수 있음
     @GetMapping("")
     public ResponseEntity<ApiResponse<GetTodosResp>> getTodosWithCondition(@ModelAttribute GetTodosCondition condition) {
         GetTodosResp responseData;
