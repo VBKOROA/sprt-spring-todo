@@ -11,14 +11,10 @@ import indiv.abko.todo.common.dto.ApiResponse;
 public class RestExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ApiResponse<?>> handleBusinessExcpetion(BusinessException e) {
-        HttpStatus status = e.getExceptionEnum().getStatus();
-        String message = e.getExceptionEnum().getMessage();
+        ExceptionEnum exceptionEnum = e.getExceptionEnum();
+        HttpStatus status = exceptionEnum.getStatus();
 
-        ApiResponse<?> response = new ApiResponse<>(
-            status,
-            message,
-            e.getData()
-        );
+        ApiResponse<?> response = ApiResponse.error(exceptionEnum, e.getData());
 
         return new ResponseEntity<>(response, status);
     }
