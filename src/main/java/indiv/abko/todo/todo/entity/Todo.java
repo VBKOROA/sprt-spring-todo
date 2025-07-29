@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo;
+package indiv.abko.todo.todo.entity;
 
 import indiv.abko.todo.global.entity.BaseTimeEntity;
 import jakarta.persistence.Entity;

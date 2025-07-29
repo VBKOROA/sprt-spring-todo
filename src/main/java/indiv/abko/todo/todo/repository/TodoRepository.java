@@ -1,6 +1,9 @@
-package indiv.abko.todo.todo;
+package indiv.abko.todo.todo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import indiv.abko.todo.todo.entity.Todo;
+
 import java.util.List;
 
 

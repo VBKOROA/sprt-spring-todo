@@ -6,6 +6,7 @@ import org.mapstruct.Mapping;
 import indiv.abko.todo.global.util.Encrypt;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoResp;
+import indiv.abko.todo.todo.entity.Todo;
 
 @Mapper(componentModel = "spring", uses = Encrypt.class)
 public interface TodoMapper {

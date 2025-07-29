@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo;
+package indiv.abko.todo.todo.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import indiv.abko.todo.global.dto.ApiResponse;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
+import indiv.abko.todo.todo.service.TodoService;
 import indiv.abko.todo.todo.dto.TodoListResp;
 import indiv.abko.todo.todo.dto.TodoResp;
 

@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo;
+package indiv.abko.todo.todo.service;
 
 import java.util.List;
 
@@ -7,8 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.global.exception.ExceptionEnum;
+import indiv.abko.todo.todo.TodoMapper;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
+import indiv.abko.todo.todo.entity.Todo;
+import indiv.abko.todo.todo.repository.TodoRepository;
 import indiv.abko.todo.todo.dto.TodoListResp;
 import indiv.abko.todo.todo.dto.TodoResp;
 import lombok.RequiredArgsConstructor;
