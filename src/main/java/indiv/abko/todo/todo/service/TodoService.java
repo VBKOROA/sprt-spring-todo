@@ -41,13 +41,7 @@ public class TodoService {
 
         return response;
     }
-
-    @Transactional(readOnly = true)
-    private TodoListResp getTodosByAuthorOrderByModifiedAtDesc(String author) {
-        var todos = todoRepo.findByAuthorOrderByModifiedAtDesc(author);
-        return mapTodosToResponse(todos);
-    }
-
+    
     private TodoListResp mapTodosToResponse(List<Todo> todos) {
         var todoDtos = todos.stream().map(todoMapper::toTodoResp).toList();
 
