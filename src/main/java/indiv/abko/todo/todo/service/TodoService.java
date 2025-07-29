@@ -40,7 +40,7 @@ public class TodoService {
         var response = todoMapper.toTodoResp(result);
 
         return response;
-    } 
+    }
 
     @Transactional(readOnly = true)
     private TodoListResp getTodosByAuthorOrderByModifiedAtDesc(String author) {
@@ -48,14 +48,9 @@ public class TodoService {
         return mapTodosToResponse(todos);
     }
 
-    private TodoListResp getTodosOrderByModifiedAtDesc() {
-        var todos = todoRepo.findByOrderByModifiedAtDesc();
-        return mapTodosToResponse(todos);
-    }
-
     private TodoListResp mapTodosToResponse(List<Todo> todos) {
         var todoDtos = todos.stream().map(todoMapper::toTodoResp).toList();
-        
+
         return new TodoListResp(todoDtos);
     }
 
@@ -68,27 +63,20 @@ public class TodoService {
      */
     public TodoResp getTodo(Long id) {
         var todo = todoRepo.findById(id)
-            .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
         return todoMapper.toTodoResp(todo);
     }
 
     /**
      * 주어진 조건에 따라 할 일 목록을 조회한다.
-     * 
-     * 조건이 null이거나 orderBy 값이 "modifiedAtDesc"가 아니면 전체 할 일을 수정일 기준 내림차순으로 반환한다.
-     * orderBy 값이 "modifiedAtDesc"이고 author가 지정된 경우, 해당 작성자의 할 일을 수정일 기준 내림차순으로 반환한다.
      *
      * @param condition 할 일 조회 조건 객체
      * @return 조건에 맞는 {@Link TodoListResp} 객체
      */
     @Transactional(readOnly = true)
     public TodoListResp fetchFilteredTodos(TodoSearchCondition condition) {
-        if (condition.isNull()) {
-            return getTodosOrderByModifiedAtDesc();
-        } else if (condition.orderBy().equals("modifiedAtDesc")) {
-            return getTodosByAuthorOrderByModifiedAtDesc(condition.author());
-        } else {
-            return getTodosOrderByModifiedAtDesc();
-        }
+        var todos = todoRepo.fetchFilteredTodos(condition);
+        return new TodoListResp(
+                todos.stream().map(todoMapper::toTodoResp).toList());
     }
 }
