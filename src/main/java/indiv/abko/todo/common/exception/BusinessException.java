@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class BusinessException extends RuntimeException {
-    private ExceptionEnum e = ExceptionEnum.UNKNOWN_ERROR;
+    private ExceptionEnum exceptionEnum = ExceptionEnum.UNKNOWN_ERROR;
     private Optional<Object> data = Optional.empty();
 
     public BusinessException() {
@@ -15,13 +15,13 @@ public class BusinessException extends RuntimeException {
 
     public BusinessException(ExceptionEnum e) {
         super();
-        this.e = e;
+        this.exceptionEnum = e;
         this.data = Optional.empty();
     }
 
     public BusinessException(ExceptionEnum e, Object data) {
         super();
-        this.e = e;
+        this.exceptionEnum = e;
         this.data = Optional.ofNullable(data);
     }
 }
