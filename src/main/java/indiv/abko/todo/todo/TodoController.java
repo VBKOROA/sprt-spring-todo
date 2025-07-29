@@ -62,7 +62,6 @@ public class TodoController {
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
     public ApiResponse<GetTodoResp> getTodo(@PathVariable("id") Long id) {
         return new ApiResponse<GetTodoResp>(
                 HttpStatus.OK,
