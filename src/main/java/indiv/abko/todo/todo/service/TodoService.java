@@ -88,12 +88,7 @@ public class TodoService {
         if(hasAuth == false) {
             throw new BusinessException(ExceptionEnum.TODO_UPDATE_UNAUTHORIZED);
         }
-        if(updateReq.title() != null) {
-            todo.updateTitle(updateReq.title());
-        }
-        if(updateReq.author() != null) {
-            todo.updateAuthor(updateReq.author());
-        }
+        todo.update(updateReq.title(), updateReq.author());
         return todoMapper.toTodoResp(todo);
     }
 }
