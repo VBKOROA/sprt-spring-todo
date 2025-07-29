@@ -10,7 +10,7 @@ import indiv.abko.todo.todo.dto.GetTodosResp;
 
 @Mapper(componentModel = "spring", uses = Encrypt.class)
 public interface TodoMapper {
-    @Mapping(target = "password", expression = "java(encrypt.hash(todoReq.password()))")
+    @Mapping(target = "password", expression = "java(encrypt.hash(req.password()))")
     Todo toTodo(CreateTodoReq req);
 
     GetTodosResp.TodoDto toTodoDto(Todo todo);
