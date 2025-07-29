@@ -11,7 +11,7 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 
-@Getter
+@Getter // 하위 클래스에 해당 getter가 전달됨
 @MappedSuperclass // 상속 받는 entity가 아래의 필드들을 컬럼으로 매핑
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseTimeEntity {
