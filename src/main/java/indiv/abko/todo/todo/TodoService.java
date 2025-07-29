@@ -40,12 +40,23 @@ public class TodoService {
         return response;
     } 
 
+    /**
+     * 지정한 작성자의 todo 목록을 수정일 기준 내림차순으로 가져온다.
+     *
+     * @param author todo를 조회할 작성자 이름 또는 아이디
+     * @return 해당 작성자의 todo 목록을 담은 {@link GetTodosResp} 객체 (최신 수정순)
+     */
     @Transactional(readOnly = true)
     public GetTodosResp getTodosByAuthorOrderByModifiedAtDesc(String author) {
         var todos = todoRepo.findByAuthorOrderByModifiedAtDesc(author);
         return mapTodosToResponse(todos);
     }
 
+    /**
+     * 모든 Todo 항목을 수정일 기준 내림차순으로 조회한다.
+     *
+     * @return 수정일 기준(최신순)으로 정렬된 Todo 목록을 담은 {@link GetTodosResp} 객체
+     */
     @Transactional(readOnly = true)
     public GetTodosResp getTodosOrderByModifiedAtDesc() {
         var todos = todoRepo.findByOrderByModifiedAtDesc();
@@ -58,6 +69,13 @@ public class TodoService {
         return new GetTodosResp(todoDtos);
     }
 
+    /**
+     * 주어진 ID에 해당하는 Todo를 조회한다.
+     *
+     * @param id 조회할 Todo의 ID
+     * @return 조회된 Todo 정보를 담은 GetTodoResp 객체
+     * @throws BusinessException Todo를 찾을 수 없는 경우 발생
+     */
     public GetTodoResp getTodo(Long id) {
         var todo = todoRepo.findById(id)
             .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
