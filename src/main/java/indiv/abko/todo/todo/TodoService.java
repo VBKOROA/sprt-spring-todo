@@ -58,7 +58,7 @@ public class TodoService {
         return new GetTodosResp(todoDtos);
     }
 
-    public GetTodoResp getTodo(Long id) throws BusinessException {
+    public GetTodoResp getTodo(Long id) {
         var todo = todoRepo.findById(id)
             .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
         return todoMapper.toGetTodoResp(todo);
