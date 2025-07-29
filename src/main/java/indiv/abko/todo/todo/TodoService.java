@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import indiv.abko.todo.common.exception.BusinessException;
-import indiv.abko.todo.common.exception.ExceptionEnum;
+import indiv.abko.todo.global.exception.BusinessException;
+import indiv.abko.todo.global.exception.ExceptionEnum;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.dto.TodoListResp;

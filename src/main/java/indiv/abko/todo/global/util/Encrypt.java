@@ -1,4 +1,4 @@
-package indiv.abko.todo.common.util;
+package indiv.abko.todo.global.util;
 
 import org.mapstruct.Named;
 import org.mindrot.jbcrypt.BCrypt;

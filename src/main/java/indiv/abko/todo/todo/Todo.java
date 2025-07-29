@@ -1,7 +1,6 @@
 package indiv.abko.todo.todo;
 
-import indiv.abko.todo.common.entity.BaseTimeEntity;
-
+import indiv.abko.todo.global.entity.BaseTimeEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

@@ -1,4 +1,4 @@
-package indiv.abko.todo.common.exception;
+package indiv.abko.todo.global.exception;
 
 import lombok.Getter;
 

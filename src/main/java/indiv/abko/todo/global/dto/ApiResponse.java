@@ -1,8 +1,8 @@
-package indiv.abko.todo.common.dto;
+package indiv.abko.todo.global.dto;
 
 import org.springframework.http.HttpStatus;
 
-import indiv.abko.todo.common.exception.ExceptionEnum;
+import indiv.abko.todo.global.exception.ExceptionEnum;
 
 public record ApiResponse<T> (
     HttpStatus status, // OK, CREATED 등의 문자열로 직렬화됨

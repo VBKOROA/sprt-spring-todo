@@ -3,7 +3,7 @@ package indiv.abko.todo.todo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import indiv.abko.todo.common.util.Encrypt;
+import indiv.abko.todo.global.util.Encrypt;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoResp;
 

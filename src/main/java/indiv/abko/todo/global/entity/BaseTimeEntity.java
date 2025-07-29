@@ -1,4 +1,4 @@
-package indiv.abko.todo.common.entity;
+package indiv.abko.todo.global.entity;
 
 import java.time.LocalDateTime;
 

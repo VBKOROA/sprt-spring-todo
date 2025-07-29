@@ -1,11 +1,11 @@
-package indiv.abko.todo.common.exception;
+package indiv.abko.todo.global.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import indiv.abko.todo.common.dto.ApiResponse;
+import indiv.abko.todo.global.dto.ApiResponse;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
