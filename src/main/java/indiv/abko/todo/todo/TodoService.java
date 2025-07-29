@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import indiv.abko.todo.common.exception.BusinessException;
+import indiv.abko.todo.common.exception.ExceptionEnum;
 import indiv.abko.todo.todo.dto.CreateTodoReq;
 import indiv.abko.todo.todo.dto.CreateTodoResp;
+import indiv.abko.todo.todo.dto.GetTodoResp;
 import indiv.abko.todo.todo.dto.GetTodosResp;
 
 import lombok.RequiredArgsConstructor;
@@ -53,5 +56,11 @@ public class TodoService {
         var todoDtos = todos.stream().map(todoMapper::toTodoDto).toList();
         
         return new GetTodosResp(todoDtos);
-    } 
+    }
+
+    private GetTodoResp getTodo(Long id) throws BusinessException {
+        var todo = todoRepo.findById(id)
+            .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
+        return todoMapper.toGetTodoResp(todo);
+    }
 }
