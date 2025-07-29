@@ -1,14 +1,27 @@
 package indiv.abko.todo.common.exception;
 
+import java.util.Optional;
+
+import lombok.Getter;
+
+@Getter
 public class BusinessException extends RuntimeException {
-    private ExceptionEnum message;
+    private ExceptionEnum e = ExceptionEnum.UNKNOWN_ERROR;
+    private Optional<Object> data = Optional.empty();
 
     public BusinessException() {
         super();
-        this.message = ExceptionEnum.UNKNOWN_ERROR;
     }
 
-    public BusinessException(ExceptionEnum message) {
-        this.message = message;
+    public BusinessException(ExceptionEnum e) {
+        super();
+        this.e = e;
+        this.data = Optional.empty();
+    }
+
+    public BusinessException(ExceptionEnum e, Object data) {
+        super();
+        this.e = e;
+        this.data = Optional.ofNullable(data);
     }
 }
