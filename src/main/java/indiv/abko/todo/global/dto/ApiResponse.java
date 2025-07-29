@@ -20,4 +20,8 @@ public record ApiResponse<T> (
     public static <T> ApiResponse<T> created(T data) {
         return new ApiResponse<T>(HttpStatus.CREATED, "", data);
     }
+
+    public static ApiResponse<Void> noContent() {
+        return new ApiResponse<Void>(HttpStatus.NO_CONTENT, "", null);
+    }
 }
