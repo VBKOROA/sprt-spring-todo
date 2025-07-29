@@ -8,11 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import indiv.abko.todo.common.exception.BusinessException;
 import indiv.abko.todo.common.exception.ExceptionEnum;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
-import indiv.abko.todo.todo.dto.CreateTodoResp;
-import indiv.abko.todo.todo.dto.GetTodoResp;
 import indiv.abko.todo.todo.dto.GetTodosCondition;
 import indiv.abko.todo.todo.dto.TodoListResp;
-
+import indiv.abko.todo.todo.dto.TodoResp;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -30,13 +28,13 @@ public class TodoService {
      * 
      *
      * @param todoReq 새 Todo의 정보를 담은 요청 객체
-     * @return 생성된 Todo 정보를 담은 {@link CreateTodoResp}
+     * @return 생성된 Todo 정보를 담은 {@link TodoResp}
      */
     @Transactional
-    public CreateTodoResp create(TodoCreateReq todoReq) {
+    public TodoResp create(TodoCreateReq todoReq) {
         Todo todo = todoMapper.toTodo(todoReq);
         var result = todoRepo.save(todo);
-        var response = todoMapper.toCreateTodoResp(result);
+        var response = todoMapper.toTodoResp(result);
 
         return response;
     } 
@@ -53,7 +51,7 @@ public class TodoService {
     }
 
     private TodoListResp mapTodosToResponse(List<Todo> todos) {
-        var todoDtos = todos.stream().map(todoMapper::toTodoDto).toList();
+        var todoDtos = todos.stream().map(todoMapper::toTodoResp).toList();
         
         return new TodoListResp(todoDtos);
     }
@@ -62,13 +60,13 @@ public class TodoService {
      * 주어진 ID에 해당하는 Todo를 조회한다.
      *
      * @param id 조회할 Todo의 ID
-     * @return 조회된 Todo 정보를 담은 GetTodoResp 객체
+     * @return 조회된 Todo 정보를 담은 {@Link TodoResp} 객체
      * @throws BusinessException Todo를 찾을 수 없는 경우 발생
      */
-    public GetTodoResp getTodo(Long id) {
+    public TodoResp getTodo(Long id) {
         var todo = todoRepo.findById(id)
             .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
-        return todoMapper.toGetTodoResp(todo);
+        return todoMapper.toTodoResp(todo);
     }
 
     /**
@@ -78,7 +76,7 @@ public class TodoService {
      * orderBy 값이 "modifiedAtDesc"이고 author가 지정된 경우, 해당 작성자의 할 일을 수정일 기준 내림차순으로 반환한다.
      *
      * @param condition 할 일 조회 조건 객체
-     * @return 조건에 맞는 할 일 목록 응답 객체
+     * @return 조건에 맞는 {@Link TodoListResp} 객체
      */
     @Transactional(readOnly = true)
     public TodoListResp fetchFilteredTodos(GetTodosCondition condition) {

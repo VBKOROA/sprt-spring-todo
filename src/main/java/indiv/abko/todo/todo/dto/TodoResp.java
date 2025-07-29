@@ -2,7 +2,7 @@ package indiv.abko.todo.todo.dto;
 
 import java.time.LocalDateTime;
 
-public record GetTodoResp(
+public record TodoResp(
     Long id,
     String title,
     String content,
@@ -10,5 +10,5 @@ public record GetTodoResp(
     LocalDateTime createdAt,
     LocalDateTime modifiedAt
 ) {
-
+    
 }

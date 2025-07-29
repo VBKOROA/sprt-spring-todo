@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import indiv.abko.todo.common.dto.ApiResponse;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
-import indiv.abko.todo.todo.dto.CreateTodoResp;
-import indiv.abko.todo.todo.dto.GetTodoResp;
 import indiv.abko.todo.todo.dto.GetTodosCondition;
 import indiv.abko.todo.todo.dto.TodoListResp;
+import indiv.abko.todo.todo.dto.TodoResp;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,7 +27,7 @@ public class TodoController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<CreateTodoResp> createTodo(@RequestBody TodoCreateReq todoReq) {
+    public ApiResponse<TodoResp> createTodo(@RequestBody TodoCreateReq todoReq) {
         var todo = todoService.create(todoReq);
 
         return ApiResponse.created(todo);
@@ -42,7 +41,7 @@ public class TodoController {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<GetTodoResp> getTodo(@PathVariable("id") Long id) {
+    public ApiResponse<TodoResp> getTodo(@PathVariable("id") Long id) {
         return ApiResponse.ok(todoService.getTodo(id));
     }
 }
