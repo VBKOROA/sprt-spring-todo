@@ -49,7 +49,7 @@ public class TodoService {
     } 
 
     @Transactional(readOnly = true)
-    public GetTodosResp getTodosWrittenByAuthor(String author) {
+    public GetTodosResp getTodosByAuthorOrderByModifiedAtDesc(String author) {
         var todos = todoRepo.findByAuthorContainingOrderByModifiedAtDesc(author);
 
         var todoDtos = todos.stream().map(todo -> {
