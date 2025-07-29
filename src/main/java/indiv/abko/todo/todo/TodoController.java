@@ -36,7 +36,7 @@ public class TodoController {
 
     // @ModelAttribute: 여러 개의 파라미터를 객체로 바인딩 할 수 있음
     @GetMapping("")
-    public ApiResponse<GetTodosResp> getTodosWithCondition(
+    public ApiResponse<GetTodosResp> getTodos(
             @ModelAttribute GetTodosCondition condition) {
         return ApiResponse.ok(todoService.fetchFilteredTodos(condition));
     }
