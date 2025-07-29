@@ -63,6 +63,6 @@ public class TodoController {
 
     @GetMapping("/{id}")
     public ApiResponse<GetTodoResp> getTodo(@PathVariable("id") Long id) {
-        return ApiResponse.Ok(todoService.getTodo(id));
+        return ApiResponse.ok(todoService.getTodo(id));
     }
 }
