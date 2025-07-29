@@ -1,14 +1,19 @@
 package indiv.abko.todo.todo;
 
+import indiv.abko.todo.common.entity.BaseTimeEntity;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-public class Todo {
+@NoArgsConstructor
+public class Todo extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,4 +25,12 @@ public class Todo {
     private String author; // 작성자
 
     private String password; // 비밀번호
+
+    @Builder
+    public Todo(String title, String content, String author, String password) {
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.password = password;
+    }
 }
