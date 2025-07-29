@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class TodoService {
     private final TodoRepository todoRepo;
     private final Encrypt encrypt;
+    private final TodoMapper todoMapper;
 
     /**
      * 주어진 요청 데이터로 새로운 Todo 항목을 생성한다.
@@ -28,22 +29,9 @@ public class TodoService {
      */
     @Transactional
     public CreateTodoResp create(CreateTodoReq todoReq) {
-        Todo todo = Todo.builder()
-            .title(todoReq.title())
-            .content(todoReq.content())
-            .author(todoReq.author())
-            .password(encrypt.hash(todoReq.password()))
-            .build();
-        
+        Todo todo = todoMapper.toTodo(todoReq);
         var result = todoRepo.save(todo);
-
-        var response = new CreateTodoResp(
-            result.getTitle(),
-            result.getContent(),
-            result.getAuthor(),
-            result.getCreatedAt(),
-            result.getModifiedAt()
-        );
+        var response = todoMapper.toCreateTodoResp(result);
 
         return response;
     } 
@@ -51,16 +39,7 @@ public class TodoService {
     @Transactional(readOnly = true)
     public GetTodosResp getTodosByAuthorOrderByModifiedAtDesc(String author) {
         var todos = todoRepo.findByAuthorOrderByModifiedAtDesc(author);
-
-        var todoDtos = todos.stream().map(todo -> {
-            return new GetTodosResp.TodoDto(
-                todo.getTitle(),
-                todo.getContent(),
-                todo.getAuthor(),
-                todo.getCreatedAt(),
-                todo.getModifiedAt()
-            );
-        }).toList();
+        var todoDtos = todos.stream().map(todoMapper::toTodoDto).toList();
         
         return new GetTodosResp(todoDtos);
     }
@@ -68,16 +47,7 @@ public class TodoService {
     @Transactional(readOnly = true)
     public GetTodosResp getTodosOrderByModifiedAtDesc() {
         var todos = todoRepo.findByOrderByModifiedAtDesc();
-
-        var todoDtos = todos.stream().map(todo -> {
-            return new GetTodosResp.TodoDto(
-                todo.getTitle(),
-                todo.getContent(),
-                todo.getAuthor(),
-                todo.getCreatedAt(),
-                todo.getModifiedAt()
-            );
-        }).toList();
+        var todoDtos = todos.stream().map(todoMapper::toTodoDto).toList();
         
         return new GetTodosResp(todoDtos);
     }
