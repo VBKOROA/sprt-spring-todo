@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import indiv.abko.todo.common.exception.BusinessException;
 import indiv.abko.todo.common.exception.ExceptionEnum;
-import indiv.abko.todo.todo.dto.CreateTodoReq;
+import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.CreateTodoResp;
 import indiv.abko.todo.todo.dto.GetTodoResp;
 import indiv.abko.todo.todo.dto.GetTodosCondition;
@@ -24,7 +24,7 @@ public class TodoService {
     /**
      * 주어진 요청 데이터로 새로운 Todo 항목을 생성한다.
      * 
-     * {@link CreateTodoReq}로부터 {@link Todo} 엔티티를 만들고,
+     * {@link TodoCreateReq}로부터 {@link Todo} 엔티티를 만들고,
      * 비밀번호를 암호화한 뒤, 저장소에 저장한다.
      * 생성된 Todo의 정보를 담은 응답 DTO를 반환한다.
      * 
@@ -33,7 +33,7 @@ public class TodoService {
      * @return 생성된 Todo 정보를 담은 {@link CreateTodoResp}
      */
     @Transactional
-    public CreateTodoResp create(CreateTodoReq todoReq) {
+    public CreateTodoResp create(TodoCreateReq todoReq) {
         Todo todo = todoMapper.toTodo(todoReq);
         var result = todoRepo.save(todo);
         var response = todoMapper.toCreateTodoResp(result);

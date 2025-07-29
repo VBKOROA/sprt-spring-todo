@@ -1,6 +1,6 @@
 package indiv.abko.todo.todo.dto;
 
-public record CreateTodoReq(
+public record TodoCreateReq(
     String title,
     String content,
     String author,

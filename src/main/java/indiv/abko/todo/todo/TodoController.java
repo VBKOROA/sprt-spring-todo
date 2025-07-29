@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import indiv.abko.todo.common.dto.ApiResponse;
-import indiv.abko.todo.todo.dto.CreateTodoReq;
+import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.CreateTodoResp;
 import indiv.abko.todo.todo.dto.GetTodoResp;
 import indiv.abko.todo.todo.dto.GetTodosCondition;
@@ -28,7 +28,7 @@ public class TodoController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<CreateTodoResp> createTodo(@RequestBody CreateTodoReq todoReq) {
+    public ApiResponse<CreateTodoResp> createTodo(@RequestBody TodoCreateReq todoReq) {
         var todo = todoService.create(todoReq);
 
         return ApiResponse.created(todo);
