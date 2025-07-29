@@ -84,11 +84,14 @@ public class TodoService {
     @Transactional
     public TodoResp updateTodo(Long id, TodoUpdateReq updateReq) {
         var todo = findOrThrow(id);
-        var hasAuth = encrypt.isHashEqual(updateReq.password(), todo.getPassword());
-        if(hasAuth == false) {
+        if(hasAuth(todo, updateReq.password()) == false) {
             throw new BusinessException(ExceptionEnum.TODO_PERMISSION_DENIED);
         }
         todo.update(updateReq.title(), updateReq.author());
         return todoMapper.toTodoResp(todo);
+    }
+
+    private boolean hasAuth(Todo todo, String password) {
+        return encrypt.isHashEqual(password, todo.getPassword());
     }
 }
