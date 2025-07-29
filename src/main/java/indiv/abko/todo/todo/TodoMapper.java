@@ -10,7 +10,8 @@ import indiv.abko.todo.todo.dto.GetTodosResp;
 
 @Mapper(componentModel = "spring", uses = Encrypt.class)
 public interface TodoMapper {
-    @Mapping(target = "password", expression = "java(encrypt.hash(req.password()))")
+    // qualifiedByName으로 "hashPassword"라는 이름의 메서드만 password 필드에 적용
+    @Mapping(target = "password", qualifiedByName = "hashPassword")
     Todo toTodo(CreateTodoReq req);
 
     GetTodosResp.TodoDto toTodoDto(Todo todo);
