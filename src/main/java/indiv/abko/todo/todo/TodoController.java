@@ -1,6 +1,7 @@
 package indiv.abko.todo.todo;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import indiv.abko.todo.common.dto.ApiResponse;
@@ -27,37 +28,28 @@ public class TodoController {
     private final TodoService todoService;
 
     @PostMapping("")
-    public ResponseEntity<ApiResponse<CreateTodoResp>> createTodo(@RequestBody CreateTodoReq todoReq) {
-        var result = todoService.create(todoReq);
+    @ResponseStatus(HttpStatus.CREATED)
+    public ApiResponse<CreateTodoResp> createTodo(@RequestBody CreateTodoReq todoReq) {
+        var todo = todoService.create(todoReq);
 
-        ApiResponse<CreateTodoResp> apiResponse = new ApiResponse<>(
-                HttpStatus.CREATED,
-                "",
-                result);
-
-        return new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
+        return ApiResponse.created(todo);
     }
 
     // @ModelAttribute: 여러 개의 파라미터를 객체로 바인딩 할 수 있음
     @GetMapping("")
-    public ResponseEntity<ApiResponse<GetTodosResp>> getTodosWithCondition(
+    public ApiResponse<GetTodosResp> getTodosWithCondition(
             @ModelAttribute GetTodosCondition condition) {
-        GetTodosResp responseData;
+        GetTodosResp todos;
 
         if (condition.isNull()) {
-            responseData = todoService.getTodosOrderByModifiedAtDesc();
+            todos = todoService.getTodosOrderByModifiedAtDesc();
         } else if (condition.orderBy().equals("modifiedAtDesc")) {
-            responseData = todoService.getTodosByAuthorOrderByModifiedAtDesc(condition.author());
+            todos = todoService.getTodosByAuthorOrderByModifiedAtDesc(condition.author());
         } else {
-            responseData = todoService.getTodosOrderByModifiedAtDesc();
+            todos = todoService.getTodosOrderByModifiedAtDesc();
         }
 
-        ApiResponse<GetTodosResp> response = new ApiResponse<>(
-                HttpStatus.OK,
-                "",
-                responseData);
-
-        return ResponseEntity.ok(response);
+        return ApiResponse.ok(todos);
     }
 
     @GetMapping("/{id}")
