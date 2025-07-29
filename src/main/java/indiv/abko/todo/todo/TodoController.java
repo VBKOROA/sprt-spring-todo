@@ -9,7 +9,7 @@ import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.CreateTodoResp;
 import indiv.abko.todo.todo.dto.GetTodoResp;
 import indiv.abko.todo.todo.dto.GetTodosCondition;
-import indiv.abko.todo.todo.dto.GetTodosResp;
+import indiv.abko.todo.todo.dto.TodoListResp;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,7 +36,7 @@ public class TodoController {
 
     // @ModelAttribute: 여러 개의 파라미터를 객체로 바인딩 할 수 있음
     @GetMapping("")
-    public ApiResponse<GetTodosResp> getTodos(
+    public ApiResponse<TodoListResp> getTodos(
             @ModelAttribute GetTodosCondition condition) {
         return ApiResponse.ok(todoService.fetchFilteredTodos(condition));
     }

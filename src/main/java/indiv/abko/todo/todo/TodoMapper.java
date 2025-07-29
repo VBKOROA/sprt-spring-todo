@@ -7,7 +7,7 @@ import indiv.abko.todo.common.util.Encrypt;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.CreateTodoResp;
 import indiv.abko.todo.todo.dto.GetTodoResp;
-import indiv.abko.todo.todo.dto.GetTodosResp;
+import indiv.abko.todo.todo.dto.TodoListResp;
 
 @Mapper(componentModel = "spring", uses = Encrypt.class)
 public interface TodoMapper {
@@ -15,7 +15,7 @@ public interface TodoMapper {
     @Mapping(target = "password", qualifiedByName = "hashPassword")
     Todo toTodo(TodoCreateReq req);
 
-    GetTodosResp.TodoDto toTodoDto(Todo todo);
+    TodoListResp.TodoDto toTodoDto(Todo todo);
 
     CreateTodoResp toCreateTodoResp(Todo todo);
 

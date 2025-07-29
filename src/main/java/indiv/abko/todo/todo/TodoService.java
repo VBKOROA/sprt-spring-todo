@@ -11,7 +11,7 @@ import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.CreateTodoResp;
 import indiv.abko.todo.todo.dto.GetTodoResp;
 import indiv.abko.todo.todo.dto.GetTodosCondition;
-import indiv.abko.todo.todo.dto.GetTodosResp;
+import indiv.abko.todo.todo.dto.TodoListResp;
 
 import lombok.RequiredArgsConstructor;
 
@@ -42,20 +42,20 @@ public class TodoService {
     } 
 
     @Transactional(readOnly = true)
-    private GetTodosResp getTodosByAuthorOrderByModifiedAtDesc(String author) {
+    private TodoListResp getTodosByAuthorOrderByModifiedAtDesc(String author) {
         var todos = todoRepo.findByAuthorOrderByModifiedAtDesc(author);
         return mapTodosToResponse(todos);
     }
 
-    private GetTodosResp getTodosOrderByModifiedAtDesc() {
+    private TodoListResp getTodosOrderByModifiedAtDesc() {
         var todos = todoRepo.findByOrderByModifiedAtDesc();
         return mapTodosToResponse(todos);
     }
 
-    private GetTodosResp mapTodosToResponse(List<Todo> todos) {
+    private TodoListResp mapTodosToResponse(List<Todo> todos) {
         var todoDtos = todos.stream().map(todoMapper::toTodoDto).toList();
         
-        return new GetTodosResp(todoDtos);
+        return new TodoListResp(todoDtos);
     }
 
     /**
@@ -81,7 +81,7 @@ public class TodoService {
      * @return 조건에 맞는 할 일 목록 응답 객체
      */
     @Transactional(readOnly = true)
-    public GetTodosResp fetchFilteredTodos(GetTodosCondition condition) {
+    public TodoListResp fetchFilteredTodos(GetTodosCondition condition) {
         if (condition.isNull()) {
             return getTodosOrderByModifiedAtDesc();
         } else if (condition.orderBy().equals("modifiedAtDesc")) {
