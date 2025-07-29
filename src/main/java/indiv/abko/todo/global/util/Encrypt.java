@@ -12,7 +12,7 @@ public class Encrypt {
         return BCrypt.hashpw(str, BCrypt.gensalt());
     }
 
-    public boolean compareHash(String original, String hashed) {
+    public boolean isHashEqual(String original, String hashed) {
         return BCrypt.checkpw(original, hashed);
     }
 }
