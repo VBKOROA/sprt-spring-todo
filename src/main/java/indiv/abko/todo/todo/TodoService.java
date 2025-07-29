@@ -64,4 +64,21 @@ public class TodoService {
         
         return new GetTodosResp(todoDtos);
     }
+
+    @Transactional(readOnly = true)
+    public GetTodosResp getTodosOrderByModifiedAtDesc() {
+        var todos = todoRepo.findByOrderByModifiedAtDesc();
+
+        var todoDtos = todos.stream().map(todo -> {
+            return new GetTodosResp.TodoDto(
+                todo.getTitle(),
+                todo.getContent(),
+                todo.getAuthor(),
+                todo.getCreatedAt(),
+                todo.getModifiedAt()
+            );
+        }).toList();
+        
+        return new GetTodosResp(todoDtos);
+    }
 }
