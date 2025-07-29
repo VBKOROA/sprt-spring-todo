@@ -1,19 +1,20 @@
 package indiv.abko.todo.todo;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import indiv.abko.todo.common.util.Encrypt;
 import indiv.abko.todo.todo.dto.CreateTodoReq;
 import indiv.abko.todo.todo.dto.CreateTodoResp;
 import indiv.abko.todo.todo.dto.GetTodosResp;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class TodoService {
     private final TodoRepository todoRepo;
-    private final Encrypt encrypt;
     private final TodoMapper todoMapper;
 
     /**
@@ -39,16 +40,18 @@ public class TodoService {
     @Transactional(readOnly = true)
     public GetTodosResp getTodosByAuthorOrderByModifiedAtDesc(String author) {
         var todos = todoRepo.findByAuthorOrderByModifiedAtDesc(author);
-        var todoDtos = todos.stream().map(todoMapper::toTodoDto).toList();
-        
-        return new GetTodosResp(todoDtos);
+        return mapTodosToResponse(todos);
     }
 
     @Transactional(readOnly = true)
     public GetTodosResp getTodosOrderByModifiedAtDesc() {
         var todos = todoRepo.findByOrderByModifiedAtDesc();
+        return mapTodosToResponse(todos);
+    }
+
+    private GetTodosResp mapTodosToResponse(List<Todo> todos) {
         var todoDtos = todos.stream().map(todoMapper::toTodoDto).toList();
         
         return new GetTodosResp(todoDtos);
-    }
+    } 
 }
