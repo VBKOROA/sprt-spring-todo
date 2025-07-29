@@ -7,6 +7,7 @@ public record GetTodosResp(
     List<TodoDto> todos
 ) {
     public record TodoDto(
+        Long id,
         String title,
         String content,
         String author,
