@@ -23,6 +23,9 @@ repositories {
 	mavenCentral()
 }
 
+// openfeign-querydsl 버전 변수
+def querydslVersion = "7.0"
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -43,8 +46,30 @@ dependencies {
 	// 롬복과 MapStruct 둘 다 컴파일 과정 중에 동작하므로
 	// 충돌을 줄이기 위해 밑의 의존성을 사용
 	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+	// io.github.openfeign.querydsl 추가
+	implementation "io.github.openfeign.querydsl:querydsl-jpa:${querydslVersion}"
+	implementation "io.github.openfeign.querydsl:querydsl-core:${querydslVersion}"
+	annotationProcessor "io.github.openfeign.querydsl:querydsl-apt:${querydslVersion}:jpa"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+// Querydsl 추가: Q-Type 빌드 디렉토리 지정
+def querydslDir = "$buildDir/generated/querydsl"
+
+sourceSets {
+	main.java.srcDirs += [ querydslDir ]
+}
+
+tasks.withType(JavaCompile) {
+	options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
+}
+
+clean.doLast {
+	file(querydslDir).deleteDir()
 }
