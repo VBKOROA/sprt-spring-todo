@@ -41,12 +41,6 @@ public class TodoService {
 
         return response;
     }
-    
-    private TodoListResp mapTodosToResponse(List<Todo> todos) {
-        var todoDtos = todos.stream().map(todoMapper::toTodoResp).toList();
-
-        return new TodoListResp(todoDtos);
-    }
 
     /**
      * 주어진 ID에 해당하는 Todo를 조회한다.
