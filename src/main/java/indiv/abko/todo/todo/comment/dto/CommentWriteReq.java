@@ -1,10 +1,10 @@
 package indiv.abko.todo.todo.comment.dto;
 
+import indiv.abko.todo.todo.comment.validation.ValidCommentContent;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 public record CommentWriteReq(
-    @Size(min = 1, max = 100)
+    @ValidCommentContent
     @NotBlank
     String content,
 
