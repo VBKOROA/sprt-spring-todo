@@ -5,6 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 import jakarta.validation.constraints.Size;
 
 @Target({ElementType.FIELD})
@@ -13,4 +14,6 @@ import jakarta.validation.constraints.Size;
 @Size(min = 1, max = 200)
 public @interface ValidTodoContent {
     String message() default "";
+    Class<?>[] groups() default {};
+    Class<? extends Payload>[] payload() default {};
 }
