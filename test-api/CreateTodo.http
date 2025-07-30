@@ -1,9 +1,74 @@
+###
+### 성공 (200 Ok)
+###
+
 POST http://localhost:8080/api/v1/todos HTTP/1.1
 content-type: application/json
 
 {
     "title": "테스트",
     "content": "테스트",
+    "author": "테스트",
+    "password": "abko"
+}
+
+### 
+### 실패 (400 Bad request)
+###
+POST http://localhost:8080/api/v1/todos HTTP/1.1
+content-type: application/json
+
+{
+    "title": "",
+    "content": "테스트",
+    "author": "테스트",
+    "password": "abko"
+}
+
+###
+
+POST http://localhost:8080/api/v1/todos HTTP/1.1
+content-type: application/json
+
+{
+    "title": "테스트",
+    "content": "",
+    "author": "테스트",
+    "password": "abko"
+}
+
+###
+
+POST http://localhost:8080/api/v1/todos HTTP/1.1
+content-type: application/json
+
+{
+    "title": "테스트",
+    "content": "테스트",
+    "author": "",
+    "password": "abko"
+}
+
+###
+
+POST http://localhost:8080/api/v1/todos HTTP/1.1
+content-type: application/json
+
+{
+    "title": "bkgJjjPteUik1jQikGvWocw8jepSioZ",
+    "content": "테스트",
+    "author": "테스트",
+    "password": "abko"
+}
+
+###
+
+POST http://localhost:8080/api/v1/todos HTTP/1.1
+content-type: application/json
+
+{
+    "title": "테스트",
+    "content": "4NjTHxNFpQfXtFm2CwWsEVzQzCYwyrh1cKvJux1QIMZEU20vd0YBu8kvpsH8AziZ1hmWlY3wtIHX3w7O5hTMwE6NRus5uqL5x11XZHqNOOPWBdPASeLZVeUGvwxpriAy4obGO0YGGm2MXm7MWNNqDayHfPXYrL2YMLjLIkQsEcVGKYIEbjQnMA3ifcWyTda6LxmXWDmJD",
     "author": "테스트",
     "password": "abko"
 }
