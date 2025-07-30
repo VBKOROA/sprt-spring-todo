@@ -1,13 +1,18 @@
 package indiv.abko.todo.todo.entity;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import indiv.abko.todo.global.entity.BaseTimeEntity;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.global.exception.ExceptionEnum;
 import indiv.abko.todo.todo.comment.entity.Comment;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,7 +26,8 @@ import lombok.experimental.FieldNameConstants;
 @Getter
 @NoArgsConstructor
 @FieldNameConstants
-public class Todo extends BaseTimeEntity{
+@EntityListeners(AuditingEntityListener.class)
+public class Todo {
     private static final int COMMENT_LIMIT = 10;
 
     @Id
@@ -39,6 +45,13 @@ public class Todo extends BaseTimeEntity{
     // Todo 엔티티와 댓글 엔티티 간의 연관관계 설정
     @OneToMany(mappedBy = "todo", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>(); // 댓글 목록
+
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime modifiedAt;
 
     @Builder
     public Todo(String title, String content, String author, String password) {
