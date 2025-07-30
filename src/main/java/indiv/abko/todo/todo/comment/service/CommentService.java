@@ -1,5 +1,6 @@
 package indiv.abko.todo.todo.comment.service;
 
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import indiv.abko.todo.global.exception.BusinessException;
@@ -35,5 +36,17 @@ public class CommentService {
         todo.addComment(comment);
         Comment savedComment = commentRepository.save(comment);
         return commentMapper.toCommentResp(savedComment);
+    }
+
+    /**
+     * 주어진 Todo 엔티티에 연결된 댓글 응답 DTO 목록을 반환한다.
+     *
+     * @param todo 댓글을 조회할 대상 {@link Todo} 엔티티
+     * @return 해당 Todo의 댓글을 나타내는 {@link CommentResp} 객체 리스트
+     */
+    public List<CommentResp> getComments(Todo todo) {
+        return todo.getComments().stream()
+                .map(commentMapper::toCommentResp)
+                .toList();
     }
 }

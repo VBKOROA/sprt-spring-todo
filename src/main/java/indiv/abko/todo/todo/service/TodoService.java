@@ -7,6 +7,7 @@ import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.global.exception.ExceptionEnum;
 import indiv.abko.todo.global.util.Encrypt;
 import indiv.abko.todo.todo.comment.mapper.CommentMapper;
+import indiv.abko.todo.todo.comment.service.CommentService;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.dto.TodoUpdateReq;
@@ -23,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class TodoService {
     private final TodoRepository todoRepo;
     private final TodoMapper todoMapper;
-    private final CommentMapper commentMapper;
+    private final CommentService commentService;
     private final Encrypt encrypt;
 
     /**
@@ -57,7 +58,7 @@ public class TodoService {
     public TodoWithCommentsResp getTodoWithComments(Long id) {
         Todo todo = findOrThrow(id);
         TodoResp todoResp = todoMapper.toTodoResp(todo);
-        var commentResps = todo.getComments().stream().map(commentMapper::toCommentResp).toList();
+        var commentResps = commentService.getComments(todo);
         return new TodoWithCommentsResp(todoResp, commentResps);
     }
 
