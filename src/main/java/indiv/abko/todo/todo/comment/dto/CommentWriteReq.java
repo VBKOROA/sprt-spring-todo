@@ -1,10 +1,10 @@
 package indiv.abko.todo.todo.comment.dto;
 
-import org.hibernate.validator.constraints.Length;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public record CommentWriteReq(
-    @Length(max=100)
+    @Size(max=100)
     @NotBlank
     String content,
 

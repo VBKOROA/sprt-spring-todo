@@ -1,14 +1,14 @@
 package indiv.abko.todo.todo.dto;
 
-import org.hibernate.validator.constraints.Length;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public record TodoCreateReq(
-    @Length(max = 30)
+    @Size(max = 30)
     @NotBlank
     String title,
 
-    @Length(max = 200)
+    @Size(max = 200)
     @NotBlank
     String content,
 
