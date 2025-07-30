@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.global.exception.ExceptionEnum;
 import indiv.abko.todo.global.util.Encrypt;
-import indiv.abko.todo.todo.comment.mapper.CommentMapper;
 import indiv.abko.todo.todo.comment.service.CommentService;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
