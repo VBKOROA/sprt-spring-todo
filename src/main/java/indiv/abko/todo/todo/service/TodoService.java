@@ -50,6 +50,7 @@ public class TodoService {
      * @return 조회된 Todo 정보를 담은 {@Link TodoResp} 객체
      * @throws BusinessException Todo를 찾을 수 없는 경우 발생
      */
+    @Transactional(readOnly = true)
     public TodoResp getTodo(Long id) {
         var todo = findOrThrow(id);
         return todoMapper.toTodoResp(todo);
