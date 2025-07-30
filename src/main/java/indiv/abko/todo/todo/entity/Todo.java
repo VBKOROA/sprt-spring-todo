@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import indiv.abko.todo.global.entity.BaseTimeEntity;
 import indiv.abko.todo.todo.comment.entity.Comment;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,7 +31,7 @@ public class Todo extends BaseTimeEntity{
     private String password; // 비밀번호
 
     // Todo 엔티티와 댓글 엔티티 간의 연관관계 설정
-    @OneToMany(mappedBy = "todo")
+    @OneToMany(mappedBy = "todo", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>(); // 댓글 목록
 
     @Builder
