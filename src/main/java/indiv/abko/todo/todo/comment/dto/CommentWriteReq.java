@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record CommentWriteReq(
-    @Size(max=100)
+    @Size(min = 1, max = 100)
     @NotBlank
     String content,
 

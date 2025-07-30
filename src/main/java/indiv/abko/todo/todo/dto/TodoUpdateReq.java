@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record TodoUpdateReq(
-    @Size(max = 30)
+    @Size(min = 1, max = 30)
     @NotBlank
     String title,
 
