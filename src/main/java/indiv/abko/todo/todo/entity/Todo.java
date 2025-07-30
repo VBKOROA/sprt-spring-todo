@@ -15,10 +15,12 @@ import jakarta.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldNameConstants;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@FieldNameConstants
 public class Todo extends BaseTimeEntity{
     private static final int COMMENT_LIMIT = 10;
 
