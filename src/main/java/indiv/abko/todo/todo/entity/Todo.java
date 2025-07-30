@@ -1,10 +1,14 @@
 package indiv.abko.todo.todo.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import indiv.abko.todo.global.entity.BaseTimeEntity;
+import indiv.abko.todo.todo.comment.entity.Comment;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +28,10 @@ public class Todo extends BaseTimeEntity{
     private String author; // 작성자
 
     private String password; // 비밀번호
+
+    // Todo 엔티티와 댓글 엔티티 간의 연관관계 설정
+    @OneToMany(mappedBy = "todo")
+    private List<Comment> comments = new ArrayList<>(); // 댓글 목록
 
     @Builder
     public Todo(String title, String content, String author, String password) {
