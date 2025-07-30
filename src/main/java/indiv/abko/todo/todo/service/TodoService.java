@@ -45,19 +45,6 @@ public class TodoService {
     }
 
     /**
-     * 주어진 ID에 해당하는 Todo를 조회한다.
-     *
-     * @param id 조회할 Todo의 ID
-     * @return 조회된 Todo 정보를 담은 {@Link TodoResp} 객체
-     * @throws BusinessException Todo를 찾을 수 없는 경우 발생
-     */
-    @Transactional(readOnly = true)
-    public TodoResp getTodo(Long id) {
-        var todo = findOrThrow(id);
-        return todoMapper.toTodoResp(todo);
-    }
-
-    /**
      * 주어진 ID에 해당하는 Todo와 그에 연결된 댓글 목록을 함께 조회한다.
      *
      * @param id 조회할 {@link Todo}의 ID
