@@ -31,7 +31,8 @@ public class CommentService {
      */
     @Transactional
     public CommentResp createComment(Long todoId, CommentWriteReq req) {
-        Todo todo = todoRepository.findById(todoId).orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
+        Todo todo = todoRepository.findById(todoId)
+            .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
         Comment comment = commentMapper.toComment(req);
         todo.addComment(comment);
         Comment savedComment = commentRepository.save(comment);
