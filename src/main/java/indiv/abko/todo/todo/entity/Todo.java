@@ -50,4 +50,9 @@ public class Todo extends BaseTimeEntity{
             this.author = author;
         }
     }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.atTodo(this);
+    }
 }
