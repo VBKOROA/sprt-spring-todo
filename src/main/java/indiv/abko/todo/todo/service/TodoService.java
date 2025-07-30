@@ -14,6 +14,7 @@ import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
 import indiv.abko.todo.todo.entity.Todo;
 import indiv.abko.todo.todo.mapper.TodoMapper;
 import indiv.abko.todo.todo.repository.TodoRepository;
+import indiv.abko.todo.todo.repository.TodoSpecification;
 import indiv.abko.todo.todo.dto.TodoListResp;
 import indiv.abko.todo.todo.dto.TodoResp;
 import lombok.RequiredArgsConstructor;
@@ -74,7 +75,8 @@ public class TodoService {
      */
     @Transactional(readOnly = true)
     public TodoListResp fetchFilteredTodos(TodoSearchCondition condition) {
-        var todos = todoRepo.fetchFilteredTodos(condition);
+        var spec = TodoSpecification.authorEquals(condition.author());
+        var todos = todoRepo.findAll(spec);
         return new TodoListResp(
                 todos.stream().map(todoMapper::toTodoResp).toList());
     }
