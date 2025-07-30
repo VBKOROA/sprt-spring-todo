@@ -19,7 +19,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("")
-    public ApiResponse<CommentResp> writeComment(@PathVariable("toodId") Long todoId, @RequestBody CommentWriteReq req) {
+    public ApiResponse<CommentResp> writeComment(@PathVariable("todoId") Long todoId, @RequestBody CommentWriteReq req) {
         return ApiResponse.ok(commentService.createComment(todoId, req));
     }
 }
