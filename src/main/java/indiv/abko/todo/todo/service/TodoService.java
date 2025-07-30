@@ -91,7 +91,7 @@ public class TodoService {
     public TodoResp updateTodo(Long id, TodoUpdateReq updateReq) {
         var todo = findOrThrow(id);
         hasAuthOrThrow(todo, updateReq.password());
-        todo.update(updateReq.title(), updateReq.author());
+        todo.updatePresented(updateReq.title(), updateReq.author());
         return todoMapper.toTodoResp(todo);
     }
 
