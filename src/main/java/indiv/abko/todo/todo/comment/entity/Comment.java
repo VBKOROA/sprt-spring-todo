@@ -38,4 +38,8 @@ public class Comment extends BaseTimeEntity {
         this.author = author;
         this.password = password;
     }
+
+    public void atTodo(Todo todo) {
+        this.todo = todo;
+    }
 }
