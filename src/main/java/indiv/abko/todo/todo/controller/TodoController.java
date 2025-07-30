@@ -9,6 +9,7 @@ import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoDeleteReq;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.dto.TodoUpdateReq;
+import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
 import indiv.abko.todo.todo.service.TodoService;
 import indiv.abko.todo.todo.dto.TodoListResp;
 import indiv.abko.todo.todo.dto.TodoResp;
@@ -46,8 +47,8 @@ public class TodoController {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<TodoResp> getTodo(@PathVariable("id") Long id) {
-        return ApiResponse.ok(todoService.getTodo(id));
+    public ApiResponse<TodoWithCommentsResp> getTodo(@PathVariable("id") Long id) {
+        return ApiResponse.ok(todoService.getTodoWithComments(id));
     }
 
     @PatchMapping("/{id}")
