@@ -7,7 +7,6 @@ public record TodoUpdateReq(
     @ValidTodoTitle
     String title,
 
-    @NotBlank
     String author,
 
     @NotBlank
