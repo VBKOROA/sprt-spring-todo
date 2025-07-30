@@ -21,7 +21,7 @@ public class TodoSpecification {
                 // 항상 true 반환
                 return builder.conjunction();
             }
-            return builder.equal(root.get(Todo.Fields.title), toPatternString(title));
+            return builder.like(root.get(Todo.Fields.title), toPatternString(title));
         };
     }
 
@@ -31,7 +31,7 @@ public class TodoSpecification {
                 // 항상 true 반환
                 return builder.conjunction();
             }
-            return builder.equal(root.get(Todo.Fields.content), toPatternString(content));
+            return builder.like(root.get(Todo.Fields.content), toPatternString(content));
         };
     }
 
