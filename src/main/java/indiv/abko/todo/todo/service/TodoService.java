@@ -1,11 +1,14 @@
 package indiv.abko.todo.todo.service;
 
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.global.exception.ExceptionEnum;
 import indiv.abko.todo.global.util.Encrypt;
+import indiv.abko.todo.todo.comment.dto.CommentResp;
+import indiv.abko.todo.todo.comment.mapper.CommentMapper;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.dto.TodoUpdateReq;
@@ -22,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class TodoService {
     private final TodoRepository todoRepo;
     private final TodoMapper todoMapper;
+    private final CommentMapper commentMapper;
     private final Encrypt encrypt;
 
     /**
@@ -53,7 +57,9 @@ public class TodoService {
      */
     public TodoWithCommentsResp getTodoWithComments(Long id) {
         Todo todo = findOrThrow(id);
-        return todoMapper.toTodoWithCommentsResp(todo);
+        TodoResp todoResp = todoMapper.toTodoResp(todo);
+        var commentResps = todo.getComments().stream().map(commentMapper::toCommentResp).toList();
+        return new TodoWithCommentsResp(todoResp, commentResps);
     }
 
     private Todo findOrThrow(Long id) {
