@@ -1,15 +1,15 @@
 package indiv.abko.todo.todo.dto;
 
+import indiv.abko.todo.todo.validation.ValidTodoContent;
 import indiv.abko.todo.todo.validation.ValidTodoTitle;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 public record TodoCreateReq(
     @ValidTodoTitle
     @NotBlank
     String title,
 
-    @Size(min = 1, max = 200)
+    @ValidTodoContent
     @NotBlank
     String content,
 
