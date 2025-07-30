@@ -3,6 +3,8 @@ package indiv.abko.todo.todo.entity;
 import java.util.ArrayList;
 import java.util.List;
 import indiv.abko.todo.global.entity.BaseTimeEntity;
+import indiv.abko.todo.global.exception.BusinessException;
+import indiv.abko.todo.global.exception.ExceptionEnum;
 import indiv.abko.todo.todo.comment.entity.Comment;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -18,6 +20,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class Todo extends BaseTimeEntity{
+    private static final int COMMENT_LIMIT = 10;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -53,7 +57,10 @@ public class Todo extends BaseTimeEntity{
     }
 
     public void addComment(Comment comment) {
-        this.comments.add(comment);
+        if(comments.size() == COMMENT_LIMIT) {
+            throw new BusinessException(ExceptionEnum.COMMENT_LIMIT_EXCEEDED);
+        }
+        comments.add(comment);
         comment.atTodo(this);
     }
 }
