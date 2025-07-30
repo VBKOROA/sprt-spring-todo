@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,4 +31,11 @@ public class Comment extends BaseTimeEntity {
     // Todo 엔티티와의 연관관계
     @ManyToOne
     private Todo todo;
+
+    @Builder
+    public Comment(String content, String author, String password) {
+        this.content = content;
+        this.author = author;
+        this.password = password;
+    }
 }
