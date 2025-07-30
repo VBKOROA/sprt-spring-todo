@@ -9,6 +9,7 @@ import indiv.abko.todo.global.util.Encrypt;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.dto.TodoUpdateReq;
+import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
 import indiv.abko.todo.todo.entity.Todo;
 import indiv.abko.todo.todo.mapper.TodoMapper;
 import indiv.abko.todo.todo.repository.TodoRepository;
@@ -54,6 +55,18 @@ public class TodoService {
     public TodoResp getTodo(Long id) {
         var todo = findOrThrow(id);
         return todoMapper.toTodoResp(todo);
+    }
+
+    /**
+     * 주어진 ID에 해당하는 Todo와 그에 연결된 댓글 목록을 함께 조회한다.
+     *
+     * @param id 조회할 {@link Todo}의 ID
+     * @return Todo 정보와 댓글 목록을 포함하는 {@link TodoWithCommentsResp} 객체
+     * @throws BusinessException 해당 ID의 Todo가 존재하지 않을 경우 발생
+     */
+    public TodoWithCommentsResp getTodoWithComments(Long id) {
+        Todo todo = findOrThrow(id);
+        return todoMapper.toTodoWithCommentsResp(todo);
     }
 
     private Todo findOrThrow(Long id) {
