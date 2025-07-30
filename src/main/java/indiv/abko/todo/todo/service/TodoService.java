@@ -1,13 +1,11 @@
 package indiv.abko.todo.todo.service;
 
-import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.global.exception.ExceptionEnum;
 import indiv.abko.todo.global.util.Encrypt;
-import indiv.abko.todo.todo.comment.dto.CommentResp;
 import indiv.abko.todo.todo.comment.mapper.CommentMapper;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
@@ -55,6 +53,7 @@ public class TodoService {
      * @return Todo 정보와 댓글 목록을 포함하는 {@link TodoWithCommentsResp} 객체
      * @throws BusinessException 해당 ID의 Todo가 존재하지 않을 경우 발생
      */
+    @Transactional(readOnly = true)
     public TodoWithCommentsResp getTodoWithComments(Long id) {
         Todo todo = findOrThrow(id);
         TodoResp todoResp = todoMapper.toTodoResp(todo);
