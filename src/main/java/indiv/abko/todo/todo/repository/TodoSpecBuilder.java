@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TodoSpecBuilder {
     public static Specification<Todo> buildWith(TodoSearchCondition condition) {
-        Specification<Todo> spec = TodoSpecification.authorEquals(condition.author());
+        Specification<Todo> spec = TodoSpecification.authorLike(condition.author());
+        spec = spec.and(TodoSpecification.titleLike(condition.title()));
+        spec = spec.and(TodoSpecification.contentLike(condition.content()));
         return spec;
     }
 }
