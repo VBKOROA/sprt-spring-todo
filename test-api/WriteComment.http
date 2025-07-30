@@ -1,0 +1,8 @@
+POST http://localhost:8080/api/v1/todos/1/comments HTTP/1.1
+content-type: application/json
+
+{
+    "content": "테스트 댓글",
+    "author": "테스트 작성자",
+    "password": "abko"
+}

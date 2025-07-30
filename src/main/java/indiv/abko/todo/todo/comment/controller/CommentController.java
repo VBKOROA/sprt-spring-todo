@@ -1,7 +1,7 @@
 package indiv.abko.todo.todo.comment.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import indiv.abko.todo.global.dto.ApiResponse;
 import indiv.abko.todo.todo.comment.dto.CommentResp;
 import indiv.abko.todo.todo.comment.dto.CommentWriteReq;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/todos/{todoId}/comments")
 @RequiredArgsConstructor
 public class CommentController {
