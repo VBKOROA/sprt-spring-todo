@@ -11,6 +11,7 @@ import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.dto.TodoUpdateReq;
 import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
 import indiv.abko.todo.todo.service.TodoService;
+import jakarta.validation.Valid;
 import indiv.abko.todo.todo.dto.TodoListResp;
 import indiv.abko.todo.todo.dto.TodoResp;
 
@@ -33,7 +34,7 @@ public class TodoController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<TodoResp> createTodo(@RequestBody TodoCreateReq todoReq) {
+    public ApiResponse<TodoResp> createTodo(@RequestBody @Valid TodoCreateReq todoReq) {
         var todo = todoService.create(todoReq);
 
         return ApiResponse.created(todo);
@@ -52,7 +53,7 @@ public class TodoController {
     }
 
     @PatchMapping("/{id}")
-    public ApiResponse<TodoResp> updateTodo(@PathVariable("id") Long id, @RequestBody TodoUpdateReq updateReq) {
+    public ApiResponse<TodoResp> updateTodo(@PathVariable("id") Long id, @RequestBody @Valid TodoUpdateReq updateReq) {
         return ApiResponse.ok(todoService.updateTodo(id, updateReq));
     }
 
