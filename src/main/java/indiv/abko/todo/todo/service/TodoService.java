@@ -30,11 +30,6 @@ public class TodoService {
 
     /**
      * 주어진 요청 데이터로 새로운 Todo 항목을 생성한다.
-     * 
-     * {@link TodoCreateReq}로부터 {@link Todo} 엔티티를 만들고,
-     * 비밀번호를 암호화한 뒤, 저장소에 저장한다.
-     * 생성된 Todo의 정보를 담은 응답 DTO를 반환한다.
-     * 
      *
      * @param todoReq 새 Todo의 정보를 담은 요청 객체
      * @return 생성된 Todo 정보를 담은 {@link TodoResp}
