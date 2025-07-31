@@ -19,6 +19,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
@@ -28,6 +29,7 @@ import lombok.experimental.FieldNameConstants;
 @NoArgsConstructor
 @FieldNameConstants(asEnum = true)
 @EntityListeners(AuditingEntityListener.class)
+@EqualsAndHashCode
 public class Todo {
     private static final int COMMENT_LIMIT = 10;
 
