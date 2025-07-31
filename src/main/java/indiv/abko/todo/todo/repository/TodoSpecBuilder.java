@@ -11,14 +11,6 @@ import lombok.NoArgsConstructor;
 public class TodoSpecBuilder {
     private Specification<Todo> spec = Specification.unrestricted();
 
-    // public static Specification<Todo> buildWith(TodoSearchCondition condition) {
-    //     Specification<Todo> spec = Specification.unrestricted();
-    //     spec = spec.and(TodoSpecification.authorLike(condition.author()));
-    //     spec = spec.and(TodoSpecification.titleLike(condition.title()));
-    //     spec = spec.and(TodoSpecification.contentLike(condition.content()));
-    //     return spec;
-    // }
-
     public static TodoSpecBuilder builder() {
         return new TodoSpecBuilder();
     }
