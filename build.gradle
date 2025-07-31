@@ -43,6 +43,9 @@ dependencies {
 	// 롬복과 MapStruct 둘 다 컴파일 과정 중에 동작하므로
 	// 충돌을 줄이기 위해 밑의 의존성을 사용
 	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+	// H2 데이터베이스 (테스트용)
+	testImplementation 'com.h2database:h2'
 }
 
 tasks.named('test') {
