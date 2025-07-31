@@ -76,7 +76,11 @@ public class TodoService {
      */
     @Transactional(readOnly = true)
     public TodoListResp fetchFilteredTodos(TodoSearchCondition condition) {
-        var spec = TodoSpecBuilder.buildWith(condition);
+        var spec = TodoSpecBuilder.builder()
+            .authorLike(condition.author())
+            .contentLike(condition.content())
+            .titleLike(condition.title())
+            .build();
         var sort = TodoSortBuilder.buildWith(condition);
         var todos = todoRepo.findAll(spec, sort);
         return new TodoListResp(
