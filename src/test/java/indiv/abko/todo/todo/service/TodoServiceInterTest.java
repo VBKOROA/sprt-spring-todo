@@ -14,6 +14,7 @@ import indiv.abko.todo.todo.repository.TodoRepository;
 
 @SpringBootTest
 @Transactional
+@DisplayName("TodoService 통합 테스트")
 public class TodoServiceInterTest {
     @Autowired
     private TodoService todoService;
