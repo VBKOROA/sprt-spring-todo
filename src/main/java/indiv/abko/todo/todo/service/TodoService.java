@@ -52,13 +52,13 @@ public class TodoService {
      */
     @Transactional(readOnly = true)
     public TodoWithCommentsResp getTodoWithComments(Long id) {
-        Todo todo = findOrThrow(id);
+        Todo todo = retrieveOrThrow(id);
         TodoResp todoResp = todoMapper.toTodoResp(todo);
         var commentResps = commentService.getComments(todo);
         return new TodoWithCommentsResp(todoResp, commentResps);
     }
 
-    private Todo findOrThrow(Long id) {
+    private Todo retrieveOrThrow(Long id) {
         return todoRepo.findById(id)
                 .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
     }
@@ -92,7 +92,7 @@ public class TodoService {
      */
     @Transactional
     public TodoResp updateTodo(Long id, TodoUpdateReq updateReq) {
-        var todo = findOrThrow(id);
+        var todo = retrieveOrThrow(id);
         hasAuthOrThrow(todo, updateReq.password());
         todo.updatePresented(updateReq.title(), updateReq.author());
         return todoMapper.toTodoResp(todo);
@@ -108,7 +108,7 @@ public class TodoService {
      */
     @Transactional
     public void deleteTodo(Long id, String password) {
-        var todo = findOrThrow(id);
+        var todo = retrieveOrThrow(id);
         hasAuthOrThrow(todo, password);
         todoRepo.delete(todo);
     }
