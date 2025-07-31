@@ -1,9 +1,12 @@
 package indiv.abko.todo.todo.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,67 +25,102 @@ public class TodoServiceInterTest {
     @Autowired
     private TodoRepository todoRepository;
 
-    @Test
+    @Nested
     @DisplayName("Todo를 title로 검색할 수 있다.")
-    void beforeEach() {
-        // Given
-        var todo1 = Todo.builder()
-            .title("테스트")
-            .author("테스트")
-            .content("테스트")
-            .password("null")
-            .build();
+    class SearchByTitle {
+        private List<Todo> savedTodos = new ArrayList<>();
 
-        var todo2 = Todo.builder()
-            .title("감스트")
-            .author("테스트")
-            .content("테스트")
-            .password("null")
-            .build();
+        @BeforeEach
+        void setUp() {
+            todoRepository.deleteAll();
 
-        var todo3 = Todo.builder()
-            .title("스프")
-            .author("테스트")
-            .content("테스트")
-            .password("null")
-            .build();
+            List<Todo> todos = new ArrayList<>();
 
-        Long id1 = todoRepository.save(todo1).getId();
-        Long id2 =  todoRepository.save(todo2).getId();
-        Long id3 =  todoRepository.save(todo3).getId();
+            todos.add(Todo.builder()
+                .title("테스트")
+                .author("테스트")
+                .content("테스트")
+                .password("null")
+                .build());
 
-        List<Long> ids = List.of(id3, id2, id1);
+            todos.add(Todo.builder()
+                .title("감스트")
+                .author("테스트")
+                .content("테스트")
+                .password("null")
+                .build());
 
-        TodoSearchCondition condition1 = new TodoSearchCondition(null, "테스트", null, null);
-        TodoSearchCondition condition2 = new TodoSearchCondition(null, "스트", null, null);
-        TodoSearchCondition condition3 = new TodoSearchCondition(null, "스", null, null);
-        TodoSearchCondition condition4 = new TodoSearchCondition(null, "test", null, null);
+            todos.add(Todo.builder()
+                .title("스프")
+                .author("테스트")
+                .content("테스트")
+                .password("null")
+                .build());
 
-        // When
-        var result1 = todoService.fetchFilteredTodos(condition1);
-        var result2 = todoService.fetchFilteredTodos(condition2);
-        var result3 = todoService.fetchFilteredTodos(condition3);
-        var result4 = todoService.fetchFilteredTodos(condition4);
+            savedTodos = todoRepository.saveAll(todos);
+        }
 
-        // Then
-        assertThat(result1).isNotNull();
-        assertThat(result2).isNotNull();
-        assertThat(result3).isNotNull();
-        assertThat(result4).isNotNull();
+        @Test
+        @DisplayName("가장 정확한 키워드로 1건 조회하기")
+        void 정확한_키워드로_조회() {
+            // Given
+            TodoSearchCondition condition = new TodoSearchCondition(null, "테스트", null, null);
 
-        assertThat(result1.todos().size()).isEqualTo(1);
-        assertThat(result2.todos().size()).isEqualTo(2);
-        assertThat(result3.todos().size()).isEqualTo(3);
-        assertThat(result4.todos().size()).isZero();
+            // When
+            var result = todoService.fetchFilteredTodos(condition);
 
-        assertThat(result1.todos().get(0).id()).isEqualTo(id1);
+            // Than
+            assertThat(result).isNotNull();
+            assertThat(result.todos().size()).isEqualTo(1);
+            assertThat(result.todos().get(0).id()).isEqualTo(savedTodos.get(0).getId());
+        }
 
-        assertThat(result2.todos().get(0).id()).isEqualTo(id2);
-        assertThat(result2.todos().get(1).id()).isEqualTo(id1);
+        @Test
+        @DisplayName("부분 일치 키워드로 2건 조회하기")
+        void 부분_일치_키워드로_조회_1() {
+            // Given
+            TodoSearchCondition condition2 = new TodoSearchCondition(null, "스트", null, null);
 
-        IntStream.rangeClosed(0, 2)
-            .forEach(i -> {
-                assertThat(result3.todos().get(i).id()).isEqualTo(ids.get(i));
-            });
+            // When
+            var result2 = todoService.fetchFilteredTodos(condition2);
+
+            // Than
+            assertThat(result2).isNotNull();
+            assertThat(result2.todos().size()).isEqualTo(2);
+            assertThat(result2.todos().get(0).id()).isEqualTo(savedTodos.get(1).getId());
+            assertThat(result2.todos().get(1).id()).isEqualTo(savedTodos.get(0).getId());
+        }
+
+        @Test
+        @DisplayName("부분 일치 키워드로 3건 조회하기")
+        void 부분_일치_키워드로_조회_2() {
+            // Given
+            TodoSearchCondition condition3 = new TodoSearchCondition(null, "스", null, null);
+
+            // When
+            var result3 = todoService.fetchFilteredTodos(condition3);
+
+            // Than
+            assertThat(result3).isNotNull();
+            assertThat(result3.todos().size()).isEqualTo(3);
+            IntStream.rangeClosed(0, 2)
+                .forEach(i -> {
+                    assertThat(result3.todos().get(i).id()).isEqualTo(savedTodos.get(savedTodos.size()-1-i).getId());
+                });
+        }
+
+        @Test
+        @DisplayName("없는 키워드로 조회하기")
+        void 없는_키워드로_조회() {
+            // Given
+            TodoSearchCondition condition4 = new TodoSearchCondition(null, "test", null, null);
+
+            // When
+            var result4 = todoService.fetchFilteredTodos(condition4);
+
+            // Then
+            assertThat(result4).isNotNull();
+            assertThat(result4.todos().size()).isZero();
+        }
     }
 }
