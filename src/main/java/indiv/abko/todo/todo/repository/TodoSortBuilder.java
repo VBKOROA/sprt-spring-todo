@@ -24,8 +24,8 @@ public class TodoSortBuilder {
      * @return 유효한 정렬 조건이 제공된 경우 해당 조건에 따른 {@link Sort} 객체를 반환하며
      *         그렇지 않은 경우 기본적으로 modifiedAt을 기준으로 내림차순 정렬된 Sort 객체를 반환한다.
      */
-    public static Sort buildWith(String orderString) {
-        var defaultSort = Sort.by(Direction.DESC, Todo.Fields.modifiedAt.toString());
+    public static Sort buildWith(final String orderString) {
+        final var defaultSort = Sort.by(Direction.DESC, Todo.Fields.modifiedAt.toString());
 
         if (StringUtils.hasText(orderString) == false) {
             return defaultSort;
@@ -34,18 +34,18 @@ public class TodoSortBuilder {
         return extractSortOrder(orderString).orElse(defaultSort);
     }
 
-    private static Optional<Sort> extractSortOrder(String sortOrderString) {
-        var orderCondition = sortOrderString.split(SORT_STRING_SEPARATOR);
+    private static Optional<Sort> extractSortOrder(final String sortOrderString) {
+        final var orderCondition = sortOrderString.split(SORT_STRING_SEPARATOR);
         return getSortIfValid(orderCondition);
     }
 
-    private static Optional<Sort> getSortIfValid(String[] sortCondition) {
+    private static Optional<Sort> getSortIfValid(final String[] sortCondition) {
         if (sortCondition.length != SORT_CONDITION_LENGTH_SHOULD) {
             return Optional.empty();
         }
 
-        Optional<Direction> direction = Direction.fromOptionalString(sortCondition[DIRECTION_INDEX]);
-        Optional<Todo.Fields> fieldName = Todo.toField(sortCondition[FIELD_NAME_INDEX]);
+        final Optional<Direction> direction = Direction.fromOptionalString(sortCondition[DIRECTION_INDEX]);
+        final Optional<Todo.Fields> fieldName = Todo.toField(sortCondition[FIELD_NAME_INDEX]);
 
         final boolean isBothEmpty = direction.isEmpty() || fieldName.isEmpty();
 
