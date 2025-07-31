@@ -10,12 +10,14 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.entity.Todo;
 import indiv.abko.todo.todo.repository.TodoRepository;
 
 @SpringBootTest
+@ActiveProfiles("test")
 @Transactional
 @DisplayName("TodoService 통합 테스트")
 public class TodoServiceInterTest {
