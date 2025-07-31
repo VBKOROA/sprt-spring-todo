@@ -10,7 +10,7 @@ public record ApiResponse<T> (
     T data
 ) {
     public static <T> ApiResponse<T> ok(T data) {
-        return new ApiResponse<>(HttpStatus.OK, "", data);
+        return new ApiResponse<>(HttpStatus.OK, null, data);
     }
 
     public static <T> ApiResponse<T> error(ExceptionEnum e, T data) {
@@ -18,11 +18,11 @@ public record ApiResponse<T> (
     }
 
     public static <T> ApiResponse<T> created(T data) {
-        return new ApiResponse<T>(HttpStatus.CREATED, "", data);
+        return new ApiResponse<T>(HttpStatus.CREATED, null, data);
     }
 
     public static ApiResponse<Void> noContent() {
-        return new ApiResponse<Void>(HttpStatus.NO_CONTENT, "", null);
+        return new ApiResponse<Void>(HttpStatus.NO_CONTENT, null, null);
     }
 
     public static ApiResponse<Void> error(HttpStatus status, String message) {
