@@ -38,9 +38,7 @@ public class TodoService {
     public TodoResp create(TodoCreateReq todoReq) {
         Todo todo = todoMapper.toTodo(todoReq);
         var result = todoRepo.save(todo);
-        var response = todoMapper.toTodoResp(result);
-
-        return response;
+        return todoMapper.toTodoResp(result);
     }
 
     /**
