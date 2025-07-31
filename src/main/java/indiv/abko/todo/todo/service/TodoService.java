@@ -67,7 +67,7 @@ public class TodoService {
      * 주어진 조건에 따라 Todo 목록을 조회한다.
      *
      * @param condition Todo 조회 조건 객체
-     * @return 조건에 맞는 {@Link TodoListResp} 객체
+     * @return 조건에 맞는 {@link TodoListResp} 객체
      */
     @Transactional(readOnly = true)
     public TodoListResp fetchFilteredTodos(TodoSearchCondition condition) {
