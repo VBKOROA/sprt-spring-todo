@@ -6,32 +6,24 @@ import indiv.abko.todo.todo.entity.Todo;
 
 public class TodoSpecification {
     public static Specification<Todo> authorLike(final String author) {
-        return (root, query, builder) -> {
-            if(StringUtils.hasText(author) == false) {
-                // 항상 true 반환
-                return builder.conjunction();
-            }
-            return builder.like(root.get(Todo.Fields.author), toPatternString(author));
-        };
+        return likeOrAlwaysTrue(author, Todo.Fields.author);
     }
 
     public static Specification<Todo> titleLike(final String title) {
-        return (root, query, builder) -> {
-            if(StringUtils.hasText(title) == false) {
-                // 항상 true 반환
-                return builder.conjunction();
-            }
-            return builder.like(root.get(Todo.Fields.title), toPatternString(title));
-        };
+        return likeOrAlwaysTrue(title, Todo.Fields.title);
     }
 
     public static Specification<Todo> contentLike(final String content) {
+        return likeOrAlwaysTrue(content, Todo.Fields.content);
+    }
+
+    private static Specification<Todo> likeOrAlwaysTrue(String value, String fieldName) {
         return (root, query, builder) -> {
-            if(StringUtils.hasText(content) == false) {
+            if(StringUtils.hasText(value) == false) {
                 // 항상 true 반환
                 return builder.conjunction();
             }
-            return builder.like(root.get(Todo.Fields.content), toPatternString(content));
+            return builder.like(root.get(fieldName), toPatternString(value));
         };
     }
 
