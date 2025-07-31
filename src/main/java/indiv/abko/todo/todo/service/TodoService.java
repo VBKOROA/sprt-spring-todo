@@ -35,9 +35,9 @@ public class TodoService {
      * @return 생성된 Todo 정보를 담은 {@link TodoResp}
      */
     @Transactional
-    public TodoResp create(TodoCreateReq todoReq) {
-        Todo todo = todoMapper.toTodo(todoReq);
-        var result = todoRepo.save(todo);
+    public TodoResp create(final TodoCreateReq todoReq) {
+        final Todo todo = todoMapper.toTodo(todoReq);
+        final var result = todoRepo.save(todo);
         return todoMapper.toTodoResp(result);
     }
 
@@ -49,14 +49,14 @@ public class TodoService {
      * @throws BusinessException 해당 ID의 Todo가 존재하지 않을 경우 발생
      */
     @Transactional(readOnly = true)
-    public TodoWithCommentsResp getTodoWithComments(Long id) {
-        Todo todo = retrieveOrThrow(id);
-        TodoResp todoResp = todoMapper.toTodoResp(todo);
-        var commentResps = commentService.getComments(todo);
+    public TodoWithCommentsResp getTodoWithComments(final Long id) {
+        final Todo todo = retrieveOrThrow(id);
+        final TodoResp todoResp = todoMapper.toTodoResp(todo);
+        final var commentResps = commentService.getComments(todo);
         return new TodoWithCommentsResp(todoResp, commentResps);
     }
 
-    private Todo retrieveOrThrow(Long id) {
+    private Todo retrieveOrThrow(final Long id) {
         return todoRepo.findById(id)
                 .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
     }
@@ -68,14 +68,14 @@ public class TodoService {
      * @return 조건에 맞는 {@link TodoListResp} 객체
      */
     @Transactional(readOnly = true)
-    public TodoListResp fetchFilteredTodos(TodoSearchCondition condition) {
-        var spec = TodoSpecBuilder.builder()
+    public TodoListResp fetchFilteredTodos(final TodoSearchCondition condition) {
+        final var spec = TodoSpecBuilder.builder()
             .authorLike(condition.author())
             .contentLike(condition.content())
             .titleLike(condition.title())
             .build();
-        var sort = TodoSortBuilder.buildWith(condition.orderBy());
-        var todos = todoRepo.findAll(spec, sort);
+        final var sort = TodoSortBuilder.buildWith(condition.orderBy());
+        final var todos = todoRepo.findAll(spec, sort);
         return new TodoListResp(todos.stream()
             .map(todoMapper::toTodoResp)
             .toList());
@@ -90,8 +90,8 @@ public class TodoService {
      * @throws BusinessException 비밀번호가 일치하지 않아 권한이 없을 경우 발생
      */
     @Transactional
-    public TodoResp updateTodo(Long id, TodoUpdateReq updateReq) {
-        var todo = retrieveOrThrow(id);
+    public TodoResp updateTodo(final Long id, final TodoUpdateReq updateReq) {
+        final var todo = retrieveOrThrow(id);
         hasAuthOrThrow(todo, updateReq.password());
         todo.updatePresented(updateReq.title(), updateReq.author());
         return todoMapper.toTodoResp(todo);
@@ -106,14 +106,14 @@ public class TodoService {
      *                           - 비밀번호가 일치하지 않을 경우
      */
     @Transactional
-    public void deleteTodo(Long id, String password) {
-        var todo = retrieveOrThrow(id);
+    public void deleteTodo(final Long id, final String password) {
+        final var todo = retrieveOrThrow(id);
         hasAuthOrThrow(todo, password);
         todoRepo.delete(todo);
     }
 
-    private void hasAuthOrThrow(Todo todo, String password) {
-        var auth = encrypt.isHashEqual(password, todo.getPassword());
+    private void hasAuthOrThrow(final Todo todo, final String password) {
+        final var auth = encrypt.isHashEqual(password, todo.getPassword());
         if (auth == false) {
             throw new BusinessException(ExceptionEnum.TODO_PERMISSION_DENIED);
         }
