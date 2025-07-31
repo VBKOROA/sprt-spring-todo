@@ -78,8 +78,9 @@ public class TodoService {
             .build();
         var sort = TodoSortBuilder.buildWith(condition.orderBy());
         var todos = todoRepo.findAll(spec, sort);
-        return new TodoListResp(
-                todos.stream().map(todoMapper::toTodoResp).toList());
+        return new TodoListResp(todos.stream()
+            .map(todoMapper::toTodoResp)
+            .toList());
     }
 
     /**
