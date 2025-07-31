@@ -18,20 +18,20 @@ public class TodoSortBuilder {
     /**
      * 주어진 검색 조건에 따라 정렬 객체를 생성한다.
      * 
-     * @param orderString 정렬 조건을 포함하는 문자열.
+     * @param sortOrderString 정렬 조건을 포함하는 문자열.
      *                  - "필드명_정렬방향" 형식이어야 한다.
      *                  예: "modifiedAt_desc" 또는 "title_asc"
      * @return 유효한 정렬 조건이 제공된 경우 해당 조건에 따른 {@link Sort} 객체를 반환하며
      *         그렇지 않은 경우 기본적으로 modifiedAt을 기준으로 내림차순 정렬된 Sort 객체를 반환한다.
      */
-    public static Sort buildWith(final String orderString) {
+    public static Sort buildWith(final String sortOrderString) {
         final var defaultSort = Sort.by(Direction.DESC, Todo.Fields.modifiedAt.toString());
 
-        if (StringUtils.hasText(orderString) == false) {
+        if (StringUtils.hasText(sortOrderString) == false) {
             return defaultSort;
         }
 
-        return extractSortOrder(orderString).orElse(defaultSort);
+        return extractSortOrder(sortOrderString).orElse(defaultSort);
     }
 
     private static Optional<Sort> extractSortOrder(final String sortOrderString) {
