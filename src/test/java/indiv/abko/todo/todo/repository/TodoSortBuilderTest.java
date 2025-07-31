@@ -17,7 +17,7 @@ public class TodoSortBuilderTest {
         var sort = TodoSortBuilder.buildWith(orderString);
         var order = sort.getOrderFor(Todo.Fields.id.toString());
 
-        // Than
+        // Then
         assertThat(order).isNotNull()
             .isEqualTo(Order.asc(Todo.Fields.id.toString()));
     } 
