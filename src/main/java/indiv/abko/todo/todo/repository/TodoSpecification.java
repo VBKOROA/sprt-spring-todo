@@ -3,7 +3,11 @@ package indiv.abko.todo.todo.repository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 import indiv.abko.todo.todo.entity.Todo;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+// 외부에서의 생성 차단
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TodoSpecification {
     public static Specification<Todo> authorLike(final String author) {
         return likeOrAlwaysTrue(author, Todo.Fields.author);
