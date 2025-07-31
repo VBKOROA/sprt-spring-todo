@@ -1,6 +1,7 @@
 package indiv.abko.todo.todo.comment.service;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import indiv.abko.todo.global.exception.BusinessException;
@@ -31,12 +32,16 @@ public class CommentService {
      */
     @Transactional
     public CommentResp createComment(Long todoId, CommentWriteReq req) {
-        Todo todo = todoRepository.findById(todoId)
-            .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
+        Todo todo = retrieveTodoOrThrow(todoId);
         Comment comment = commentMapper.toComment(req);
         todo.addComment(comment);
         Comment savedComment = commentRepository.save(comment);
         return commentMapper.toCommentResp(savedComment);
+    }
+
+    private Todo retrieveTodoOrThrow(Long todoId) {
+        return todoRepository.findById(todoId)
+            .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
     }
 
     /**
