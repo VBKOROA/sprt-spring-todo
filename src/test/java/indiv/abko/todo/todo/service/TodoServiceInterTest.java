@@ -1,9 +1,11 @@
 package indiv.abko.todo.todo.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -39,25 +41,25 @@ public class TodoServiceInterTest {
             List<Todo> todos = new ArrayList<>();
 
             todos.add(Todo.builder()
-                .title("테스트")
-                .author("테스트")
-                .content("테스트")
-                .password("null")
-                .build());
+                    .title("테스트")
+                    .author("테스트")
+                    .content("테스트")
+                    .password("null")
+                    .build());
 
             todos.add(Todo.builder()
-                .title("감스트")
-                .author("테스트")
-                .content("테스트")
-                .password("null")
-                .build());
+                    .title("감스트")
+                    .author("테스트")
+                    .content("테스트")
+                    .password("null")
+                    .build());
 
             todos.add(Todo.builder()
-                .title("스프")
-                .author("테스트")
-                .content("테스트")
-                .password("null")
-                .build());
+                    .title("스프")
+                    .author("테스트")
+                    .content("테스트")
+                    .password("null")
+                    .build());
 
             savedTodos = todoRepository.saveAll(todos);
         }
@@ -71,7 +73,7 @@ public class TodoServiceInterTest {
             // When
             var result = todoService.fetchFilteredTodos(condition);
 
-            // Than
+            // Then
             assertThat(result).isNotNull();
             assertThat(result.todos().size()).isEqualTo(1);
             assertThat(result.todos().get(0).id()).isEqualTo(savedTodos.get(0).getId());
@@ -86,7 +88,7 @@ public class TodoServiceInterTest {
             // When
             var result2 = todoService.fetchFilteredTodos(condition2);
 
-            // Than
+            // Then
             assertThat(result2).isNotNull();
             assertThat(result2.todos().size()).isEqualTo(2);
             assertThat(result2.todos().get(0).id()).isEqualTo(savedTodos.get(1).getId());
@@ -102,13 +104,13 @@ public class TodoServiceInterTest {
             // When
             var result3 = todoService.fetchFilteredTodos(condition3);
 
-            // Than
+            // Then
             assertThat(result3).isNotNull();
             assertThat(result3.todos().size()).isEqualTo(3);
             IntStream.rangeClosed(0, 2)
-                .forEach(i -> {
-                    assertThat(result3.todos().get(i).id()).isEqualTo(savedTodos.get(savedTodos.size()-1-i).getId());
-                });
+                    .forEach(i ->
+                            assertThat(result3.todos().get(i).id()).isEqualTo(savedTodos.get(savedTodos.size() - 1 - i).getId())
+                    );
         }
 
         @Test
