@@ -30,37 +30,22 @@ public class TodoSortBuilder {
         }
 
         // orderBy가 정상적이지 않다면
-        return Sort.by(Direction.DESC, Todo.Fields.modifiedAt);
+        return Sort.by(Direction.DESC, Todo.Fields.modifiedAt.toString());
     }
 
     private static Optional<Sort> getSortIfValid(String[] orderCondition) {
         if (orderCondition.length == 2) {
             Optional<Direction> dir = getDirection(orderCondition[1]);
-            Optional<String> fieldName = getFieldName(orderCondition[0]);
+            Optional<Todo.Fields> fieldName = Todo.toField(orderCondition[0]);
 
             if (dir.isPresent() && fieldName.isPresent()) {
-                return Optional.of(Sort.by(dir.get(), fieldName.get()));
+                return Optional.of(Sort.by(dir.get(), fieldName.get().toString()));
             }
         }
         return Optional.empty();
     }
 
-    private static Optional<String> getFieldName(String fieldString) {
-        return Optional.ofNullable(switch (fieldString) {
-            case Todo.Fields.title -> Todo.Fields.title;
-            case Todo.Fields.author -> Todo.Fields.author;
-            case Todo.Fields.content -> Todo.Fields.content;
-            case Todo.Fields.modifiedAt -> Todo.Fields.modifiedAt;
-            case Todo.Fields.createdAt -> Todo.Fields.createdAt;
-            default -> null;
-        });
-    }
-
     private static Optional<Direction> getDirection(String directionString) {
-        return Optional.ofNullable(switch (directionString) {
-            case "asc" -> Direction.ASC;
-            case "desc" -> Direction.DESC;
-            default -> null;
-        });
+        return Direction.fromOptionalString(directionString);
     }
 }

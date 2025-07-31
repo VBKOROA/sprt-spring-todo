@@ -17,13 +17,13 @@ public class TodoSpecification {
         return likeOrAlwaysTrue(content, Todo.Fields.content);
     }
 
-    private static Specification<Todo> likeOrAlwaysTrue(String value, String fieldName) {
+    private static Specification<Todo> likeOrAlwaysTrue(String value, Todo.Fields field) {
         return (root, query, builder) -> {
             if(StringUtils.hasText(value) == false) {
                 // 항상 true 반환
                 return builder.conjunction();
             }
-            return builder.like(root.get(fieldName), toPatternString(value));
+            return builder.like(root.get(field.toString()), toPatternString(value));
         };
     }
 

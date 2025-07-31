@@ -3,6 +3,7 @@ package indiv.abko.todo.todo.entity;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -25,7 +26,7 @@ import lombok.experimental.FieldNameConstants;
 @Entity
 @Getter
 @NoArgsConstructor
-@FieldNameConstants
+@FieldNameConstants(asEnum = true)
 @EntityListeners(AuditingEntityListener.class)
 public class Todo {
     private static final int COMMENT_LIMIT = 10;
@@ -77,5 +78,14 @@ public class Todo {
         }
         comments.add(comment);
         comment.atTodo(this);
+    }
+    
+    public static Optional<Todo.Fields> toField(String fieldName) {
+        try {
+            var field = Todo.Fields.valueOf(fieldName);
+            return Optional.of(field);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 }
