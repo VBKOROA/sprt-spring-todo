@@ -30,15 +30,15 @@ public class CommentService {
      * @throws BusinessException Todo 항목을 찾을 수 없거나 댓글 제한을 초과한 경우
      */
     @Transactional
-    public CommentResp createComment(Long todoId, CommentWriteReq req) {
-        Todo todo = retrieveTodoOrThrow(todoId);
-        Comment comment = commentMapper.toComment(req);
+    public CommentResp createComment(final Long todoId, final CommentWriteReq req) {
+        final Todo todo = retrieveTodoOrThrow(todoId);
+        final Comment comment = commentMapper.toComment(req);
         todo.addComment(comment);
-        Comment savedComment = commentRepository.save(comment);
+        final Comment savedComment = commentRepository.save(comment);
         return commentMapper.toCommentResp(savedComment);
     }
 
-    private Todo retrieveTodoOrThrow(Long todoId) {
+    private Todo retrieveTodoOrThrow(final Long todoId) {
         return todoRepository.findById(todoId)
             .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
     }
@@ -49,7 +49,7 @@ public class CommentService {
      * @param todo 댓글을 조회할 대상 {@link Todo} 엔티티
      * @return 해당 Todo의 댓글을 나타내는 {@link CommentResp} 객체 리스트
      */
-    public List<CommentResp> getComments(Todo todo) {
+    public List<CommentResp> getComments(final Todo todo) {
         return todo.getComments().stream()
                 .map(commentMapper::toCommentResp)
                 .toList();
