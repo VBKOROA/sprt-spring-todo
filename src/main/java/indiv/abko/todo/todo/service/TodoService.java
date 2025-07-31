@@ -81,7 +81,7 @@ public class TodoService {
             .contentLike(condition.content())
             .titleLike(condition.title())
             .build();
-        var sort = TodoSortBuilder.buildWith(condition);
+        var sort = TodoSortBuilder.buildWith(condition.orderBy());
         var todos = todoRepo.findAll(spec, sort);
         return new TodoListResp(
                 todos.stream().map(todoMapper::toTodoResp).toList());
