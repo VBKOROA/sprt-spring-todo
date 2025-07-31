@@ -24,28 +24,30 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    
+    // Lombok 설정
+    implementation 'org.projectlombok:lombok'
+    
+    // MapStruct 설정
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 
-	// 해시 암호화를 위한 의존성
-	implementation 'org.mindrot:jbcrypt:0.4'
-
-	// MapStruct를 위한 의존성
-	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
-	// 롬복을 사용하므로 추가
-	// 롬복과 MapStruct 둘 다 컴파일 과정 중에 동작하므로
-	// 충돌을 줄이기 위해 밑의 의존성을 사용
-	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
-
-	// H2 데이터베이스 (테스트용)
-	testImplementation 'com.h2database:h2'
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    
+    // 데이터베이스 설정
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    testRuntimeOnly 'com.h2database:h2'
+    
+    // 암호화
+    implementation 'org.mindrot:jbcrypt:0.4'
+    
+    // 테스트 설정
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
