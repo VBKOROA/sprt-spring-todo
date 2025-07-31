@@ -10,6 +10,11 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TodoSortBuilder {
+    private static final int SORT_CONDITION_LENGTH_SHOULD = 2;
+    private static final String SORT_STRING_SEPARATOR = "_";
+    private static final int FIELD_NAME_INDEX = 0;
+    private static final int DIRECTION_INDEX = 1;
+
     /**
      * 주어진 검색 조건에 따라 정렬 객체를 생성한다.
      * 
@@ -20,27 +25,37 @@ public class TodoSortBuilder {
      *         그렇지 않은 경우 기본적으로 modifiedAt을 기준으로 내림차순 정렬된 Sort 객체를 반환한다.
      */
     public static Sort buildWith(String orderString) {
-        if (StringUtils.hasText(orderString)) {
-            var orderCondition = orderString.split("_");
-            var sort = getSortIfValid(orderCondition);
-            if(sort.isPresent()) {
-                return sort.get();
-            }
+        var defaultSort = Sort.by(Direction.DESC, Todo.Fields.modifiedAt.toString());
+
+        if (StringUtils.hasText(orderString) == false) {
+            return defaultSort;
         }
 
-        return Sort.by(Direction.DESC, Todo.Fields.modifiedAt.toString());
+        return extractSortOrder(orderString).orElse(defaultSort);
     }
 
-    private static Optional<Sort> getSortIfValid(String[] orderCondition) {
-        if (orderCondition.length == 2) {
-            Optional<Direction> dir = getDirection(orderCondition[1]);
-            Optional<Todo.Fields> fieldName = Todo.toField(orderCondition[0]);
+    private static Optional<Sort> extractSortOrder(String sortOrderString) {
+        var orderCondition = sortOrderString.split(SORT_STRING_SEPARATOR);
+        return getSortIfValid(orderCondition);
+    }
 
-            if (dir.isPresent() && fieldName.isPresent()) {
-                return Optional.of(Sort.by(dir.get(), fieldName.get().toString()));
-            }
+    private static Optional<Sort> getSortIfValid(String[] sortCondition) {
+        if (sortCondition.length != SORT_CONDITION_LENGTH_SHOULD) {
+            return Optional.empty();
         }
-        return Optional.empty();
+
+        Optional<Direction> direction = getDirection(sortCondition[DIRECTION_INDEX]);
+        Optional<Todo.Fields> fieldName = Todo.toField(sortCondition[FIELD_NAME_INDEX]);
+
+        if (isDirectionOrFieldEmpty(direction, fieldName)) {
+            return Optional.empty();    
+        }
+
+        return Optional.of(Sort.by(direction.get(), fieldName.get().toString()));
+    }
+
+    private static boolean isDirectionOrFieldEmpty(Optional<Direction> direction, Optional<Todo.Fields> fieldName) {
+        return direction.isEmpty() || fieldName.isEmpty();
     }
 
     private static Optional<Direction> getDirection(String directionString) {
