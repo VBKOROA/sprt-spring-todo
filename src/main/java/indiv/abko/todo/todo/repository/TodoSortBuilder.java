@@ -44,21 +44,15 @@ public class TodoSortBuilder {
             return Optional.empty();
         }
 
-        Optional<Direction> direction = getDirection(sortCondition[DIRECTION_INDEX]);
+        Optional<Direction> direction = Direction.fromOptionalString(sortCondition[DIRECTION_INDEX]);
         Optional<Todo.Fields> fieldName = Todo.toField(sortCondition[FIELD_NAME_INDEX]);
 
-        if (isDirectionOrFieldEmpty(direction, fieldName)) {
+        final boolean isBothEmpty = direction.isEmpty() || fieldName.isEmpty();
+
+        if (isBothEmpty) {
             return Optional.empty();    
         }
 
         return Optional.of(Sort.by(direction.get(), fieldName.get().toString()));
-    }
-
-    private static boolean isDirectionOrFieldEmpty(Optional<Direction> direction, Optional<Todo.Fields> fieldName) {
-        return direction.isEmpty() || fieldName.isEmpty();
-    }
-
-    private static Optional<Direction> getDirection(String directionString) {
-        return Direction.fromOptionalString(directionString);
     }
 }
