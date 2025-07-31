@@ -44,12 +44,13 @@
 - **엔드포인트:** `GET /api/v1/todos`
 - **설명:** 조건에 따라 Todo 목록을 조회합니다.
 - **요청 파라미터:** `TodoSearchCondition` (쿼리 파라미터)
-```json
-{
-  "orderBy": "string",
-  "author": "string"
-}
-```
+  - `orderBy` (optional, string): 정렬 기준. `"필드명_정렬방향"` 형식으로 지정합니다 (예: `title_asc`, `createdAt_desc`).
+      - **정렬 가능 필드:** `title`, `author`, `content`, `createdAt`, `modifiedAt`
+      - **정렬 방향:** `asc` (오름차순), `desc` (내림차순)
+      - **기본값:** `modifiedAt_desc`
+  - `title` (optional, string): 제목으로 필터링합니다.
+  - `content` (optional, string): 내용으로 필터링합니다.
+  - `author` (optional, string): 작성자로 필터링합니다.
 - **응답:** `ApiResponse<TodoListResp>`
 ```json
 {
