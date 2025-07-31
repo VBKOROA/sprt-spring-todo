@@ -29,7 +29,6 @@ import lombok.experimental.FieldNameConstants;
 @NoArgsConstructor
 @FieldNameConstants(asEnum = true)
 @EntityListeners(AuditingEntityListener.class)
-@EqualsAndHashCode
 public class Todo {
     private static final int COMMENT_LIMIT = 10;
 
