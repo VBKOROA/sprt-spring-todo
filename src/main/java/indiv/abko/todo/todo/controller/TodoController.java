@@ -44,7 +44,7 @@ public class TodoController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "새 Todo 생성", description = "새 Todo 생성")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Todo가 성공적으로 생성됨"),
+        @ApiResponse(responseCode = "201", description = "Todo가 성공적으로 생성됨"),
         @ApiResponse(responseCode = "400", description = "파라미터가 유효하지 않음")
     })
     public ApiResp<TodoResp> createTodo(@RequestBody @Valid TodoCreateReq createReq) {
