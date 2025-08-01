@@ -9,12 +9,12 @@ import jakarta.validation.constraints.NotBlank;
 public record TodoCreateReq(
     @ValidTodoTitle
     @NotBlank
-    @Schema(description = "Todo 제목", example = "테스트", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "Todo 제목. 1~30자 이내여야 함.", example = "테스트", requiredMode = Schema.RequiredMode.REQUIRED)
     String title,
 
     @ValidTodoContent
     @NotBlank
-    @Schema(description = "Todo 내용", example = "테스트", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "Todo 내용. 1~200자 이내여야 함.", example = "테스트", requiredMode = Schema.RequiredMode.REQUIRED)
     String content,
 
     @NotBlank
