@@ -167,9 +167,8 @@
 - **설명:** 특정 Todo 항목을 삭제합니다.
 - **경로 변수:**
   - `id` (Long): 삭제할 Todo의 ID
-
 - **요청 헤더:**
-  - `X-Todo-Password` (string): Todo를 삭제하기 위한 비밀번호
+  - `X-Todo-Password` (base64 string): Todo를 삭제하기 위한 비밀번호.
 
 - **응답:** 없음
 - **상태 코드:**
@@ -177,6 +176,7 @@
 | 코드 | 설명 |
 |---|---|
 | `204 No Content` | Todo가 성공적으로 삭제되었습니다. |
+| `400 Bad Request` | 잘못된 비밀번호 헤더 (Base64 인코딩되지 않음, 누락됨) |
 | `404 Not Found` | 해당 ID의 Todo를 찾을 수 없습니다. |
 | `401 Unauthorized` | 비밀번호가 일치하지 않습니다. |
 
