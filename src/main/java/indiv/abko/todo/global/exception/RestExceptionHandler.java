@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import indiv.abko.todo.global.dto.ApiResponse;
 import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.Path;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
