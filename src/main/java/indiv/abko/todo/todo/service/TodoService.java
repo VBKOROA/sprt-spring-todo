@@ -93,8 +93,7 @@ public class TodoService {
      */
     @Transactional
     public TodoResp updateTodo(final Long id, final TodoUpdateReq updateReq) {
-        final var todo = retrieveOrThrow(id);
-        hasAuthOrThrow(todo, updateReq.password());
+        final var todo = retrieveTodoWithAuth(id, updateReq.password());
         // 제목과 작성자만 업데이트하는것이 요구사항
         todo.updatePresented(updateReq.title(), updateReq.author());
         return todoMapper.toTodoResp(todo);
@@ -111,9 +110,14 @@ public class TodoService {
     @Transactional
     public void deleteTodo(final Long id, final String encodedPassword) {
         final String decodedPassword = new String(Base64.getDecoder().decode(encodedPassword));
-        final var todo = retrieveOrThrow(id);
-        hasAuthOrThrow(todo, decodedPassword);
+        final var todo = retrieveTodoWithAuth(id, decodedPassword);
         todoRepo.delete(todo);
+    }
+
+    private Todo retrieveTodoWithAuth(Long id, String password) {
+        final var todo = retrieveOrThrow(id);
+        hasAuthOrThrow(todo, password);
+        return todo;
     }
 
     private void hasAuthOrThrow(final Todo todo, final String password) {
