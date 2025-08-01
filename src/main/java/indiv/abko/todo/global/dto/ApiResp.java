@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public record ApiResp<T> (
     @Schema(description = "HTTP 상태 코드", example = "OK")
     HttpStatus status, // OK, CREATED 등의 문자열로 직렬화됨
-    @Schema(description = "메시지", example = "요청이 잘못되었습니다.")
+    @Schema(description = "메시지", example = "테스트 메시지")
     String message,
     @Schema(description = "응답 데이터")
     T data
