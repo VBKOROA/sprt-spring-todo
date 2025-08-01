@@ -12,7 +12,6 @@ import indiv.abko.todo.todo.dto.TodoUpdateReq;
 import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
 import indiv.abko.todo.todo.service.TodoService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import indiv.abko.todo.todo.dto.TodoListResp;
 import indiv.abko.todo.todo.dto.TodoResp;
 
