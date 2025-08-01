@@ -21,10 +21,6 @@ public record ApiResponse<T> (
         return new ApiResponse<T>(HttpStatus.CREATED, null, data);
     }
 
-    public static ApiResponse<Void> noContent() {
-        return new ApiResponse<Void>(HttpStatus.NO_CONTENT, null, null);
-    }
-
     public static ApiResponse<Void> error(HttpStatus status, String message) {
         return new ApiResponse<Void>(status, message, null);
     }
