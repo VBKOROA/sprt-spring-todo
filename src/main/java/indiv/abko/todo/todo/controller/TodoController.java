@@ -154,7 +154,7 @@ public class TodoController {
             required = true)
         @RequestHeader("X-Todo-Password") 
         @ShouldBase64 
-        String password) {
-        todoService.deleteTodo(id, password);
+        String encodedPassword) {
+        todoService.deleteTodo(id, encodedPassword);
     }
 }
