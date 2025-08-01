@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import indiv.abko.todo.global.util.Encrypt;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -69,6 +71,12 @@ public class Todo {
 
         if(author != null) {
             this.author = author;
+        }
+    }
+
+    public void verifyPassword(String password, Encrypt encrypt) {
+        if(encrypt.isHashEqual(password, this.password) == false) {
+            throw new BusinessException(ExceptionEnum.TODO_PERMISSION_DENIED);
         }
     }
 

@@ -93,8 +93,8 @@ public class TodoService {
      */
     @Transactional
     public TodoResp updateTodo(final Long id, final TodoUpdateReq updateReq) {
-        final var todo = retrieveTodoWithAuth(id, updateReq.password());
-        // 제목과 작성자만 업데이트하는것이 요구사항
+        final var todo = retrieveOrThrow(id);
+        todo.verifyPassword(updateReq.password(), encrypt);
         todo.updatePresented(updateReq.title(), updateReq.author());
         return todoMapper.toTodoResp(todo);
     }
