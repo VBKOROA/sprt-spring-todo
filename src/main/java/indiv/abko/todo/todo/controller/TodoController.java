@@ -6,20 +6,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import indiv.abko.todo.global.dto.ApiResponse;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
-import indiv.abko.todo.todo.dto.TodoDeleteReq;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.dto.TodoUpdateReq;
 import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
 import indiv.abko.todo.todo.service.TodoService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import indiv.abko.todo.todo.dto.TodoListResp;
 import indiv.abko.todo.todo.dto.TodoResp;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 @RequestMapping("/api/v1/todos")
 @RequiredArgsConstructor
+@Validated
 public class TodoController {
     private final TodoService todoService;
 
@@ -59,8 +62,9 @@ public class TodoController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ApiResponse<Void> deleteTodo(@PathVariable("id") Long id, @RequestBody @Valid TodoDeleteReq deleteReq) {
-        todoService.deleteTodo(id, deleteReq.password());
+    public ApiResponse<Void> deleteTodo(@PathVariable("id") Long id,
+        @RequestHeader("X-Todo-Password") @NotBlank String password) {
+        todoService.deleteTodo(id, password);
         return ApiResponse.noContent();
     }
 }
