@@ -32,6 +32,7 @@
 | **Security** | `jBCrypt` | 강력한 해시 함수를 이용한 비밀번호 암호화 | 
 | **Code-Gen** | `MapStruct`, `Lombok` | 보일러플레이트 코드 자동 생성 및 제거 | 
 | **Build Tool** | `Gradle` | 유연하고 빠른 빌드 자동화 도구 | 
+| **API Docs** | `SpringDoc OpenAPI` | API 명세 자동화 및 Swagger UI 제공 |
 
 ## 📁 프로젝트 구조
 
@@ -72,3 +73,6 @@
     ```bash
     ./gradlew bootRun
     ```
+4.  **Swagger API 문서 확인**
+    - 애플리케이션 실행 후, 웹 브라우저에서 `http://localhost:8080/swagger-ui/index.html` 로 접속하여 API 문서를 확인할 수 있습니다.
+    - `docs/api_spec.md` 파일에서도 API 명세를 확인할 수 있습니다.
