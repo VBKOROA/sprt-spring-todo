@@ -74,7 +74,9 @@ public class TodoController {
             ))
     })
     public ApiResp<TodoListResp> getTodos(
-            @ModelAttribute @Parameter(name = "condition", description = "검색 조건", required = false) TodoSearchCondition condition) {
+            @ModelAttribute 
+            @Parameter(name = "condition", description = "검색 조건", required = false) 
+            TodoSearchCondition condition) {
         return ApiResp.ok(todoService.fetchFilteredTodos(condition));
     }
 
@@ -89,7 +91,10 @@ public class TodoController {
                 examples = @ExampleObject(value = "{\"status\":\"NOT_FOUND\",\"message\":\"Todo를 찾을 수 없습니다.\",\"data\":null}")
             ))
     })
-    public ApiResp<TodoWithCommentsResp> getTodo(@PathVariable("id") @Parameter(name = "id", description = "Todo ID") Long id) {
+    public ApiResp<TodoWithCommentsResp> getTodo(
+        @PathVariable("id") 
+        @Parameter(name = "id", description = "Todo ID") 
+        Long id) {
         return ApiResp.ok(todoService.getTodoWithComments(id));
     }
 
@@ -113,7 +118,13 @@ public class TodoController {
                 examples = @ExampleObject(value = "{\"status\":\"NOT_FOUND\",\"message\":\"Todo를 찾을 수 없습니다.\",\"data\":null}")
             ))
     })
-    public ApiResp<TodoResp> updateTodo(@PathVariable("id") @Parameter(name = "id", description = "Todo ID") Long id, @RequestBody @Valid TodoUpdateReq updateReq) {
+    public ApiResp<TodoResp> updateTodo(
+        @PathVariable("id") 
+        @Parameter(name = "id", description = "Todo ID") 
+        Long id, 
+        @RequestBody 
+        @Valid 
+        TodoUpdateReq updateReq) {
         return ApiResp.ok(todoService.updateTodo(id, updateReq));
     }
 
@@ -133,9 +144,17 @@ public class TodoController {
                 examples = @ExampleObject(value = "{\"status\":\"NOT_FOUND\",\"message\":\"Todo를 찾을 수 없습니다.\",\"data\":null}")
             ))
     })
-    public void deleteTodo(@PathVariable("id") Long id,
-        @Parameter(name = "X-Todo-Password", in = ParameterIn.HEADER, description = "Todo 삭제를 위한 인증 비밀번호. base64로 인코딩되어야 함.", required = true)
-        @RequestHeader("X-Todo-Password") @ShouldBase64 String password) {
+    public void deleteTodo(
+        @Parameter(name = "id", description = "Todo ID")
+        @PathVariable("id") 
+        Long id,
+        @Parameter(name = "X-Todo-Password", 
+            in = ParameterIn.HEADER, 
+            description = "Todo 삭제를 위한 인증 비밀번호. base64로 인코딩되어야 함.", 
+            required = true)
+        @RequestHeader("X-Todo-Password") 
+        @ShouldBase64 
+        String password) {
         String decodedPassword = new String(Base64.getDecoder().decode(password));
         todoService.deleteTodo(id, decodedPassword);
     }
