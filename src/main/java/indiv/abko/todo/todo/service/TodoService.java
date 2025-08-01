@@ -1,5 +1,9 @@
 package indiv.abko.todo.todo.service;
 
+import indiv.abko.todo.todo.comment.dto.CommentResp;
+import indiv.abko.todo.todo.comment.dto.CommentWriteReq;
+import indiv.abko.todo.todo.comment.entity.Comment;
+import indiv.abko.todo.todo.comment.mapper.CommentMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +33,7 @@ public class TodoService {
     private final TodoMapper todoMapper;
     private final CommentService commentService;
     private final Encrypt encrypt;
+    private final CommentMapper commentMapper;
 
     /**
      * 주어진 요청 데이터로 새로운 Todo 항목을 생성한다.
@@ -113,5 +118,22 @@ public class TodoService {
         final var todo = retrieveOrThrow(id);
         todo.verifyPassword(decodedPassword, encrypt);
         todoRepo.delete(todo);
+    }
+
+    /**
+     * 지정된 Todo 항목에 새로운 댓글을 저장한다.
+     *
+     * @param todoId 댓글이 추가될 {@link Todo} 항목의 ID
+     * @param req    댓글의 내용, 작성자, 비밀번호를 포함하는 요청 객체
+     * @return 생성된 댓글의 세부 정보를 포함하는 {@link CommentResp} 객체
+     * @throws BusinessException Todo 항목을 찾을 수 없거나 댓글 제한을 초과한 경우
+     */
+    @Transactional
+    public CommentResp addComment(final Long todoId, final CommentWriteReq req) {
+        final Todo todo = retrieveOrThrow(todoId);
+        final Comment comment = commentMapper.toComment(req);
+        todo.addComment(comment);
+        todoRepo.save(todo);
+        return commentMapper.toCommentResp(comment);
     }
 }

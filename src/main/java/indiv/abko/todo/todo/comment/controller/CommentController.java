@@ -1,5 +1,6 @@
 package indiv.abko.todo.todo.comment.controller;
 
+import indiv.abko.todo.todo.service.TodoService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequiredArgsConstructor
 @Tag(name = "Comment API", description = "할일 관리 시스템의 댓글 관련 API")
 public class CommentController {
-    private final CommentService commentService;
+    private final TodoService todoService;
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
@@ -48,6 +49,6 @@ public class CommentController {
         @RequestBody
         @Valid
         CommentWriteReq req) {
-        return ApiResp.created(commentService.createComment(todoId, req));
+        return ApiResp.created(todoService.addComment(todoId, req));
     }
 }
