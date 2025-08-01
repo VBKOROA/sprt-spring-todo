@@ -72,3 +72,14 @@ content-type: application/json
     "author": "테스트",
     "password": "abko"
 }
+
+###
+
+POST http://localhost:8080/api/v1/todos HTTP/1.1
+content-type: application/json
+
+{
+    "title": "테스트",
+    "content": "테스트",
+    "author": "테스트"
+}
