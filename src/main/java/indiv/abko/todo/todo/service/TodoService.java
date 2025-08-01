@@ -20,6 +20,8 @@ import indiv.abko.todo.todo.dto.TodoListResp;
 import indiv.abko.todo.todo.dto.TodoResp;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Base64;
+
 @Service
 @RequiredArgsConstructor
 public class TodoService {
@@ -102,14 +104,15 @@ public class TodoService {
      * 주어진 ID와 비밀번호를 사용하여 Todo를 삭제한다.
      * 
      * @param id       삭제할 {@link Todo}의 고유 ID
-     * @param password Todo 삭제를 위한 인증 비밀번호
+     * @param encodedPassword Todo 삭제를 위한 인증 비밀번호
      * @throws BusinessException - 주어진 ID에 해당하는 Todo가 존재하지 않을 경우
      *                           - 비밀번호가 일치하지 않을 경우
      */
     @Transactional
-    public void deleteTodo(final Long id, final String password) {
+    public void deleteTodo(final Long id, final String encodedPassword) {
+        final String decodedPassword = new String(Base64.getDecoder().decode(encodedPassword));
         final var todo = retrieveOrThrow(id);
-        hasAuthOrThrow(todo, password);
+        hasAuthOrThrow(todo, decodedPassword);
         todoRepo.delete(todo);
     }
 

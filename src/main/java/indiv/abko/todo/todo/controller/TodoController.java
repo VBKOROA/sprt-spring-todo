@@ -25,7 +25,6 @@ import indiv.abko.todo.todo.dto.TodoListResp;
 import indiv.abko.todo.todo.dto.TodoResp;
 
 import lombok.RequiredArgsConstructor;
-import java.util.Base64;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -156,7 +155,6 @@ public class TodoController {
         @RequestHeader("X-Todo-Password") 
         @ShouldBase64 
         String password) {
-        String decodedPassword = new String(Base64.getDecoder().decode(password));
-        todoService.deleteTodo(id, decodedPassword);
+        todoService.deleteTodo(id, password);
     }
 }
