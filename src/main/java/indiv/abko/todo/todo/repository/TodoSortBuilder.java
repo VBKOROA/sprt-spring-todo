@@ -47,9 +47,9 @@ public class TodoSortBuilder {
         final Optional<Direction> direction = Direction.fromOptionalString(sortCondition[DIRECTION_INDEX]);
         final Optional<Todo.Fields> fieldName = Todo.toField(sortCondition[FIELD_NAME_INDEX]);
 
-        final boolean isBothEmpty = direction.isEmpty() || fieldName.isEmpty();
+        final boolean isAnyEmpty = direction.isEmpty() || fieldName.isEmpty();
 
-        if (isBothEmpty) {
+        if (isAnyEmpty) {
             return Optional.empty();    
         }
 
