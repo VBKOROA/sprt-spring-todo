@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import indiv.abko.todo.global.dto.ApiResponse;
+import indiv.abko.todo.global.validation.ShouldBase64;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.dto.TodoUpdateReq;
@@ -16,7 +17,7 @@ import indiv.abko.todo.todo.dto.TodoListResp;
 import indiv.abko.todo.todo.dto.TodoResp;
 
 import lombok.RequiredArgsConstructor;
-
+import java.util.Base64;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,7 +64,8 @@ public class TodoController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTodo(@PathVariable("id") Long id,
-        @RequestHeader("X-Todo-Password") @NotBlank String password) {
-        todoService.deleteTodo(id, password);
+        @RequestHeader("X-Todo-Password") @ShouldBase64 String password) {
+        String decodedPassword = new String(Base64.getDecoder().decode(password));
+        todoService.deleteTodo(id, decodedPassword);
     }
 }
