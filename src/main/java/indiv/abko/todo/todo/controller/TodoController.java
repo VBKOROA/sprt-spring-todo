@@ -62,9 +62,8 @@ public class TodoController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ApiResponse<Void> deleteTodo(@PathVariable("id") Long id,
+    public void deleteTodo(@PathVariable("id") Long id,
         @RequestHeader("X-Todo-Password") @NotBlank String password) {
         todoService.deleteTodo(id, password);
-        return ApiResponse.noContent();
     }
 }
