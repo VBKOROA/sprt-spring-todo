@@ -73,7 +73,7 @@ public class TodoController {
             ))
     })
     public ApiResp<TodoListResp> getTodos(
-            @ModelAttribute @Parameter(name = "condition", description = "검색 조건") TodoSearchCondition condition) {
+            @ModelAttribute @Parameter(name = "condition", description = "검색 조건", required = false) TodoSearchCondition condition) {
         return ApiResp.ok(todoService.fetchFilteredTodos(condition));
     }
 
@@ -93,7 +93,21 @@ public class TodoController {
     }
 
     @PatchMapping("/{id}")
-    public ApiResp<TodoResp> updateTodo(@PathVariable("id") Long id, @RequestBody @Valid TodoUpdateReq updateReq) {
+    @Operation(summary = "Todo 수정", description = "Todo를 수정함. 수정할 수 있는 필드는 제목, 작성자임.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Todo가 성공적으로 수정됨"),
+        @ApiResponse(responseCode = "400", description = "파라미터가 유효하지 않음",
+            content = @Content(
+                schema = @Schema(implementation = ApiResp.class),
+                examples = @ExampleObject(value = "{\"status\":\"BAD_REQUEST\",\"message\":\"요청이 잘못되었습니다.\",\"data\":null}")
+            )),
+        @ApiResponse(responseCode = "404", description = "Todo를 찾을 수 없음",
+            content = @Content(
+                schema = @Schema(implementation = ApiResp.class),
+                examples = @ExampleObject(value = "{\"status\":\"NOT_FOUND\",\"message\":\"Todo를 찾을 수 없습니다.\",\"data\":null}")
+            ))
+    })
+    public ApiResp<TodoResp> updateTodo(@PathVariable("id") @Parameter(name = "id", description = "Todo ID") Long id, @RequestBody @Valid TodoUpdateReq updateReq) {
         return ApiResp.ok(todoService.updateTodo(id, updateReq));
     }
 
