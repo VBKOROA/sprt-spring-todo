@@ -2,7 +2,7 @@ package indiv.abko.todo.todo.comment.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import indiv.abko.todo.global.dto.ApiResponse;
+import indiv.abko.todo.global.dto.ApiResp;
 import indiv.abko.todo.todo.comment.dto.CommentResp;
 import indiv.abko.todo.todo.comment.dto.CommentWriteReq;
 import indiv.abko.todo.todo.comment.service.CommentService;
@@ -20,8 +20,8 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("")
-    public ApiResponse<CommentResp> writeComment(@PathVariable("todoId") Long todoId,
+    public ApiResp<CommentResp> writeComment(@PathVariable("todoId") Long todoId,
             @RequestBody @Valid CommentWriteReq req) {
-        return ApiResponse.ok(commentService.createComment(todoId, req));
+        return ApiResp.ok(commentService.createComment(todoId, req));
     }
 }

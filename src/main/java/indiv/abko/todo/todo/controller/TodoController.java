@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import indiv.abko.todo.global.dto.ApiResponse;
+import indiv.abko.todo.global.dto.ApiResp;
 import indiv.abko.todo.global.validation.ShouldBase64;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
@@ -41,27 +41,27 @@ public class TodoController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "새 Todo 생성", description = "새 Todo 생성")
-    public ApiResponse<TodoResp> createTodo(@RequestBody @Valid TodoCreateReq createReq) {
+    public ApiResp<TodoResp> createTodo(@RequestBody @Valid TodoCreateReq createReq) {
         var todoResponse = todoService.create(createReq);
 
-        return ApiResponse.created(todoResponse);
+        return ApiResp.created(todoResponse);
     }
 
     // @ModelAttribute: 여러 개의 파라미터를 객체로 바인딩 할 수 있음
     @GetMapping("")
-    public ApiResponse<TodoListResp> getTodos(
+    public ApiResp<TodoListResp> getTodos(
             @ModelAttribute TodoSearchCondition condition) {
-        return ApiResponse.ok(todoService.fetchFilteredTodos(condition));
+        return ApiResp.ok(todoService.fetchFilteredTodos(condition));
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<TodoWithCommentsResp> getTodo(@PathVariable("id") Long id) {
-        return ApiResponse.ok(todoService.getTodoWithComments(id));
+    public ApiResp<TodoWithCommentsResp> getTodo(@PathVariable("id") Long id) {
+        return ApiResp.ok(todoService.getTodoWithComments(id));
     }
 
     @PatchMapping("/{id}")
-    public ApiResponse<TodoResp> updateTodo(@PathVariable("id") Long id, @RequestBody @Valid TodoUpdateReq updateReq) {
-        return ApiResponse.ok(todoService.updateTodo(id, updateReq));
+    public ApiResp<TodoResp> updateTodo(@PathVariable("id") Long id, @RequestBody @Valid TodoUpdateReq updateReq) {
+        return ApiResp.ok(todoService.updateTodo(id, updateReq));
     }
 
     @DeleteMapping("/{id}")
