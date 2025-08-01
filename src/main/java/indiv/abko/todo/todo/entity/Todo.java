@@ -74,7 +74,7 @@ public class Todo {
         }
     }
 
-    public void verifyPassword(String password, Encrypt encrypt) {
+    public void verifyPassword(final String password, final Encrypt encrypt) {
         if(encrypt.isHashEqual(password, this.password) == false) {
             throw new BusinessException(ExceptionEnum.TODO_PERMISSION_DENIED);
         }
