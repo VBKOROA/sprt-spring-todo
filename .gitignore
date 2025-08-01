@@ -39,3 +39,4 @@ out/
 ### application.yml (Only prod yml)
 application.yml
 application-dev.yml
+application-test.yml
