@@ -114,17 +114,4 @@ public class TodoService {
         todo.verifyPassword(decodedPassword, encrypt);
         todoRepo.delete(todo);
     }
-
-    private Todo retrieveTodoWithAuth(Long id, String password) {
-        final var todo = retrieveOrThrow(id);
-        hasAuthOrThrow(todo, password);
-        return todo;
-    }
-
-    private void hasAuthOrThrow(final Todo todo, final String password) {
-        final var auth = encrypt.isHashEqual(password, todo.getPassword());
-        if (auth == false) {
-            throw new BusinessException(ExceptionEnum.TODO_PERMISSION_DENIED);
-        }
-    }
 }
