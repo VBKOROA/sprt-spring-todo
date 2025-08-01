@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Todo 검색 조건 DTO")
 public record TodoSearchCondition(
-    @Schema(description = "정렬 기준", example = "createdAt_desc", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "정렬 기준", example = "createdAt_desc")
     String orderBy,
     @Schema(description = "제목", example = "Todo 제목")
     String title,
