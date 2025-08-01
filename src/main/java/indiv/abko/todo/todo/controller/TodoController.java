@@ -77,8 +77,18 @@ public class TodoController {
         return ApiResp.ok(todoService.fetchFilteredTodos(condition));
     }
 
+
     @GetMapping("/{id}")
-    public ApiResp<TodoWithCommentsResp> getTodo(@PathVariable("id") Long id) {
+    @Operation(summary = "Todo 조회", description = "Todo를 조회함. 해당 Todo와 연결된 댓글 목록도 함께 조회함.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Todo가 성공적으로 조회됨"),
+        @ApiResponse(responseCode = "404", description = "Todo를 찾을 수 없음",
+            content = @Content(
+                schema = @Schema(implementation = ApiResp.class),
+                examples = @ExampleObject(value = "{\"status\":\"NOT_FOUND\",\"message\":\"Todo를 찾을 수 없습니다.\",\"data\":null}")
+            ))
+    })
+    public ApiResp<TodoWithCommentsResp> getTodo(@PathVariable("id") @Parameter(name = "id", description = "Todo ID") Long id) {
         return ApiResp.ok(todoService.getTodoWithComments(id));
     }
 
