@@ -12,6 +12,8 @@ import indiv.abko.todo.todo.dto.TodoUpdateReq;
 import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
 import indiv.abko.todo.todo.service.TodoService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import indiv.abko.todo.todo.dto.TodoListResp;
@@ -41,6 +43,10 @@ public class TodoController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "새 Todo 생성", description = "새 Todo 생성")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Todo가 성공적으로 생성됨"),
+        @ApiResponse(responseCode = "400", description = "파라미터가 유효하지 않음")
+    })
     public ApiResp<TodoResp> createTodo(@RequestBody @Valid TodoCreateReq createReq) {
         var todoResponse = todoService.create(createReq);
 
