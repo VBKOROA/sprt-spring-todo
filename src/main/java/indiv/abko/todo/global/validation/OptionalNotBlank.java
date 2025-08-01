@@ -11,7 +11,7 @@ import jakarta.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = OptionalNotBlankValidator.class)
 public @interface OptionalNotBlank {
-    String message() default "공백일 수 없습니다.";
+    String message() default "공백이 아니어야 합니다.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

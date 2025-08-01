@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 public record TodoUpdateReq(
     @ValidTodoTitle
     @OptionalNotBlank
-    @Schema(description = "Todo 제목. 1~30자 이내여야 함.", example = "수정할 제목", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    @Schema(description = "Todo 제목 / 1~30자 이내", example = "수정할 제목", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     String title,
 
     @OptionalNotBlank

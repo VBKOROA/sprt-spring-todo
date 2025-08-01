@@ -11,7 +11,7 @@ import jakarta.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = ShouldBase64Validator.class)
 public @interface ShouldBase64 {
-    String message() default "Base64 형식이 아닙니다.";
+    String message() default "Base64 인코딩이 적용되어야 합니다.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

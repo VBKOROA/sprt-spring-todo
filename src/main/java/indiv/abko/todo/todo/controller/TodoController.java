@@ -151,7 +151,7 @@ public class TodoController {
         Long id,
         @Parameter(name = "X-Todo-Password", 
             in = ParameterIn.HEADER, 
-            description = "Todo 삭제를 위한 인증 비밀번호. base64로 인코딩되어야 함.", 
+            description = "Todo 삭제를 위한 인증 비밀번호 / base64로 인코딩되어야 함.", 
             required = true)
         @RequestHeader("X-Todo-Password") 
         @ShouldBase64 
