@@ -62,6 +62,15 @@ public class TodoController {
 
     // @ModelAttribute: 여러 개의 파라미터를 객체로 바인딩 할 수 있음
     @GetMapping("")
+    @Operation(summary = "Todo 목록 조회", description = "Todo 목록을 조회함. 필터링 및 정렬 기능을 지원함.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Todo 목록이 성공적으로 조회됨"),
+        @ApiResponse(responseCode = "400", description = "파라미터가 유효하지 않음",
+            content = @Content(
+                schema = @Schema(implementation = ApiResp.class),
+                examples = @ExampleObject(value = "{\"status\":\"BAD_REQUEST\",\"message\":\"요청이 잘못되었습니다.\",\"data\":null}")
+            ))
+    })
     public ApiResp<TodoListResp> getTodos(
             @ModelAttribute TodoSearchCondition condition) {
         return ApiResp.ok(todoService.fetchFilteredTodos(condition));
