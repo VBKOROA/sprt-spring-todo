@@ -8,7 +8,4 @@ import java.util.List;
 
 
 public interface TodoRepository extends JpaRepository<Todo, Long>, JpaSpecificationExecutor<Todo> {
-    List<Todo> findByAuthorOrderByModifiedAtDesc(String author);
-
-    List<Todo> findByOrderByModifiedAtDesc();
 }
