@@ -93,6 +93,7 @@ public class TodoService {
     public TodoResp updateTodo(final Long id, final TodoUpdateReq updateReq) {
         final var todo = retrieveOrThrow(id);
         hasAuthOrThrow(todo, updateReq.password());
+        // 제목과 작성자만 업데이트하는것이 요구사항
         todo.updatePresented(updateReq.title(), updateReq.author());
         return todoMapper.toTodoResp(todo);
     }
