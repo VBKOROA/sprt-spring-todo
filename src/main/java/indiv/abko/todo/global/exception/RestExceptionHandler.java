@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import indiv.abko.todo.global.dto.ApiResponse;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Path;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
@@ -35,6 +37,24 @@ public class RestExceptionHandler {
 
         String field = singleError.getField();
         String message = singleError.getDefaultMessage();
+
+        var apiResponse = ApiResponse.error(HttpStatus.BAD_REQUEST, String.format("%s: %s", field, message));
+        return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ApiResponse<?>> handleConstraintViolationException(ConstraintViolationException e) {
+        var constraints = e.getConstraintViolations();
+
+        if(constraints.isEmpty()) {
+            var apiResponse = ApiResponse.error(ExceptionEnum.UNKNOWN_ERROR, "알 수 없는 오류가 발생했습니다.");
+            return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        var firstConstraint = constraints.iterator().next();
+
+        String field = firstConstraint.getPropertyPath().toString();
+        String message = firstConstraint.getMessage();
 
         var apiResponse = ApiResponse.error(HttpStatus.BAD_REQUEST, String.format("%s: %s", field, message));
         return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
