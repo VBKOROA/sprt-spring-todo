@@ -85,5 +85,125 @@ public class TodoControllerInterTest {
             assertThat(body.status()).isEqualTo(HttpStatus.BAD_REQUEST);
             assertThat(body.data()).isNull();
         }
+
+        @Test
+        @DisplayName("Todo 생성 실패 테스트 - 제목이 30자 이상인 경우")
+        void 제목이30자이상이면_Todo생성이실패한다() {
+            // Given
+            TodoCreateReq todoCreateReq = TodoCreateReq.builder()
+                    .title("a".repeat(31))
+                    .content("테스트")
+                    .author("테스트")
+                    .password("테스트")
+                    .build();
+
+            // When
+            var reqResponse = testRestTemplate.postForEntity("/api/v1/todos", todoCreateReq, ApiResp.class);
+
+            // Then
+            assertThat(reqResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(reqResponse.getBody()).isNotNull();
+
+            var body =  reqResponse.getBody();
+
+            assertThat(body.status()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(body.data()).isNull();
+        }
+
+        @Test
+        @DisplayName("Todo 생성 실패 테스트 - 내용이 없는 경우")
+        void 내용이없으면_Todo생성이실패한다() {
+            // Given
+            TodoCreateReq todoCreateReq = TodoCreateReq.builder()
+                    .title("테스트")
+                    .content(null)
+                    .author("테스트")
+                    .password("테스트")
+                    .build();
+
+            // When
+            var reqResponse = testRestTemplate.postForEntity("/api/v1/todos", todoCreateReq, ApiResp.class);
+
+            // Then
+            assertThat(reqResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(reqResponse.getBody()).isNotNull();
+
+            var body =  reqResponse.getBody();
+
+            assertThat(body.status()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(body.data()).isNull();
+        }
+
+        @Test
+        @DisplayName("Todo 생성 실패 테스트 - 내용이 200자 이상인 경우")
+        void 내용이200자이상이면_Todo생성이실패한다() {
+            // Given
+            TodoCreateReq todoCreateReq = TodoCreateReq.builder()
+                    .title("테스트")
+                    .content("a".repeat(201))
+                    .author("테스트")
+                    .password("테스트")
+                    .build();
+
+            // When
+            var reqResponse = testRestTemplate.postForEntity("/api/v1/todos", todoCreateReq, ApiResp.class);
+
+            // Then
+            assertThat(reqResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(reqResponse.getBody()).isNotNull();
+
+            var body =  reqResponse.getBody();
+
+            assertThat(body.status()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(body.data()).isNull();
+        }
+
+        @Test
+        @DisplayName("Todo 생성 실패 테스트 - 작성자가 없는 경우")
+        void 작성자가없으면_Todo생성이실패한다() {
+            // Given
+            TodoCreateReq todoCreateReq = TodoCreateReq.builder()
+                    .title("테스트")
+                    .content("테스트")
+                    .author(null)
+                    .password("테스트")
+                    .build();
+
+            // When
+            var reqResponse = testRestTemplate.postForEntity("/api/v1/todos", todoCreateReq, ApiResp.class);
+
+            // Then
+            assertThat(reqResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(reqResponse.getBody()).isNotNull();
+
+            var body =  reqResponse.getBody();
+
+            assertThat(body.status()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(body.data()).isNull();
+        }
+
+        @Test
+        @DisplayName("Todo 생성 실패 테스트 - 비밀번호가 없는 경우")
+        void 비밀번호가없으면_Todo생성이실패한다() {
+            // Given
+            TodoCreateReq todoCreateReq = TodoCreateReq.builder()
+                    .title("테스트")
+                    .content("테스트")
+                    .author("테스트")
+                    .password(null)
+                    .build();
+
+            // When
+            var reqResponse = testRestTemplate.postForEntity("/api/v1/todos", todoCreateReq, ApiResp.class);
+
+            // Then
+            assertThat(reqResponse.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(reqResponse.getBody()).isNotNull();
+
+            var body =  reqResponse.getBody();
+
+            assertThat(body.status()).isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(body.data()).isNull();
+        }
     }
 }
