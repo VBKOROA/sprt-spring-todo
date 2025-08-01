@@ -4,8 +4,10 @@ import indiv.abko.todo.todo.validation.ValidTodoContent;
 import indiv.abko.todo.todo.validation.ValidTodoTitle;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
 
 @Schema(description = "새 Todo 생성 요청")
+@Builder
 public record TodoCreateReq(
     @ValidTodoTitle
     @NotBlank
