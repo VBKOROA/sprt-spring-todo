@@ -11,6 +11,8 @@ import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.dto.TodoUpdateReq;
 import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
 import indiv.abko.todo.todo.service.TodoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import indiv.abko.todo.todo.dto.TodoListResp;
 import indiv.abko.todo.todo.dto.TodoResp;
@@ -32,11 +34,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequestMapping("/api/v1/todos")
 @RequiredArgsConstructor
 @Validated
+@Tag(name = "Todo API", description = "할일 관리 시스템의 Todo 관련 API")
 public class TodoController {
     private final TodoService todoService;
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "새 Todo 생성", description = "새 Todo 생성")
     public ApiResponse<TodoResp> createTodo(@RequestBody @Valid TodoCreateReq createReq) {
         var todoResponse = todoService.create(createReq);
 
