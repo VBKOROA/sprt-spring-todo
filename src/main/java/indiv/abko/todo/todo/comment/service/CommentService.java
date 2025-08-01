@@ -31,15 +31,15 @@ public class CommentService {
      */
     @Transactional
     public CommentResp createComment(final Long todoId, final CommentWriteReq req) {
-        final Todo todo = retrieveTodoOrThrow(todoId);
+        final Todo todo = retrieveTodoWithCommentsOrThrow(todoId);
         final Comment comment = commentMapper.toComment(req);
         todo.addComment(comment);
         final Comment savedComment = commentRepository.save(comment);
         return commentMapper.toCommentResp(savedComment);
     }
 
-    private Todo retrieveTodoOrThrow(final Long todoId) {
-        return todoRepository.findById(todoId)
+    private Todo retrieveTodoWithCommentsOrThrow(final Long todoId) {
+        return todoRepository.findByIdWithComments(todoId)
             .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
     }
 
