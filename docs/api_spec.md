@@ -123,16 +123,16 @@
 ### 4. Todo 수정
 
 - **엔드포인트:** `PATCH /api/v1/todos/{id}`
-- **설명:** 특정 Todo 항목을 수정합니다.
+- **설명:** 특정 Todo 항목을 수정합니다. `title`과 `author`는 선택적으로 수정 가능하며, `password`는 필수입니다.
 - **경로 변수:**
     - `id` (Long): 수정할 Todo의 ID
 
 - **요청 본문:** `TodoUpdateReq`
 ```json
 {
-  "title": "string",
-  "author": "string",
-  "password": "string"
+  "title": "string (optional)",
+  "author": "string (optional)",
+  "password": "string (required)"
 }
 ```
 - **응답:** `ApiResponse<TodoResp>`
@@ -168,20 +168,10 @@
 - **경로 변수:**
   - `id` (Long): 삭제할 Todo의 ID
 
-- **요청 본문:** `TodoDeleteReq`
-```json
-{
-  "password": "string"
-}
-```
-- **응답:** `ApiResponse<Void>`
-```json
-{
-  "status": "NO_CONTENT",
-  "message": "",
-  "data": null
-}
-```
+- **요청 헤더:**
+  - `X-Todo-Password` (string): Todo를 삭제하기 위한 비밀번호
+
+- **응답:** 없음
 - **상태 코드:**
 
 | 코드 | 설명 |
