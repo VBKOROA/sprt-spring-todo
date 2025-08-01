@@ -110,7 +110,8 @@ public class TodoService {
     @Transactional
     public void deleteTodo(final Long id, final String encodedPassword) {
         final String decodedPassword = new String(Base64.getDecoder().decode(encodedPassword));
-        final var todo = retrieveTodoWithAuth(id, decodedPassword);
+        final var todo = retrieveOrThrow(id);
+        todo.verifyPassword(decodedPassword, encrypt);
         todoRepo.delete(todo);
     }
 
