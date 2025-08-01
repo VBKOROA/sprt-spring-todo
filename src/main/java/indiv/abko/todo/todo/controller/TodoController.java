@@ -12,6 +12,7 @@ import indiv.abko.todo.todo.dto.TodoUpdateReq;
 import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
 import indiv.abko.todo.todo.service.TodoService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -72,7 +73,7 @@ public class TodoController {
             ))
     })
     public ApiResp<TodoListResp> getTodos(
-            @ModelAttribute TodoSearchCondition condition) {
+            @ModelAttribute @Parameter(name = "condition", description = "검색 조건") TodoSearchCondition condition) {
         return ApiResp.ok(todoService.fetchFilteredTodos(condition));
     }
 
