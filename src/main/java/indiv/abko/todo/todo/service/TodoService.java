@@ -58,9 +58,7 @@ public class TodoService {
     @Transactional(readOnly = true)
     public TodoWithCommentsResp getTodoWithComments(final Long id) {
         final Todo todo = retrieveOrThrow(id);
-        final TodoResp todoResp = todoMapper.toTodoResp(todo);
-        final var commentResps = commentService.getComments(todo);
-        return new TodoWithCommentsResp(todoResp, commentResps);
+        return todoMapper.toTodoWithCommentResp(todo);
     }
 
     private Todo retrieveOrThrow(final Long id) {
