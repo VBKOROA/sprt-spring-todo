@@ -26,6 +26,7 @@ import indiv.abko.todo.todo.dto.TodoResp;
 
 import lombok.RequiredArgsConstructor;
 import java.util.Base64;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,7 +76,7 @@ public class TodoController {
     })
     public ApiResp<TodoListResp> getTodos(
             @ModelAttribute 
-            @Parameter(name = "condition", description = "검색 조건", required = false) 
+            @ParameterObject
             TodoSearchCondition condition) {
         return ApiResp.ok(todoService.fetchFilteredTodos(condition));
     }
