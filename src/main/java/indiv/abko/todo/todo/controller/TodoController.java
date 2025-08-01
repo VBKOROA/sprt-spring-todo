@@ -13,6 +13,7 @@ import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
 import indiv.abko.todo.todo.service.TodoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -118,7 +119,22 @@ public class TodoController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Todo 삭제", description = "Todo를 삭제함.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "204", description = "Todo가 성공적으로 삭제됨"),
+        @ApiResponse(responseCode = "401", description = "인증 실패",
+            content = @Content(
+                schema = @Schema(implementation = ApiResp.class),
+                examples = @ExampleObject(value = "{\"status\":\"UNAUTHORIZED\",\"message\":\"인증에 실패하였습니다.\",\"data\":null}")
+            )),
+        @ApiResponse(responseCode = "404", description = "Todo를 찾을 수 없음",
+            content = @Content(
+                schema = @Schema(implementation = ApiResp.class),
+                examples = @ExampleObject(value = "{\"status\":\"NOT_FOUND\",\"message\":\"Todo를 찾을 수 없습니다.\",\"data\":null}")
+            ))
+    })
     public void deleteTodo(@PathVariable("id") Long id,
+        @Parameter(name = "X-Todo-Password", in = ParameterIn.HEADER, description = "Todo 삭제를 위한 인증 비밀번호. base64로 인코딩되어야 함.", required = true)
         @RequestHeader("X-Todo-Password") @ShouldBase64 String password) {
         String decodedPassword = new String(Base64.getDecoder().decode(password));
         todoService.deleteTodo(id, decodedPassword);
