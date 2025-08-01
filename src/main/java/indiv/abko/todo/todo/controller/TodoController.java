@@ -37,10 +37,10 @@ public class TodoController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<TodoResp> createTodo(@RequestBody @Valid TodoCreateReq todoReq) {
-        var todo = todoService.create(todoReq);
+    public ApiResponse<TodoResp> createTodo(@RequestBody @Valid TodoCreateReq createReq) {
+        var todoResponse = todoService.create(createReq);
 
-        return ApiResponse.created(todo);
+        return ApiResponse.created(todoResponse);
     }
 
     // @ModelAttribute: 여러 개의 파라미터를 객체로 바인딩 할 수 있음
