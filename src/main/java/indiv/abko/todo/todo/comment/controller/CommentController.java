@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 import indiv.abko.todo.global.dto.ApiResp;
 import indiv.abko.todo.todo.comment.dto.CommentResp;
 import indiv.abko.todo.todo.comment.dto.CommentWriteReq;
-import indiv.abko.todo.todo.comment.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
