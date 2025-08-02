@@ -41,7 +41,7 @@ public class TodoService {
      */
     @Transactional
     public TodoResp create(final TodoCreateReq todoReq) {
-        final Todo todo = todoMapper.toTodo(todoReq);
+        final Todo todo = todoMapper.toTodo(todoReq, encrypt);
         final var result = todoRepo.save(todo);
         return todoMapper.toTodoResp(result);
     }
@@ -95,7 +95,7 @@ public class TodoService {
     @Transactional
     public TodoResp updateTodo(final Long id, final TodoUpdateReq updateReq) {
         final var todo = retrieveOrThrow(id);
-        todo.verifyPassword(updateReq.password(), encrypt);
+        todo.getPassword().verify(updateReq.password(), encrypt);
         todo.updatePresented(updateReq.title(), updateReq.author());
         return todoMapper.toTodoResp(todo);
     }
@@ -112,7 +112,7 @@ public class TodoService {
     public void deleteTodo(final Long id, final String encodedPassword) {
         final String decodedPassword = new String(Base64.getDecoder().decode(encodedPassword));
         final var todo = retrieveOrThrow(id);
-        todo.verifyPassword(decodedPassword, encrypt);
+        todo.getPassword().verify(decodedPassword, encrypt);
         todoRepo.delete(todo);
     }
 

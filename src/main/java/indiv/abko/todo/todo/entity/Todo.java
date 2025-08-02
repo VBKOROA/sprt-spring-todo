@@ -6,20 +6,14 @@ import java.util.List;
 import java.util.Optional;
 
 import indiv.abko.todo.global.util.Encrypt;
+import indiv.abko.todo.todo.vo.Password;
+import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.global.exception.ExceptionEnum;
 import indiv.abko.todo.todo.comment.entity.Comment;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,7 +37,8 @@ public class Todo {
 
     private String author; // 작성자
 
-    private String password; // 비밀번호
+    @Embedded
+    private Password password; // 비밀번호
 
     // Todo 엔티티와 댓글 엔티티 간의 연관관계 설정
     @OneToMany(mappedBy = "todo", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
@@ -57,7 +52,7 @@ public class Todo {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Todo(String title, String content, String author, String password) {
+    public Todo(String title, String content, String author, Password password) {
         this.title = title;
         this.content = content;
         this.author = author;
@@ -71,12 +66,6 @@ public class Todo {
 
         if(author != null) {
             this.author = author;
-        }
-    }
-
-    public void verifyPassword(final String password, final Encrypt encrypt) {
-        if(encrypt.isHashEqual(password, this.password) == false) {
-            throw new BusinessException(ExceptionEnum.TODO_PERMISSION_DENIED);
         }
     }
 
