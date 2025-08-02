@@ -5,8 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import indiv.abko.todo.global.util.Encrypt;
-import indiv.abko.todo.todo.vo.Password;
+import indiv.abko.todo.todo.entity.vo.Password;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

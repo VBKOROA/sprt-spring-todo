@@ -2,7 +2,7 @@ package indiv.abko.todo.todo.mapper;
 
 import indiv.abko.todo.todo.comment.mapper.CommentMapper;
 import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
-import indiv.abko.todo.todo.vo.Password;
+import indiv.abko.todo.todo.entity.vo.Password;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -11,7 +11,7 @@ import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoResp;
 import indiv.abko.todo.todo.entity.Todo;
 
-@Mapper(componentModel = "spring", uses = CommentMapper.class)
+@Mapper(componentModel = "spring", uses = {CommentMapper.class})
 public interface TodoMapper {
     default Password toPassword(String rawPassword, Encrypt encrypt) {
         return new Password(rawPassword).encrypted(encrypt);

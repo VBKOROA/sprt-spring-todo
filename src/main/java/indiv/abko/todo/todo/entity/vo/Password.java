@@ -1,9 +1,8 @@
-package indiv.abko.todo.todo.vo;
+package indiv.abko.todo.todo.entity.vo;
 
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.global.exception.ExceptionEnum;
 import indiv.abko.todo.global.util.Encrypt;
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -16,19 +15,19 @@ import org.springframework.util.StringUtils;
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Password {
-    private String value;
+    private String password;
 
     public Password(String value) {
         shouldValid(value);
-        this.value = value;
+        this.password = value;
     }
 
     public Password encrypted(final Encrypt encrypt) {
-        return new Password(encrypt.hash(this.value));
+        return new Password(encrypt.hash(this.password));
     }
 
     public void verify(final String password, final Encrypt encrypt) {
-        if(encrypt.isHashEqual(password, value) == false) {
+        if(encrypt.isHashEqual(password, this.password) == false) {
             throw new BusinessException(ExceptionEnum.TODO_PERMISSION_DENIED);
         }
     }
