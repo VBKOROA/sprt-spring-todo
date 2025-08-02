@@ -19,7 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.domain.Todo;
-import indiv.abko.todo.todo.repository.TodoRepository;
+import indiv.abko.todo.todo.domain.repository.TodoRepository;
 
 @SpringBootTest
 @ActiveProfiles("test")

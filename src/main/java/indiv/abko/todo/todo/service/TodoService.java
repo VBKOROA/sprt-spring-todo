@@ -14,7 +14,7 @@ import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.dto.TodoUpdateReq;
 import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
 import indiv.abko.todo.todo.domain.Todo;
-import indiv.abko.todo.todo.repository.TodoRepository;
+import indiv.abko.todo.todo.domain.repository.TodoRepository;
 import indiv.abko.todo.todo.dto.TodoListResp;
 import indiv.abko.todo.todo.dto.TodoResp;
 import lombok.RequiredArgsConstructor;

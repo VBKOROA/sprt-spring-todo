@@ -1,5 +1,6 @@
-package indiv.abko.todo.todo.repository;
+package indiv.abko.todo.todo.domain.repository;
 
+import indiv.abko.todo.todo.repository.TodoRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import indiv.abko.todo.todo.domain.Todo;
 import org.springframework.data.jpa.repository.Query;
