@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import indiv.abko.todo.global.vo.Content;
-import indiv.abko.todo.todo.comment.dto.CommentResp;
+import indiv.abko.todo.todo.application.controller.dto.comment.CommentResp;
 import indiv.abko.todo.todo.application.controller.dto.todo.TodoCreateReq;
 import indiv.abko.todo.todo.application.controller.dto.todo.TodoResp;
 import indiv.abko.todo.todo.application.controller.dto.todo.TodoWithCommentsResp;

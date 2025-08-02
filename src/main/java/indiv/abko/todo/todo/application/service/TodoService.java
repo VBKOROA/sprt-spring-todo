@@ -1,7 +1,7 @@
 package indiv.abko.todo.todo.application.service;
 
-import indiv.abko.todo.todo.comment.dto.CommentResp;
-import indiv.abko.todo.todo.comment.dto.CommentWriteReq;
+import indiv.abko.todo.todo.application.controller.dto.comment.CommentResp;
+import indiv.abko.todo.todo.application.controller.dto.comment.CommentWriteReq;
 import indiv.abko.todo.todo.domain.Comment;
 import indiv.abko.todo.todo.domain.service.PasswordEncoder;
 import org.springframework.stereotype.Service;

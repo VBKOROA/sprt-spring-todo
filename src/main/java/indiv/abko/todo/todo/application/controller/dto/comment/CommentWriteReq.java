@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.comment.dto;
+package indiv.abko.todo.todo.application.controller.dto.comment;
 
 import indiv.abko.todo.todo.comment.validation.ValidCommentContent;
 import io.swagger.v3.oas.annotations.media.Schema;
