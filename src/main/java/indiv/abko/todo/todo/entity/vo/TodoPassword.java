@@ -18,7 +18,6 @@ public class TodoPassword {
     private String password;
 
     public TodoPassword(String value) {
-        shouldValid(value);
         this.password = value;
     }
 
@@ -29,12 +28,6 @@ public class TodoPassword {
     public void verify(final String password, final Encrypt encrypt) {
         if(encrypt.isHashEqual(password, this.password) == false) {
             throw new BusinessException(ExceptionEnum.TODO_PERMISSION_DENIED);
-        }
-    }
-
-    private void shouldValid(final String passwordString) {
-        if(StringUtils.hasText(passwordString) == false) {
-            throw new BusinessException(ExceptionEnum.TODO_PASSWORD_NOT_VALID);
         }
     }
 }
