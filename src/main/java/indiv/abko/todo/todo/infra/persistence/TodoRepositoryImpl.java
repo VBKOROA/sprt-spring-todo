@@ -16,7 +16,7 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 import java.util.Optional;
 
-import static indiv.abko.todo.todo.entity.QTodo.todo;
+import static indiv.abko.todo.todo.domain.QTodo.todo;
 
 @Repository
 @RequiredArgsConstructor
