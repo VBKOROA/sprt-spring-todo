@@ -18,7 +18,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.global.exception.ExceptionEnum;
-import indiv.abko.todo.todo.comment.entity.Comment;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
