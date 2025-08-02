@@ -8,17 +8,17 @@
 
 ## 🎯 프로젝트 핵심 목표 및 설계 철학
 
-- **도메인 분리 (Domain Separation)**: `todo`와 `comment`라는 명확한 도메인 경계를 설정하여, 각자의 책임과 역할을 분리했습니다. 이를 통해 코드의 응집도를 높이고 결합도를 낮추어, 기능 변경 및 확장이 용이한 구조를 만들었습니다.
-- **계층형 아키텍처 (Layered Architecture)**: `Controller` - `Service` - `Repository`로 이어지는 명확한 계층 구조를 적용하여 각 레이어의 책임을 분명히 하고, 데이터의 흐름을 직관적으로 파악할 수 있도록 설계했습니다.
-- **객체지향 원칙 준수**: 각 도메인 객체(`Todo`, `Comment`)가 스스로의 상태와 행위를 관리하도록 구현하여, 객체의 자율성과 캡슐화를 극대화했습니다. 특히, **개방-폐쇄 원칙(OCP)** 을 준수하기 위해 Specification 패턴과 빌더를 적용하여, 새로운 검색 조건이 추가되어도 서비스 계층의 변경 없이 확장할 수 있는 구조를 구현했습니다.
-- **예외 처리의 체계화**: 애플리케이션 전역에서 발생할 수 있는 예외를 `@RestControllerAdvice`를 통해 일관되게 처리하고, 도메인 비즈니스 규칙에 따른 예외는 `BusinessException`으로 명확하게 정의하여 코드의 안정성과 예측 가능성을 높였습니다.
+- **계층형 아키텍처 (Layered Architecture)**: `Presentation` - `Application` - `Domain` - `Infrastructure`로 이어지는 명확한 계층 구조를 적용하여 각 레이어의 책임을 분명히 하고, 의존성 규칙을 준수하여 유연하고 확장 가능한 설계를 구현했습니다.
+- **도메인 모델 중심 설계**: 도메인(`Todo`, `Comment`)이 비즈니스 로직의 중심이 되도록 설계했습니다. 특히 각 도메인 객체가 스스로의 상태와 행위를 관리하도록 구현하여, 객체의 자율성과 캡슐화를 극대화했습니다.
+- **타입-세이프 동적 쿼리**: **QueryDSL**을 도입하여, 컴파일 타임에 타입을 검증할 수 있는 안전하고 직관적인 동적 쿼리를 작성했습니다. 이를 통해 런타임에 발생할 수 있는 쿼리 오류를 줄이고, 복잡한 검색 조건을 명확한 코드로 구현했습니다.
+- **체계적인 예외 처리**: 애플리케이션 전역에서 발생할 수 있는 예외를 `@RestControllerAdvice`를 통해 일관되게 처리하고, 도메인 비즈니스 규칙에 따른 예외는 `BusinessException`으로 명확하게 정의하여 코드의 안정성과 예측 가능성을 높였습니다.
 
 ## ✨ 주요 기능 하이라이트
 
 - **할일(Todo) 및 댓글(Comment) 관리**: 기본적인 CRUD 기능을 완벽하게 지원합니다.
-- **확장 가능한 동적 검색**: **JPA Specification(명세)** 패턴을 도입하여, 작성자 이름 등 다양한 조건에 따른 할일 목록을 동적으로 조회할 수 있습니다. Specification Builder를 구현하여 새로운 검색 조건이 추가되어도 기존 코드를 수정할 필요 없는, OCP를 준수하는 설계를 적용했습니다.
-- **데이터 유효성 검사**: `@Valid` 어노테이션과 커스텀 Validation 어노테이션을 활용하여 API 요청 데이터의 정합성을 보장합니다.
-- **객체 매핑 자동화**: **MapStruct**를 적용하여 DTO와 Entity 간의 변환 코드를 컴파일 타임에 자동으로 생성함으로써, 반복적인 보일러플레이트 코드를 제거하고 런타임 성능 저하를 방지했습니다.
+- **QueryDSL을 이용한 동적 검색**: 작성자, 제목, 내용 등 다양한 조건에 따라 할일 목록을 동적으로 조회할 수 있습니다.
+- **커스텀 데이터 유효성 검사**: `@Valid` 어노테이션과 더불어 `@ShouldBase64`, `@OptionalNotBlank` 등 직접 구현한 커스텀 Validation 어노테이션을 활용하여 API 요청 데이터의 정합성을 세밀하게 보장합니다.
+- **Base64를 이용한 비밀번호 처리**: 할일 수정/삭제 시, `X-Todo-Password` 헤더를 통해 Base64로 인코딩된 비밀번호를 받아 처리하여 보안성을 강화했습니다.
 
 ## 🛠️ 적용 기술
 
@@ -26,9 +26,10 @@
 |---|---|---|
 | **Framework** | `Spring Boot 3.5.4` | 강력하고 빠른 애플리케이션 개발 환경 | 
 | **Language** | `Java 17` | 안정성과 성능이 검증된 LTS 버전 | 
-| **Database** | `Spring Data JPA`, `MySQL` | ORM을 통한 객체지향적 데이터 관리 | 
-| **Query** | `JPA Specification` | 타입-세이프한 동적 쿼리 빌더 | 
-| **Code-Gen** | `MapStruct`, `Lombok` | 보일러플레이트 코드 자동 생성 및 제거 | 
+| **Database** | `Spring Data JPA`, `MySQL`, `H2` | ORM을 통한 객체지향적 데이터 관리 및 테스트 환경 구축 | 
+| **Query** | `QueryDSL` | 타입-세이프(Type-Safe)한 동적 쿼리 빌더 | 
+| **Code-Gen** | `Lombok` | 보일러플레이트 코드 자동 생성 및 제거 | 
+| **Security** | `jBCrypt` | 안전한 비밀번호 해싱을 위한 라이브러리 |
 | **Build Tool** | `Gradle` | 유연하고 빠른 빌드 자동화 도구 | 
 | **API Docs** | `SpringDoc OpenAPI` | API 명세 자동화 및 Swagger UI 제공 |
 
@@ -36,23 +37,22 @@
 
 ```
 .
-├── src
-│   └── main
-│       └── java
-│           └── indiv/abko/todo
-│               ├── global          # 🌐 전역 설정 및 공통 모듈
-│               │   ├── dto         #   - 공통 응답 DTO
-│               │   ├── exception   #   - 글로벌 예외 처리 핸들러
-│               │   └── util        #   - 암호화 등 공통 유틸리티
-│               └── todo            # 📝 Todo 도메인 패키지
-│                   ├── comment     #   - 💬 Comment 하위 도메인
-│                   ├── controller  #   - API 엔드포인트
-│                   ├── dto         #   - 데이터 전송 객체
-│                   ├── entity      #   - JPA 엔티티
-│                   ├── mapper      #   - MapStruct 매퍼 인터페이스
-│                   ├── repository  #   - 데이터 액세스 (JPA, Specification)
-│                   └── service     #   - 비즈니스 로직
-└── ...
+└── src
+    └── main
+        └── java
+            └── indiv/abko/todo/todo
+                ├── application     # 📖 애플리케이션 계층: 서비스 로직, DTO 변환
+                │   └── service
+                ├── domain          # 🧠 도메인 계층: 핵심 비즈니스 로직, 엔티티, VO, 리포지토리 인터페이스
+                │   ├── vo
+                │   └── repository
+                ├── infra           # 🔌 인프라 계층: 외부 시스템 연동, DB, Security 구현
+                │   ├── persistence
+                │   └── security
+                └── presentation    # 📡 프레젠테이션 계층: API 엔드포인트, DTO, 예외 처리, 유효성 검사
+                    ├── exception
+                    ├── rest
+                    └── validation
 ```
 
 ## 💾 ERD (Entity-Relationship Diagram)
