@@ -4,17 +4,15 @@ import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.ComparableExpressionBase;
-import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.repository.TodoRepositoryCustom;
 import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoSearchCondition;
-import indiv.abko.todo.todo.domain.Todo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-import java.util.Optional;
 
 import static indiv.abko.todo.todo.domain.QTodo.todo;
 
@@ -34,43 +32,47 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom {
         return queryFactory
                 .selectFrom(todo)
                 .where(
-                        like(condition.author(), todo.author),
-                        like(condition.title(), todo.title.title),
-                        like(condition.content(), todo.content.content)
+                        authorLike(condition.author()),
+                        titleLike(condition.title()),
+                        contentLike(condition.content())
                 )
                 .orderBy(getOrderBy(condition.orderBy()))
                 .fetch();
     }
 
-    private BooleanExpression like(String value, StringPath path) {
-        return StringUtils.hasText(value) ?
-                path.like("%" + value + "%") : null;
+    private BooleanExpression authorLike(String author) {
+        return StringUtils.hasText(author) ? todo.author.like("%" + author + "%") : null;
+    }
+
+    private BooleanExpression titleLike(String title) {
+        return StringUtils.hasText(title) ? todo.title.title.like("%" + title + "%") : null;
+    }
+
+    private BooleanExpression contentLike(String content) {
+        return StringUtils.hasText(content) ? todo.content.content.like("%" + content + "%") : null;
     }
 
     private OrderSpecifier<?> getOrderBy(String sort) {
-        var sortCondition = parseValidSortString(sort);
-        if (sortCondition.isEmpty()) {
+        if (!StringUtils.hasText(sort)) {
             return DEFAULT_ORDER;
         }
-        return createOrderSpecifierFrom(sortCondition.get());
-    }
 
-    private OrderSpecifier<?> createOrderSpecifierFrom(String[] sortCondition) {
+        String[] sortCondition = sort.split(ORDER_SEPARATOR);
+        if (sortCondition.length != VALID_SORT_CONDITION_LENGTH) {
+            return DEFAULT_ORDER;
+        }
+
         String property = sortCondition[PROPERTY_IDX];
+        ComparableExpressionBase<?> path = getPath(property);
+
+        if (path == null) {
+            return DEFAULT_ORDER;
+        }
+
         Order direction = "desc".equalsIgnoreCase(sortCondition[ORDER_IDX]) ?
                 Order.DESC : Order.ASC;
-        ComparableExpressionBase<?> path = getPath(property);
-        return new OrderSpecifier<>(direction, path);
-    }
 
-    private Optional<String[]> parseValidSortString(String sort) {
-        if (StringUtils.hasText(sort)) {
-            String[] sortCondition = sort.split(ORDER_SEPARATOR);
-            if (sortCondition.length == VALID_SORT_CONDITION_LENGTH) {
-                return Optional.of(sortCondition);
-            }
-        }
-        return Optional.empty();
+        return new OrderSpecifier<>(direction, path);
     }
 
     private ComparableExpressionBase<?> getPath(String property) {
@@ -80,7 +82,8 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom {
             case "content" -> todo.content.content;
             case "author" -> todo.author;
             case "createdAt" -> todo.createdAt;
-            default -> todo.modifiedAt;
+            case "modifiedAt" -> todo.modifiedAt;
+            default -> null;
         };
     }
 }
