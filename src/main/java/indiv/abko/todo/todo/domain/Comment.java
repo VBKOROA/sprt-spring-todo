@@ -2,10 +2,10 @@ package indiv.abko.todo.todo.domain;
 
 import java.time.LocalDateTime;
 
-import indiv.abko.todo.global.vo.Content;
-import indiv.abko.todo.global.vo.Password;
-import indiv.abko.todo.todo.application.controller.dto.comment.CommentResp;
-import indiv.abko.todo.todo.application.controller.dto.comment.CommentWriteReq;
+import indiv.abko.todo.todo.domain.vo.Content;
+import indiv.abko.todo.todo.domain.vo.Password;
+import indiv.abko.todo.todo.application.web.dto.comment.CommentResp;
+import indiv.abko.todo.todo.application.web.dto.comment.CommentWriteReq;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package indiv.abko.todo.todo.domain.service;
 
-import indiv.abko.todo.global.vo.Password;
+import indiv.abko.todo.todo.domain.vo.Password;
 
 public interface PasswordEncoder {
     Password encode(String rawPassword);
