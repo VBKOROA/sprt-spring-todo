@@ -17,8 +17,9 @@ import org.springframework.util.StringUtils;
 public class TodoPassword {
     private String password;
 
-    public TodoPassword(String value) {
-        this.password = value;
+    public TodoPassword(String password) {
+        shouldValid(password);
+        this.password = password;
     }
 
     public TodoPassword encrypted(final Encrypt encrypt) {
@@ -28,6 +29,12 @@ public class TodoPassword {
     public void verify(final String password, final Encrypt encrypt) {
         if(encrypt.isHashEqual(password, this.password) == false) {
             throw new BusinessException(ExceptionEnum.TODO_PERMISSION_DENIED);
+        }
+    }
+
+    private void shouldValid(String password) {
+        if(StringUtils.hasText(password) == false)  {
+            throw new BusinessException(ExceptionEnum.TODO_PASSWORD_REQUIRED);
         }
     }
 }
