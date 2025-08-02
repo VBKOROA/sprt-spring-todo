@@ -2,14 +2,10 @@ package indiv.abko.todo.todo.comment.entity;
 
 import java.time.LocalDateTime;
 
+import indiv.abko.todo.global.vo.Content;
 import indiv.abko.todo.todo.comment.dto.CommentResp;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Column;
+import indiv.abko.todo.todo.comment.dto.CommentWriteReq;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,7 +24,8 @@ public class Comment {
     private Long id;
 
     // 댓글 내용
-    private String content;
+    @Embedded
+    private Content content;
 
     // 작성자명
     private String author;
@@ -48,7 +45,7 @@ public class Comment {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Comment(String content, String author, String password) {
+    public Comment(Content content, String author, String password) {
         this.content = content;
         this.author = author;
         this.password = password;
@@ -62,9 +59,17 @@ public class Comment {
         return CommentResp.builder()
                 .id(id)
                 .author(author)
-                .content(content)
+                .content(content.getContent())
                 .createdAt(createdAt)
                 .modifiedAt(modifiedAt)
+                .build();
+    }
+
+    public static Comment from(CommentWriteReq req) {
+        return Comment.builder()
+                .author(req.author())
+                .content(new Content(req.content()))
+                .password(req.password())
                 .build();
     }
 }
