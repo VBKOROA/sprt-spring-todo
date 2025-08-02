@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.dto;
+package indiv.abko.todo.todo.application.controller.dto.todo;
 
 import java.time.LocalDateTime;
 import io.swagger.v3.oas.annotations.media.Schema;

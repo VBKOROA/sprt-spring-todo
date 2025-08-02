@@ -7,9 +7,9 @@ import java.util.Optional;
 
 import indiv.abko.todo.global.vo.Content;
 import indiv.abko.todo.todo.comment.dto.CommentResp;
-import indiv.abko.todo.todo.dto.TodoCreateReq;
-import indiv.abko.todo.todo.dto.TodoResp;
-import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
+import indiv.abko.todo.todo.application.controller.dto.todo.TodoCreateReq;
+import indiv.abko.todo.todo.application.controller.dto.todo.TodoResp;
+import indiv.abko.todo.todo.application.controller.dto.todo.TodoWithCommentsResp;
 import indiv.abko.todo.global.vo.Password;
 import indiv.abko.todo.todo.entity.vo.TodoTitle;
 import jakarta.persistence.*;

@@ -9,14 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.global.exception.ExceptionEnum;
-import indiv.abko.todo.todo.dto.TodoCreateReq;
-import indiv.abko.todo.todo.dto.TodoSearchCondition;
-import indiv.abko.todo.todo.dto.TodoUpdateReq;
-import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
+import indiv.abko.todo.todo.application.controller.dto.todo.TodoCreateReq;
+import indiv.abko.todo.todo.application.controller.dto.todo.TodoSearchCondition;
+import indiv.abko.todo.todo.application.controller.dto.todo.TodoUpdateReq;
+import indiv.abko.todo.todo.application.controller.dto.todo.TodoWithCommentsResp;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.repository.TodoRepository;
-import indiv.abko.todo.todo.dto.TodoListResp;
-import indiv.abko.todo.todo.dto.TodoResp;
+import indiv.abko.todo.todo.application.controller.dto.todo.TodoListResp;
+import indiv.abko.todo.todo.application.controller.dto.todo.TodoResp;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Base64;

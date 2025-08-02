@@ -1,7 +1,7 @@
 package indiv.abko.todo.todo.controller;
 
 import indiv.abko.todo.global.dto.ApiResp;
-import indiv.abko.todo.todo.dto.TodoCreateReq;
+import indiv.abko.todo.todo.application.controller.dto.todo.TodoCreateReq;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

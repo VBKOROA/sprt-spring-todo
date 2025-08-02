@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.dto;
+package indiv.abko.todo.todo.application.controller.dto.todo;
 
 import java.util.List;
 import indiv.abko.todo.todo.comment.dto.CommentResp;

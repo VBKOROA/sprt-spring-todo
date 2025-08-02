@@ -7,7 +7,7 @@ import com.querydsl.core.types.dsl.ComparableExpressionBase;
 import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import indiv.abko.todo.todo.domain.repository.TodoRepositoryCustom;
-import indiv.abko.todo.todo.dto.TodoSearchCondition;
+import indiv.abko.todo.todo.application.controller.dto.todo.TodoSearchCondition;
 import indiv.abko.todo.todo.domain.Todo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

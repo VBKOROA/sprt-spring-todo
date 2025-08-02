@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.dto;
+package indiv.abko.todo.todo.application.controller.dto.todo;
 
 import indiv.abko.todo.global.validation.OptionalNotBlank;
 import indiv.abko.todo.todo.validation.ValidTodoTitle;
