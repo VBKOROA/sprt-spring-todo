@@ -3,12 +3,12 @@ package indiv.abko.todo.todo.service;
 import indiv.abko.todo.todo.comment.dto.CommentResp;
 import indiv.abko.todo.todo.comment.dto.CommentWriteReq;
 import indiv.abko.todo.todo.comment.entity.Comment;
+import indiv.abko.todo.todo.domain.service.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.global.exception.ExceptionEnum;
-import indiv.abko.todo.global.util.Encrypt;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.dto.TodoUpdateReq;
@@ -25,7 +25,7 @@ import java.util.Base64;
 @RequiredArgsConstructor
 public class TodoService {
     private final TodoRepository todoRepo;
-    private final Encrypt encrypt;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 주어진 요청 데이터로 새로운 Todo 항목을 생성한다.
@@ -35,7 +35,8 @@ public class TodoService {
      */
     @Transactional
     public TodoResp create(final TodoCreateReq todoReq) {
-        final Todo todo = Todo.from(todoReq, encrypt);
+        var password = passwordEncoder.encode(todoReq.password());
+        final Todo todo = Todo.from(todoReq, password);
         final var result = todoRepo.save(todo);
         return result.toTodoResp();
     }
@@ -84,7 +85,7 @@ public class TodoService {
     @Transactional
     public TodoResp updateTodo(final Long id, final TodoUpdateReq updateReq) {
         final var todo = retrieveOrThrow(id);
-        todo.getPassword().verify(updateReq.password(), encrypt);
+        shouldHaveAuth(todo, updateReq.password());
         todo.updatePresented(updateReq.title(), updateReq.author());
         return todo.toTodoResp();
     }
@@ -101,7 +102,7 @@ public class TodoService {
     public void deleteTodo(final Long id, final String encodedPassword) {
         final String decodedPassword = new String(Base64.getDecoder().decode(encodedPassword));
         final var todo = retrieveOrThrow(id);
-        todo.getPassword().verify(decodedPassword, encrypt);
+        shouldHaveAuth(todo, decodedPassword);
         todoRepo.delete(todo);
     }
 
@@ -116,9 +117,16 @@ public class TodoService {
     @Transactional
     public CommentResp addComment(final Long todoId, final CommentWriteReq req) {
         final Todo todo = retrieveOrThrow(todoId);
-        final Comment comment = Comment.from(req);
+        var encodedPassword = passwordEncoder.encode(req.password());
+        final Comment comment = Comment.from(req, encodedPassword);
         todo.addComment(comment);
         todoRepo.save(todo);
         return comment.toCommentResp();
+    }
+
+    private void shouldHaveAuth(Todo todo, String rawPassword) {
+        if(passwordEncoder.matches(rawPassword, todo.getPassword()) == false) {
+            throw new BusinessException(ExceptionEnum.TODO_PERMISSION_DENIED);
+        }
     }
 }

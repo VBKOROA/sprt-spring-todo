@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import indiv.abko.todo.global.util.Encrypt;
 import indiv.abko.todo.global.vo.Content;
 import indiv.abko.todo.todo.comment.dto.CommentResp;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
@@ -14,7 +13,6 @@ import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
 import indiv.abko.todo.global.vo.Password;
 import indiv.abko.todo.todo.entity.vo.TodoTitle;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -95,12 +93,12 @@ public class Todo {
         }
     }
 
-    public static Todo from(TodoCreateReq dto, Encrypt encrypt) {
+    public static Todo from(TodoCreateReq dto, Password encryptedPassword) {
         return Todo.builder()
                 .title(new TodoTitle(dto.title()))
                 .author(dto.author())
                 .content(new Content(dto.content()))
-                .password(new Password(dto.password()).encrypted(encrypt))
+                .password(encryptedPassword)
                 .build();
     }
 

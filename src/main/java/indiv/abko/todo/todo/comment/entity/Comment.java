@@ -67,11 +67,11 @@ public class Comment {
                 .build();
     }
 
-    public static Comment from(CommentWriteReq req) {
+    public static Comment from(CommentWriteReq req, Password encodedPassword) {
         return Comment.builder()
                 .author(req.author())
                 .content(new Content(req.content()))
-                .password(new Password(req.password()))
+                .password(encodedPassword)
                 .build();
     }
 }
