@@ -123,4 +123,9 @@ public class Todo {
                 .map(Comment::toCommentResp)
                 .toList();
     }
+
+    public Comment getLastComment() {
+        final int lastIdx = comments.size() - 1;
+        return comments.get(lastIdx);
+    }
 }
