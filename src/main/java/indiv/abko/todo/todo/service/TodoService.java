@@ -3,7 +3,6 @@ package indiv.abko.todo.todo.service;
 import indiv.abko.todo.todo.comment.dto.CommentResp;
 import indiv.abko.todo.todo.comment.dto.CommentWriteReq;
 import indiv.abko.todo.todo.comment.entity.Comment;
-import indiv.abko.todo.todo.comment.mapper.CommentMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +28,6 @@ import java.util.Base64;
 public class TodoService {
     private final TodoRepository todoRepo;
     private final Encrypt encrypt;
-    private final CommentMapper commentMapper;
 
     /**
      * 주어진 요청 데이터로 새로운 Todo 항목을 생성한다.
