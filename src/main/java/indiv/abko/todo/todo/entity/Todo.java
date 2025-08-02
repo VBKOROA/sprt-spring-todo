@@ -46,7 +46,7 @@ public class Todo {
     private String password; // 비밀번호
 
     // Todo 엔티티와 댓글 엔티티 간의 연관관계 설정
-    @OneToMany(mappedBy = "todo", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "todo", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>(); // 댓글 목록
 
     @CreatedDate
