@@ -10,7 +10,9 @@ public enum ExceptionEnum {
     TODO_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 ID의 일정이 없습니다."),
     TODO_PERMISSION_DENIED(HttpStatus.UNAUTHORIZED, "해당 일정에 대한 권한이 없습니다."),
     COMMENT_LIMIT_EXCEEDED(HttpStatus.BAD_REQUEST, "댓글은 10개를 초과할 수 없습니다."),
-    TODO_PASSWORD_NOT_VALID(HttpStatus.BAD_REQUEST, "비밀번호가 유효하지 않습니다.");
+    TODO_PASSWORD_NOT_VALID(HttpStatus.BAD_REQUEST, "비밀번호가 유효하지 않습니다."),
+    TODO_TITLE_LENGTH_NOT_VALID(HttpStatus.BAD_REQUEST, "제목의 길이는 1 ~ 30자 이내여야 합니다."),
+    TODO_TITLE_REQUIRED(HttpStatus.BAD_REQUEST, "제목은 필수 입력 값입니다.");
 
     private final HttpStatus status;
     private final String message;
