@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.controller;
+package indiv.abko.todo.todo.application.web;
 
 import indiv.abko.todo.todo.application.web.dto.ApiResp;
 import indiv.abko.todo.todo.application.web.dto.todo.TodoCreateReq;

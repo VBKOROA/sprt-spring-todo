@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.service;
+package indiv.abko.todo.todo.application.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

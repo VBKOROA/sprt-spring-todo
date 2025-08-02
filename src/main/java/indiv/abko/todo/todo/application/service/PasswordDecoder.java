@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.domain.service;
+package indiv.abko.todo.todo.application.service;
 
 public interface PasswordDecoder {
     String decode(String encodedPassword);

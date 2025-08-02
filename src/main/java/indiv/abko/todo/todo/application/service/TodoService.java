@@ -3,8 +3,6 @@ package indiv.abko.todo.todo.application.service;
 import indiv.abko.todo.todo.application.web.dto.comment.CommentResp;
 import indiv.abko.todo.todo.application.web.dto.comment.CommentWriteReq;
 import indiv.abko.todo.todo.domain.Comment;
-import indiv.abko.todo.todo.domain.service.PasswordDecoder;
-import indiv.abko.todo.todo.domain.service.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
