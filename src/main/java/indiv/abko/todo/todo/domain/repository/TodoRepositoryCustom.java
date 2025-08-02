@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.repository;
+package indiv.abko.todo.todo.domain.repository;
 
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.domain.Todo;
