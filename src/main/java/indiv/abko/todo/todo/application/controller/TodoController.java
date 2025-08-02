@@ -10,7 +10,7 @@ import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.dto.TodoUpdateReq;
 import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
-import indiv.abko.todo.todo.service.TodoService;
+import indiv.abko.todo.todo.application.service.TodoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;

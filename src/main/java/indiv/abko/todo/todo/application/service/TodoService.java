@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.service;
+package indiv.abko.todo.todo.application.service;
 
 import indiv.abko.todo.todo.comment.dto.CommentResp;
 import indiv.abko.todo.todo.comment.dto.CommentWriteReq;

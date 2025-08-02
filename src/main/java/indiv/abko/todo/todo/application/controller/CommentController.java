@@ -1,6 +1,6 @@
 package indiv.abko.todo.todo.application.controller;
 
-import indiv.abko.todo.todo.service.TodoService;
+import indiv.abko.todo.todo.application.service.TodoService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
