@@ -27,15 +27,4 @@ public interface TodoMapper {
     default String toTitle(TodoTitle title) {
         return title.getTitle();
     }
-
-    @Mapping(target = "password", expression = "java(toTodoPassword(req.password(), encrypt))")
-    @Mapping(target = "title", expression = "java(toTodoTitle(req.title(), encrypt))")
-    Todo toTodo(TodoCreateReq req, Encrypt encrypt);
-
-    @Mapping(target = "title", expression = "java(toTitle(todo.getTitle()))")
-    TodoResp toTodoResp(Todo todo);
-
-    @Mapping(target = "todo", source = "todo")
-    @Mapping(target = "comments", source = "comments")
-    TodoWithCommentsResp toTodoWithCommentResp(Todo todo);
 }
