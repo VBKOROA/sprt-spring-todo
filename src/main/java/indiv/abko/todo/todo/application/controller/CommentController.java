@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.comment.controller;
+package indiv.abko.todo.todo.application.controller;
 
 import indiv.abko.todo.todo.service.TodoService;
 import org.springframework.web.bind.annotation.RequestMapping;

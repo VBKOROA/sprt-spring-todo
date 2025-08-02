@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.controller;
+package indiv.abko.todo.todo.application.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
