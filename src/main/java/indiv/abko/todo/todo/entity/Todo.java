@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import indiv.abko.todo.global.util.Encrypt;
+import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.entity.vo.TodoPassword;
+import indiv.abko.todo.todo.entity.vo.TodoTitle;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -30,7 +33,8 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title; // 일정 제목
+    @Embedded
+    private TodoTitle title; // 일정 제목
 
     private String content; // 일정 내용
 
@@ -51,7 +55,7 @@ public class Todo {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Todo(String title, String content, String author, TodoPassword password) {
+    public Todo(TodoTitle title, String content, String author, TodoPassword password) {
         this.title = title;
         this.content = content;
         this.author = author;
@@ -60,7 +64,7 @@ public class Todo {
 
     public void updatePresented(String title, String author) {
         if(title != null) {
-            this.title = title;
+            this.title = new TodoTitle(title);
         }
 
         if(author != null) {
@@ -83,5 +87,14 @@ public class Todo {
         } catch (Exception e) {
             return Optional.empty();
         }
+    }
+
+    public static Todo from(TodoCreateReq dto, Encrypt encrypt) {
+        return Todo.builder()
+                .title(new TodoTitle(dto.title()))
+                .author(dto.author())
+                .content(dto.content())
+                .password(new TodoPassword(dto.password()).encrypted(encrypt))
+                .build();
     }
 }
