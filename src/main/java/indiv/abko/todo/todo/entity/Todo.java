@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 import indiv.abko.todo.global.util.Encrypt;
+import indiv.abko.todo.global.vo.Content;
 import indiv.abko.todo.todo.comment.dto.CommentResp;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoResp;
 import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
-import indiv.abko.todo.todo.entity.vo.TodoContent;
 import indiv.abko.todo.todo.entity.vo.TodoPassword;
 import indiv.abko.todo.todo.entity.vo.TodoTitle;
 import jakarta.persistence.*;
@@ -40,7 +40,7 @@ public class Todo {
     @Embedded
     private TodoTitle title; // 일정 제목
 
-    private TodoContent content; // 일정 내용
+    private Content content; // 일정 내용
 
     private String author; // 작성자
 
@@ -59,7 +59,7 @@ public class Todo {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Todo(TodoTitle title, TodoContent content, String author, TodoPassword password) {
+    public Todo(TodoTitle title, Content content, String author, TodoPassword password) {
         this.title = title;
         this.content = content;
         this.author = author;
@@ -97,7 +97,7 @@ public class Todo {
         return Todo.builder()
                 .title(new TodoTitle(dto.title()))
                 .author(dto.author())
-                .content(new TodoContent(dto.content()))
+                .content(new Content(dto.content()))
                 .password(new TodoPassword(dto.password()).encrypted(encrypt))
                 .build();
     }
