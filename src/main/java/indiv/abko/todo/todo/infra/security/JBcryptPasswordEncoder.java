@@ -6,7 +6,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Encrypt implements PasswordEncoder {
+public class JBcryptPasswordEncoder implements PasswordEncoder {
     public Password encode(final String rawPassword) {
         return new Password(BCrypt.hashpw(rawPassword, BCrypt.gensalt()));
     }
