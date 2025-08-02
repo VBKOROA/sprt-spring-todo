@@ -21,7 +21,7 @@ import static indiv.abko.todo.todo.domain.QTodo.todo;
 @Repository
 @RequiredArgsConstructor
 public class TodoRepositoryImpl implements TodoRepositoryCustom {
-    private static final String SEPARATOR = "_";
+    private static final String ORDER_SEPARATOR = "_";
     private static final int PROPERTY_IDX = 0;
     private static final int ORDER_IDX = 1;
     private static final int VALID_SORT_CONDITION_LENGTH = 2;
@@ -48,11 +48,11 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom {
     }
 
     private OrderSpecifier<?> getOrderBy(String sort) {
-        var sortCondtion = parseValidSortString(sort);
-        if (sortCondtion.isEmpty()) {
+        var sortCondition = parseValidSortString(sort);
+        if (sortCondition.isEmpty()) {
             return DEFAULT_ORDER;
         }
-        return createOrderSpecifierFrom(sortCondtion.get());
+        return createOrderSpecifierFrom(sortCondition.get());
     }
 
     private OrderSpecifier<?> createOrderSpecifierFrom(String[] sortCondition) {
@@ -65,7 +65,7 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom {
 
     private Optional<String[]> parseValidSortString(String sort) {
         if (StringUtils.hasText(sort)) {
-            String[] sortCondition = sort.split(SEPARATOR);
+            String[] sortCondition = sort.split(ORDER_SEPARATOR);
             if (sortCondition.length == VALID_SORT_CONDITION_LENGTH) {
                 return Optional.of(sortCondition);
             }
