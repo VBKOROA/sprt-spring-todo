@@ -6,7 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 import indiv.abko.todo.global.util.Encrypt;
+import indiv.abko.todo.todo.comment.dto.CommentResp;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
+import indiv.abko.todo.todo.dto.TodoResp;
+import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
+import indiv.abko.todo.todo.entity.vo.TodoContent;
 import indiv.abko.todo.todo.entity.vo.TodoPassword;
 import indiv.abko.todo.todo.entity.vo.TodoTitle;
 import jakarta.persistence.*;
@@ -36,7 +40,7 @@ public class Todo {
     @Embedded
     private TodoTitle title; // 일정 제목
 
-    private String content; // 일정 내용
+    private TodoContent content; // 일정 내용
 
     private String author; // 작성자
 
@@ -55,7 +59,7 @@ public class Todo {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Todo(TodoTitle title, String content, String author, TodoPassword password) {
+    public Todo(TodoTitle title, TodoContent content, String author, TodoPassword password) {
         this.title = title;
         this.content = content;
         this.author = author;
@@ -93,8 +97,31 @@ public class Todo {
         return Todo.builder()
                 .title(new TodoTitle(dto.title()))
                 .author(dto.author())
-                .content(dto.content())
+                .content(new TodoContent(dto.content()))
                 .password(new TodoPassword(dto.password()).encrypted(encrypt))
                 .build();
+    }
+
+    public TodoResp toTodoResp() {
+        return TodoResp.builder()
+                .id(id)
+                .title(title.getTitle())
+                .content(content.getContent())
+                .author(author)
+                .createdAt(createdAt)
+                .modifiedAt(modifiedAt)
+                .build();
+    }
+
+    public TodoWithCommentsResp toTodoWithCommentsResp() {
+        TodoResp todoResp = toTodoResp();
+        List<CommentResp> commentResps = toCommentResps();
+        return new TodoWithCommentsResp(todoResp, commentResps);
+    }
+
+    private List<CommentResp> toCommentResps() {
+        return comments.stream()
+                .map(Comment::toCommentResp)
+                .toList();
     }
 }

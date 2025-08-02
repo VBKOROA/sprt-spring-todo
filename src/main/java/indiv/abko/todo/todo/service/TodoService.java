@@ -43,7 +43,7 @@ public class TodoService {
     public TodoResp create(final TodoCreateReq todoReq) {
         final Todo todo = Todo.from(todoReq, encrypt);
         final var result = todoRepo.save(todo);
-        return todoMapper.toTodoResp(result);
+        return result.toTodoResp();
     }
 
     /**
@@ -56,7 +56,7 @@ public class TodoService {
     @Transactional(readOnly = true)
     public TodoWithCommentsResp getTodoWithComments(final Long id) {
         final Todo todo = retrieveOrThrow(id);
-        return todoMapper.toTodoWithCommentResp(todo);
+        return todo.toTodoWithCommentsResp();
     }
 
     private Todo retrieveOrThrow(final Long id) {
@@ -80,7 +80,7 @@ public class TodoService {
         final var sort = TodoSortBuilder.buildWith(condition.orderBy());
         final var todos = todoRepo.findAll(spec, sort);
         return new TodoListResp(todos.stream()
-            .map(todoMapper::toTodoResp)
+            .map(Todo::toTodoResp)
             .toList());
     }
 
@@ -97,7 +97,7 @@ public class TodoService {
         final var todo = retrieveOrThrow(id);
         todo.getPassword().verify(updateReq.password(), encrypt);
         todo.updatePresented(updateReq.title(), updateReq.author());
-        return todoMapper.toTodoResp(todo);
+        return todo.toTodoResp();
     }
 
     /**
