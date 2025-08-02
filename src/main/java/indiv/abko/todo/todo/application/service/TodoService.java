@@ -3,6 +3,7 @@ package indiv.abko.todo.todo.application.service;
 import indiv.abko.todo.todo.application.web.dto.comment.CommentResp;
 import indiv.abko.todo.todo.application.web.dto.comment.CommentWriteReq;
 import indiv.abko.todo.todo.domain.Comment;
+import indiv.abko.todo.todo.domain.service.PasswordDecoder;
 import indiv.abko.todo.todo.domain.service.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +20,12 @@ import indiv.abko.todo.todo.application.web.dto.todo.TodoListResp;
 import indiv.abko.todo.todo.application.web.dto.todo.TodoResp;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Base64;
-
 @Service
 @RequiredArgsConstructor
 public class TodoService {
     private final TodoRepository todoRepo;
     private final PasswordEncoder passwordEncoder;
+    private final PasswordDecoder passwordDecoder;
 
     /**
      * 주어진 요청 데이터로 새로운 Todo 항목을 생성한다.
@@ -100,7 +100,7 @@ public class TodoService {
      */
     @Transactional
     public void deleteTodo(final Long id, final String encodedPassword) {
-        final String decodedPassword = new String(Base64.getDecoder().decode(encodedPassword));
+        final String decodedPassword = passwordDecoder.decode(encodedPassword);
         final var todo = retrieveOrThrow(id);
         shouldHaveAuth(todo, decodedPassword);
         todoRepo.delete(todo);
