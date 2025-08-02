@@ -51,7 +51,8 @@ public class TodoService {
      */
     @Transactional(readOnly = true)
     public TodoWithCommentsResp getTodoWithComments(final Long id) {
-        final Todo todo = retrieveOrThrow(id);
+        final Todo todo = todoRepo.findByIdWithComments(id)
+                .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
         return todo.toTodoWithCommentsResp();
     }
 
