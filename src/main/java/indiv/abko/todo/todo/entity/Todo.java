@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import indiv.abko.todo.todo.entity.vo.Password;
+import indiv.abko.todo.todo.entity.vo.TodoPassword;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -37,7 +37,7 @@ public class Todo {
     private String author; // 작성자
 
     @Embedded
-    private Password password; // 비밀번호
+    private TodoPassword password; // 비밀번호
 
     // Todo 엔티티와 댓글 엔티티 간의 연관관계 설정
     @OneToMany(mappedBy = "todo", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
@@ -51,7 +51,7 @@ public class Todo {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Todo(String title, String content, String author, Password password) {
+    public Todo(String title, String content, String author, TodoPassword password) {
         this.title = title;
         this.content = content;
         this.author = author;

@@ -14,16 +14,16 @@ import org.springframework.util.StringUtils;
 @Embeddable
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Password {
+public class TodoPassword {
     private String password;
 
-    public Password(String value) {
+    public TodoPassword(String value) {
         shouldValid(value);
         this.password = value;
     }
 
-    public Password encrypted(final Encrypt encrypt) {
-        return new Password(encrypt.hash(this.password));
+    public TodoPassword encrypted(final Encrypt encrypt) {
+        return new TodoPassword(encrypt.hash(this.password));
     }
 
     public void verify(final String password, final Encrypt encrypt) {
