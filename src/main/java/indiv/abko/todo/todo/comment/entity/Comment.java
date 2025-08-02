@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import indiv.abko.todo.todo.entity.Todo;
+import indiv.abko.todo.todo.domain.Todo;
 
 @Entity
 @Getter

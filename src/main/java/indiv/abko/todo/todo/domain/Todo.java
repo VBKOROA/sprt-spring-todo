@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.entity;
+package indiv.abko.todo.todo.domain;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

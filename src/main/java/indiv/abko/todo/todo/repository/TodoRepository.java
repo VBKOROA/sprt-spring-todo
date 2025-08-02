@@ -1,12 +1,10 @@
 package indiv.abko.todo.todo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import indiv.abko.todo.todo.entity.Todo;
+import indiv.abko.todo.todo.domain.Todo;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
 import java.util.Optional;
 
 
