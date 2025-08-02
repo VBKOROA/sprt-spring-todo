@@ -28,7 +28,7 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Todo> search(TodoSearchCondition condition) {
+    public List<Todo> search(final TodoSearchCondition condition) {
         return queryFactory
                 .selectFrom(todo)
                 .where(
@@ -40,42 +40,46 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom {
                 .fetch();
     }
 
-    private BooleanExpression authorLike(String author) {
-        return StringUtils.hasText(author) ? todo.author.like("%" + author + "%") : null;
+    private static String makeLikePattern(final String value) {
+        return "%" + value + "%";
     }
 
-    private BooleanExpression titleLike(String title) {
-        return StringUtils.hasText(title) ? todo.title.title.like("%" + title + "%") : null;
+    private BooleanExpression authorLike(final String author) {
+        return StringUtils.hasText(author) ? todo.author.like(makeLikePattern(author)) : null;
     }
 
-    private BooleanExpression contentLike(String content) {
-        return StringUtils.hasText(content) ? todo.content.content.like("%" + content + "%") : null;
+    private BooleanExpression titleLike(final String title) {
+        return StringUtils.hasText(title) ? todo.title.title.like(makeLikePattern(title)) : null;
     }
 
-    private OrderSpecifier<?> getOrderBy(String sort) {
+    private BooleanExpression contentLike(final String content) {
+        return StringUtils.hasText(content) ? todo.content.content.like(makeLikePattern(content)) : null;
+    }
+
+    private OrderSpecifier<?> getOrderBy(final String sort) {
         if (!StringUtils.hasText(sort)) {
             return DEFAULT_ORDER;
         }
 
-        String[] sortCondition = sort.split(ORDER_SEPARATOR);
+        final String[] sortCondition = sort.split(ORDER_SEPARATOR);
         if (sortCondition.length != VALID_SORT_CONDITION_LENGTH) {
             return DEFAULT_ORDER;
         }
 
-        String property = sortCondition[PROPERTY_IDX];
-        ComparableExpressionBase<?> path = getPath(property);
+        final String property = sortCondition[PROPERTY_IDX];
+        final ComparableExpressionBase<?> path = getPath(property);
 
         if (path == null) {
             return DEFAULT_ORDER;
         }
 
-        Order direction = "desc".equalsIgnoreCase(sortCondition[ORDER_IDX]) ?
+        final Order direction = "desc".equalsIgnoreCase(sortCondition[ORDER_IDX]) ?
                 Order.DESC : Order.ASC;
 
         return new OrderSpecifier<>(direction, path);
     }
 
-    private ComparableExpressionBase<?> getPath(String property) {
+    private ComparableExpressionBase<?> getPath(final String property) {
         return switch (property) {
             case "id" -> todo.id;
             case "title" -> todo.title.title;

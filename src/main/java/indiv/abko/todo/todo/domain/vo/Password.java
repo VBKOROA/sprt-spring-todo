@@ -16,12 +16,12 @@ import org.springframework.util.StringUtils;
 public class Password {
     private String password;
 
-    public Password(String password) {
+    public Password(final String password) {
         shouldValid(password);
         this.password = password;
     }
 
-    private void shouldValid(String password) {
+    private void shouldValid(final String password) {
         if(StringUtils.hasText(password) == false)  {
             throw new BusinessException(ExceptionEnum.TODO_PASSWORD_REQUIRED);
         }

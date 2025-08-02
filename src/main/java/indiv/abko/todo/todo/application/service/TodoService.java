@@ -1,5 +1,6 @@
 package indiv.abko.todo.todo.application.service;
 
+import indiv.abko.todo.todo.domain.vo.Password;
 import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentResp;
 import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentWriteReq;
 import indiv.abko.todo.todo.domain.Comment;
@@ -33,9 +34,9 @@ public class TodoService {
      */
     @Transactional
     public TodoResp create(final TodoCreateReq todoReq) {
-        var password = passwordEncoder.encode(todoReq.password());
+        final Password password = passwordEncoder.encode(todoReq.password());
         final Todo todo = Todo.from(todoReq, password);
-        final var result = todoRepo.save(todo);
+        final Todo result = todoRepo.save(todo);
         return result.toTodoResp();
     }
 
@@ -82,7 +83,7 @@ public class TodoService {
      */
     @Transactional
     public TodoResp updateTodo(final Long id, final TodoUpdateReq updateReq) {
-        final var todo = retrieveOrThrow(id);
+        final Todo todo = retrieveOrThrow(id);
         shouldHaveAuth(todo, updateReq.password());
         todo.updatePresented(updateReq.title(), updateReq.author());
         return todo.toTodoResp();
@@ -99,7 +100,7 @@ public class TodoService {
     @Transactional
     public void deleteTodo(final Long id, final String encodedPassword) {
         final String decodedPassword = passwordDecoder.decode(encodedPassword);
-        final var todo = retrieveOrThrow(id);
+        final Todo todo = retrieveOrThrow(id);
         shouldHaveAuth(todo, decodedPassword);
         todoRepo.delete(todo);
     }
@@ -115,7 +116,7 @@ public class TodoService {
     @Transactional
     public CommentResp addComment(final Long todoId, final CommentWriteReq req) {
         final Todo todo = retrieveOrThrow(todoId);
-        var encodedPassword = passwordEncoder.encode(req.password());
+        final Password encodedPassword = passwordEncoder.encode(req.password());
         final Comment comment = Comment.from(req, encodedPassword);
         todo.addComment(comment);
         todoRepo.save(todo);
@@ -123,7 +124,7 @@ public class TodoService {
         return savedComment.toCommentResp();
     }
 
-    private void shouldHaveAuth(Todo todo, String rawPassword) {
+    private void shouldHaveAuth(final Todo todo, final String rawPassword) {
         if(passwordEncoder.matches(rawPassword, todo.getPassword()) == false) {
             throw new BusinessException(ExceptionEnum.TODO_PERMISSION_DENIED);
         }

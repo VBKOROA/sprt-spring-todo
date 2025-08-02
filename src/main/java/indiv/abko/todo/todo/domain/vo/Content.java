@@ -16,12 +16,12 @@ import org.springframework.util.StringUtils;
 public class Content {
     private String content;
 
-    public Content(String content) {
+    public Content(final String content) {
         shouldValid(content);
         this.content = content;
     }
 
-    private void shouldValid(String content) {
+    private void shouldValid(final String content) {
         if(StringUtils.hasText(content) == false)  {
             throw new BusinessException(ExceptionEnum.CONTENT_REQUIRED);
         }

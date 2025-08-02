@@ -16,12 +16,12 @@ import org.springframework.util.StringUtils;
 public class TodoTitle {
     private String title;
 
-    public TodoTitle(String title) {
+    public TodoTitle(final String title) {
         shouldValid(title);
         this.title = title;
     }
 
-    private void shouldValid(String title) {
+    private void shouldValid(final String title) {
         if(StringUtils.hasText(title) == false)  {
             throw new BusinessException(ExceptionEnum.TODO_TITLE_REQUIRED);
         }

@@ -10,7 +10,7 @@ public class Base64PasswordDecoder implements PasswordDecoder {
     private static final Base64.Decoder decoder = Base64.getDecoder();
 
     @Override
-    public String decode(String encodedPassword) {
+    public String decode(final String encodedPassword) {
         return new String(decoder.decode(encodedPassword));
     }
 }

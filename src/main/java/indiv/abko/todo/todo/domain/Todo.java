@@ -58,14 +58,14 @@ public class Todo {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Todo(TodoTitle title, Content content, String author, Password password) {
+    public Todo(final TodoTitle title, final Content content, final String author, final Password password) {
         this.title = title;
         this.content = content;
         this.author = author;
         this.password = password;
     }
 
-    public void updatePresented(String title, String author) {
+    public void updatePresented(final String title, final String author) {
         if (title != null) {
             this.title = new TodoTitle(title);
         }
@@ -75,7 +75,7 @@ public class Todo {
         }
     }
 
-    public void addComment(Comment comment) {
+    public void addComment(final Comment comment) {
         if (comments.size() == COMMENT_LIMIT) {
             throw new BusinessException(ExceptionEnum.COMMENT_LIMIT_EXCEEDED);
         }
@@ -83,16 +83,7 @@ public class Todo {
         comment.atTodo(this);
     }
 
-    public static Optional<Todo.Fields> toField(String fieldName) {
-        try {
-            var field = Todo.Fields.valueOf(fieldName);
-            return Optional.of(field);
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-    }
-
-    public static Todo from(TodoCreateReq dto, Password encryptedPassword) {
+    public static Todo from(final TodoCreateReq dto, final Password encryptedPassword) {
         return Todo.builder()
                 .title(new TodoTitle(dto.title()))
                 .author(dto.author())
@@ -113,8 +104,8 @@ public class Todo {
     }
 
     public TodoWithCommentsResp toTodoWithCommentsResp() {
-        TodoResp todoResp = toTodoResp();
-        List<CommentResp> commentResps = toCommentResps();
+        final TodoResp todoResp = toTodoResp();
+        final List<CommentResp> commentResps = toCommentResps();
         return new TodoWithCommentsResp(todoResp, commentResps);
     }
 

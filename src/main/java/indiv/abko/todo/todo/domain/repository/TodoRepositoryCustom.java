@@ -5,5 +5,5 @@ import indiv.abko.todo.todo.domain.Todo;
 import java.util.List;
 
 public interface TodoRepositoryCustom {
-    List<Todo> search(TodoSearchCondition condition);
+    List<Todo> search(final TodoSearchCondition condition);
 }

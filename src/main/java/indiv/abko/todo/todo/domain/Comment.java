@@ -46,13 +46,13 @@ public class Comment {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Comment(Content content, String author, Password password) {
+    public Comment(final Content content, final String author, final Password password) {
         this.content = content;
         this.author = author;
         this.password = password;
     }
 
-    public void atTodo(Todo todo) {
+    public void atTodo(final Todo todo) {
         this.todo = todo;
     }
 
@@ -66,7 +66,7 @@ public class Comment {
                 .build();
     }
 
-    public static Comment from(CommentWriteReq req, Password encodedPassword) {
+    public static Comment from(final CommentWriteReq req, final Password encodedPassword) {
         return Comment.builder()
                 .author(req.author())
                 .content(new Content(req.content()))
