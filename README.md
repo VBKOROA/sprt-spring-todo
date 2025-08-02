@@ -2,57 +2,85 @@
 
 > 💬 **"단순한 Todo 앱을 넘어, 견고한 백엔드 설계를 경험하다"**
 
-이 프로젝트는 단순한 기능 구현을 넘어, **유지보수성과 확장성**을 고려한 소프트웨어 설계를 체험하는 데 중점을 둔 Todo 애플리케이션입니다. 도메인 주도 설계(DDD)의 기본 원칙을 적용하여 각 기능의 독립성을 높이고, 클린 아키텍처를 지향합니다.
+이 프로젝트는 단순한 기능 구현을 넘어, **유지보수성과 확장성**을 고려한 소프트웨어 설계를 학습하고 적용하는 데 중점을 둔 Todo 애플리케이션입니다. 클린 아키텍처와 객체지향의 핵심 원칙을 코드에 반영하고자 노력했습니다.
 
 ---
 
-## 🎯 프로젝트 핵심 목표 및 설계 철학
+## 🎯 핵심 설계 원칙
 
-- **계층형 아키텍처 (Layered Architecture)**: `Presentation` - `Application` - `Domain` - `Infrastructure`로 이어지는 명확한 계층 구조를 적용하여 각 레이어의 책임을 분명히 하고, 의존성 규칙을 준수하여 유연하고 확장 가능한 설계를 구현했습니다.
-- **도메인 모델 중심 설계**: 도메인(`Todo`, `Comment`)이 비즈니스 로직의 중심이 되도록 설계했습니다. 특히 각 도메인 객체가 스스로의 상태와 행위를 관리하도록 구현하여, 객체의 자율성과 캡슐화를 극대화했습니다.
-- **타입-세이프 동적 쿼리**: **QueryDSL**을 도입하여, 컴파일 타임에 타입을 검증할 수 있는 안전하고 직관적인 동적 쿼리를 작성했습니다. 이를 통해 런타임에 발생할 수 있는 쿼리 오류를 줄이고, 복잡한 검색 조건을 명확한 코드로 구현했습니다.
-- **체계적인 예외 처리**: 애플리케이션 전역에서 발생할 수 있는 예외를 `@RestControllerAdvice`를 통해 일관되게 처리하고, 도메인 비즈니스 규칙에 따른 예외는 `BusinessException`으로 명확하게 정의하여 코드의 안정성과 예측 가능성을 높였습니다.
+이 프로젝트는 다음의 설계 원칙을 기반으로 구현되었습니다.
 
-## ✨ 주요 기능 하이라이트
+- **클린 아키텍처 (Clean Architecture)**
+    - 코드를 `Presentation`, `Application`, `Domain`, `Infrastructure` 네 가지 영역으로 분리하여 의존성 규칙을 준수했습니다. 이를 통해 각 영역이 자신의 책임에만 집중하고, 외부 변화로부터 도메인 로직을 보호하는 안정적인 구조를 구현했습니다.
 
-- **할일(Todo) 및 댓글(Comment) 관리**: 기본적인 CRUD 기능을 완벽하게 지원합니다.
-- **QueryDSL을 이용한 동적 검색**: 작성자, 제목, 내용 등 다양한 조건에 따라 할일 목록을 동적으로 조회할 수 있습니다.
-- **커스텀 데이터 유효성 검사**: `@Valid` 어노테이션과 더불어 `@ShouldBase64`, `@OptionalNotBlank` 등 직접 구현한 커스텀 Validation 어노테이션을 활용하여 API 요청 데이터의 정합성을 세밀하게 보장합니다.
-- **Base64를 이용한 비밀번호 처리**: 할일 수정/삭제 시, `X-Todo-Password` 헤더를 통해 Base64로 인코딩된 비밀번호를 받아 처리하여 보안성을 강화했습니다.
+- **개방-폐쇄 원칙 (OCP, Open-Closed Principle)**
+    - **QueryDSL**을 활용하여, 새로운 검색 또는 정렬 조건이 추가되더라도 `Service` 코드의 변경 없이 `Repository` 계층에서 유연하게 기능을 확장할 수 있는 구조를 구현했습니다.
+
+- **타입 안정성 및 도메인 표현력 강화**
+    - `TodoTitle`, `Content`, `Password`와 같은 **값 객체(Value Object)**를 도입하여 단순한 문자열이 아닌, 비즈니스 의미를 가진 타입으로 데이터를 관리합니다. 이를 통해 컴파일 시점에 타입이 보장되고, 각 객체가 스스로의 유효성 검사 로직을 캡슐화하여 도메인의 응집도를 높였습니다.
+
+- **도메인 엔티티의 책임 (Entity Responsibility)**
+    - `Todo` 엔티티가 단순한 데이터 객체를 넘어, 댓글 추가 및 개수 제한과 같은 자체적인 비즈니스 로직을 갖도록 구현하여 객체의 자율성을 높였습니다.
+
+## ✨ 주요 기능
+
+- **동적 검색 및 정렬**
+    - **QueryDSL**을 사용하여 제목, 내용, 작성자 등 여러 조건으로 할일 목록을 동적으로 검색하고 정렬할 수 있습니다.
+
+- **커스텀 유효성 검사**
+    - `@OptionalNotBlank` (null은 허용하지만 공백 문자열은 불허), `@ShouldBase64` (Base64 인코딩 검증) 등 재사용 가능한 커스텀 어노테이션을 적용하여 데이터의 정합성을 세밀하게 검증합니다.
+    - `@ValidTodoTitle`, `@ValidTodoContent` 등을 통해 각 필드의 비즈니스 규칙을 어노테이션으로 명확하게 표현했습니다.
+
+- **값 객체를 통한 데이터 관리**
+    - `TodoTitle`, `Content`, `Password`와 같은 값 객체를 사용하여 데이터의 생성 시점부터 유효성을 보장하고, 해당 데이터와 관련된 비즈니스 로직을 함께 캡슐화하여 코드의 응집도를 높였습니다.
+
+- **비밀번호 기반 인가**
+    - **jBCrypt** 라이브러리로 비밀번호를 안전하게 해싱하여 저장하고, 할일 수정 및 삭제 시 비밀번호를 통해 인가(Authorization)를 구현했습니다.
+
+## 🔬 테스트 전략
+
+코드의 신뢰성과 설계의 견고함을 보장하기 위해 단위 테스트와 통합 테스트를 작성했습니다.
+
+- **통합 테스트 (`@SpringBootTest`)**: API 계층부터 데이터베이스까지 시스템의 전체 흐름을 검증하여 각 계층의 연동과 비즈니스 로직의 정확성을 보장합니다.
+- **단위 테스트**: 외부 의존성이 적은 특정 컴포넌트(예: 값 객체)의 논리적 정확성을 독립적으로 검증하여 안정성을 높입니다.
 
 ## 🛠️ 적용 기술
 
-| 구분 | 기술 | 설명 |
-|---|---|---|
-| **Framework** | `Spring Boot 3.5.4` | 강력하고 빠른 애플리케이션 개발 환경 | 
-| **Language** | `Java 17` | 안정성과 성능이 검증된 LTS 버전 | 
-| **Database** | `Spring Data JPA`, `MySQL`, `H2` | ORM을 통한 객체지향적 데이터 관리 및 테스트 환경 구축 | 
-| **Query** | `QueryDSL` | 타입-세이프(Type-Safe)한 동적 쿼리 빌더 | 
-| **Code-Gen** | `Lombok` | 보일러플레이트 코드 자동 생성 및 제거 | 
-| **Security** | `jBCrypt` | 안전한 비밀번호 해싱을 위한 라이브러리 |
-| **Build Tool** | `Gradle` | 유연하고 빠른 빌드 자동화 도구 | 
-| **API Docs** | `SpringDoc OpenAPI` | API 명세 자동화 및 Swagger UI 제공 |
+| 구분 | 기술 | 버전 | 설명 |
+|---|---|---|---|
+| **Framework** | `Spring Boot` | 3.5.4 | 안정적이고 빠른 애플리케이션 개발 환경 |
+| **Language** | `Java` | 17 | LTS 버전의 Java |
+| **Database** | `Spring Data JPA`, `MySQL`, `H2` | | ORM을 통한 객체지향적 데이터 관리 (테스트에는 H2 사용) |
+| **Query** | `QueryDSL` | 5.0.0 | 타입-세이프(Type-Safe) 동적 쿼리 작성 |
+| **Testing** | `JUnit 5`, `AssertJ`, `@SpringBootTest` | | 통합/단위 테스트를 통한 코드 신뢰성 및 설계 증명 |
+| **Code-Gen** | `Lombok` | | 보일러플레이트 코드 자동 생성 및 제거 |
+| **Security** | `jBCrypt` | 0.4 | 강력한 해시 함수를 사용한 안전한 비밀번호 저장 |
+| **Build Tool** | `Gradle` | | 유연하고 빠른 빌드 자동화 도구 |
+| **API Docs** | `SpringDoc OpenAPI` | 2.8.9 | API 명세 자동화 및 Swagger UI 제공 |
 
 ## 📁 프로젝트 구조
 
 ```
 .
-└── src
-    └── main
-        └── java
-            └── indiv/abko/todo/todo
-                ├── application     # 📖 애플리케이션 계층: 서비스 로직, DTO 변환
-                │   └── service
-                ├── domain          # 🧠 도메인 계층: 핵심 비즈니스 로직, 엔티티, VO, 리포지토리 인터페이스
-                │   ├── vo
-                │   └── repository
-                ├── infra           # 🔌 인프라 계층: 외부 시스템 연동, DB, Security 구현
-                │   ├── persistence
-                │   └── security
-                └── presentation    # 📡 프레젠테이션 계층: API 엔드포인트, DTO, 예외 처리, 유효성 검사
-                    ├── exception
-                    ├── rest
-                    └── validation
+├── src
+│   └── main
+│       └── java
+│           └── indiv/abko/todo
+│               ├── todo
+│               │   ├── application   # 🧠 Use-Case 계층 (비즈니스 로직 흐름 제어)
+│               │   │   └── service
+│               │   ├── domain        # 🏛️ 핵심 도메인 모델 (Entity, VO, Repository Interface)
+│               │   │   ├── repository
+│               │   │   └── vo
+│               │   ├── infra         # 💾 외부 시스템 연동 (DB, Security 등)
+│               │   │   ├── persistence
+│               │   │   └── security
+│               │   └── presentation  # 📡 API 엔드포인트 및 DTO, 유효성 검사
+│               │       ├── exception
+│               │       ├── rest
+│               │       └── validation
+│               └── TodoApplication.java
+└── ...
 ```
 
 ## 💾 ERD (Entity-Relationship Diagram)
