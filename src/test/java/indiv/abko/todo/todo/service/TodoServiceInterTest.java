@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import indiv.abko.todo.global.vo.Content;
 import indiv.abko.todo.global.vo.Password;
+import indiv.abko.todo.todo.entity.vo.TodoTitle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -42,23 +44,23 @@ public class TodoServiceInterTest {
             List<Todo> todos = new ArrayList<>();
 
             todos.add(Todo.builder()
-                    .title("테스트")
+                    .title(new TodoTitle("테스트"))
                     .author("테스트")
-                    .content("테스트")
+                    .content(new Content("테스트"))
                     .password(new Password("null"))
                     .build());
 
             todos.add(Todo.builder()
-                    .title("감스트")
+                    .title(new TodoTitle("감스트"))
                     .author("테스트")
-                    .content("테스트")
+                    .content(new Content("테스트"))
                     .password(new Password("null"))
                     .build());
 
             todos.add(Todo.builder()
-                    .title("스프")
+                    .title(new TodoTitle("스프"))
                     .author("테스트")
-                    .content("테스트")
+                    .content(new Content("테스트"))
                     .password(new Password("null"))
                     .build());
 
