@@ -127,7 +127,7 @@ public class TodoService {
     @Transactional
     public CommentResp addComment(final Long todoId, final CommentWriteReq req) {
         final Todo todo = retrieveOrThrow(todoId);
-        final Comment comment = commentMapper.toComment(req);
+        final Comment comment = Comment.from(req);
         todo.addComment(comment);
         todoRepo.save(todo);
         return commentMapper.toCommentResp(comment);
