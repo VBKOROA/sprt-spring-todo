@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.entity.vo;
+package indiv.abko.todo.global.vo;
 
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.global.exception.ExceptionEnum;
@@ -14,16 +14,16 @@ import org.springframework.util.StringUtils;
 @Embeddable
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TodoPassword {
+public class Password {
     private String password;
 
-    public TodoPassword(String password) {
+    public Password(String password) {
         shouldValid(password);
         this.password = password;
     }
 
-    public TodoPassword encrypted(final Encrypt encrypt) {
-        return new TodoPassword(encrypt.hash(this.password));
+    public Password encrypted(final Encrypt encrypt) {
+        return new Password(encrypt.hash(this.password));
     }
 
     public void verify(final String password, final Encrypt encrypt) {
