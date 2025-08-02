@@ -13,8 +13,8 @@ public enum ExceptionEnum {
     TODO_TITLE_LENGTH_NOT_VALID(HttpStatus.BAD_REQUEST, "제목의 길이는 1 ~ 30자 이내여야 합니다."),
     TODO_TITLE_REQUIRED(HttpStatus.BAD_REQUEST, "제목은 필수 입력 값입니다."),
     TODO_PASSWORD_REQUIRED(HttpStatus.BAD_REQUEST, "비밀번호는 필수 입력 값입니다."),
-    TODO_CONTENT_REQUIRED(HttpStatus.BAD_REQUEST, "내용은 필수 입력값입니다."),
-    TODO_CONTENT_LENGTH_NOT_VALID(HttpStatus.BAD_REQUEST, "내용의 길이는 1 ~ 200자 이내여야 합니다.");
+    CONTENT_REQUIRED(HttpStatus.BAD_REQUEST, "내용은 필수 입력값입니다."),
+    CONTENT_LENGTH_NOT_VALID(HttpStatus.BAD_REQUEST, "내용의 길이는 1 ~ 200자 이내여야 합니다.");
 
     private final HttpStatus status;
     private final String message;
