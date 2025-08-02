@@ -119,7 +119,8 @@ public class TodoService {
         final Comment comment = Comment.from(req, encodedPassword);
         todo.addComment(comment);
         todoRepo.save(todo);
-        return comment.toCommentResp();
+        final Comment savedComment = todo.getLastComment();
+        return savedComment.toCommentResp();
     }
 
     private void shouldHaveAuth(Todo todo, String rawPassword) {
