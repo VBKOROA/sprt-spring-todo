@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.global.exception.ExceptionEnum;
 import indiv.abko.todo.global.util.Encrypt;
-import indiv.abko.todo.todo.comment.service.CommentService;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.dto.TodoUpdateReq;
@@ -31,7 +30,6 @@ import java.util.Base64;
 public class TodoService {
     private final TodoRepository todoRepo;
     private final TodoMapper todoMapper;
-    private final CommentService commentService;
     private final Encrypt encrypt;
     private final CommentMapper commentMapper;
 
