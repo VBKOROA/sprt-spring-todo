@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-public interface TodoRepository extends JpaRepository<Todo, Long>, JpaSpecificationExecutor<Todo> {
+public interface TodoRepository extends JpaRepository<Todo, Long>, TodoRepositoryCustom {
     @Query("""
         SELECT t FROM Todo t LEFT JOIN FETCH t.comments c
         WHERE t.id = :id
