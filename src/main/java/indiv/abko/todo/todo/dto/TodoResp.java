@@ -2,8 +2,10 @@ package indiv.abko.todo.todo.dto;
 
 import java.time.LocalDateTime;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 
 @Schema(description = "Todo 응답 DTO")
+@Builder
 public record TodoResp(
     @Schema(description = "Todo ID", example = "1")
     Long id,
