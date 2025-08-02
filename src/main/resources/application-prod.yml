@@ -1,0 +1,11 @@
+spring:
+    application:
+        name: todo_prod
+    datasource:
+        url: jdbc:mysql://localhost:3306/sprt_todo
+        username: todo_user
+        password: todo_password
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+        hibernate:
+            ddl-auto: update
