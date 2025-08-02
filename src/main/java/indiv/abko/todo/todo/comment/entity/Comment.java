@@ -3,6 +3,7 @@ package indiv.abko.todo.todo.comment.entity;
 import java.time.LocalDateTime;
 
 import indiv.abko.todo.global.vo.Content;
+import indiv.abko.todo.global.vo.Password;
 import indiv.abko.todo.todo.comment.dto.CommentResp;
 import indiv.abko.todo.todo.comment.dto.CommentWriteReq;
 import jakarta.persistence.*;
@@ -31,7 +32,7 @@ public class Comment {
     private String author;
 
     // 비밀번호
-    private String password;
+    private Password password;
 
     // Todo 엔티티와의 연관관계
     @ManyToOne
@@ -45,7 +46,7 @@ public class Comment {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Comment(Content content, String author, String password) {
+    public Comment(Content content, String author, Password password) {
         this.content = content;
         this.author = author;
         this.password = password;
@@ -69,7 +70,7 @@ public class Comment {
         return Comment.builder()
                 .author(req.author())
                 .content(new Content(req.content()))
-                .password(req.password())
+                .password(new Password(req.password()))
                 .build();
     }
 }
