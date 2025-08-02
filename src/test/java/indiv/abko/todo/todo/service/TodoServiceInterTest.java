@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import indiv.abko.todo.todo.vo.Password;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -44,21 +45,21 @@ public class TodoServiceInterTest {
                     .title("테스트")
                     .author("테스트")
                     .content("테스트")
-                    .password("null")
+                    .password(new Password("null"))
                     .build());
 
             todos.add(Todo.builder()
                     .title("감스트")
                     .author("테스트")
                     .content("테스트")
-                    .password("null")
+                    .password(new Password("null"))
                     .build());
 
             todos.add(Todo.builder()
                     .title("스프")
                     .author("테스트")
                     .content("테스트")
-                    .password("null")
+                    .password(new Password("null"))
                     .build());
 
             savedTodos = todoRepository.saveAll(todos);
