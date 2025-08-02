@@ -126,13 +126,4 @@ public class Todo {
                 .map(Comment::toCommentResp)
                 .toList();
     }
-
-    @Getter
-    @AllArgsConstructor
-    public enum JPAPath {
-        id("id"), title("title.title"), content("content.content"), author("author"),
-        password("password.password"), comments("comments"), createdAt("createdAt"), modifiedAt("modifiedAt");
-
-        private final String path;
-    }
 }
