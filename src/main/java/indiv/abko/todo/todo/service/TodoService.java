@@ -41,7 +41,7 @@ public class TodoService {
      */
     @Transactional
     public TodoResp create(final TodoCreateReq todoReq) {
-        final Todo todo = todoMapper.toTodo(todoReq, encrypt);
+        final Todo todo = Todo.from(todoReq, encrypt);
         final var result = todoRepo.save(todo);
         return todoMapper.toTodoResp(result);
     }
