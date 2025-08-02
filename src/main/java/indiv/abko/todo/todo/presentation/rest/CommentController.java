@@ -1,12 +1,12 @@
-package indiv.abko.todo.todo.application.web;
+package indiv.abko.todo.todo.presentation.rest;
 
 import indiv.abko.todo.todo.application.service.TodoService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import indiv.abko.todo.todo.application.web.dto.ApiResp;
-import indiv.abko.todo.todo.application.web.dto.comment.CommentResp;
-import indiv.abko.todo.todo.application.web.dto.comment.CommentWriteReq;
+import indiv.abko.todo.todo.presentation.rest.dto.ApiResp;
+import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentResp;
+import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentWriteReq;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

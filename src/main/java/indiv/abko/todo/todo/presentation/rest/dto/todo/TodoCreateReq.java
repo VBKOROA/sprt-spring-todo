@@ -1,7 +1,7 @@
-package indiv.abko.todo.todo.application.web.dto.todo;
+package indiv.abko.todo.todo.presentation.rest.dto.todo;
 
-import indiv.abko.todo.todo.application.validation.ValidTodoContent;
-import indiv.abko.todo.todo.application.validation.ValidTodoTitle;
+import indiv.abko.todo.todo.presentation.validation.ValidTodoContent;
+import indiv.abko.todo.todo.presentation.validation.ValidTodoTitle;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;

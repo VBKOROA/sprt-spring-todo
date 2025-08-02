@@ -1,21 +1,21 @@
 package indiv.abko.todo.todo.application.service;
 
-import indiv.abko.todo.todo.application.web.dto.comment.CommentResp;
-import indiv.abko.todo.todo.application.web.dto.comment.CommentWriteReq;
+import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentResp;
+import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentWriteReq;
 import indiv.abko.todo.todo.domain.Comment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import indiv.abko.todo.todo.application.exception.BusinessException;
-import indiv.abko.todo.todo.application.exception.ExceptionEnum;
-import indiv.abko.todo.todo.application.web.dto.todo.TodoCreateReq;
-import indiv.abko.todo.todo.application.web.dto.todo.TodoSearchCondition;
-import indiv.abko.todo.todo.application.web.dto.todo.TodoUpdateReq;
-import indiv.abko.todo.todo.application.web.dto.todo.TodoWithCommentsResp;
+import indiv.abko.todo.todo.presentation.exception.BusinessException;
+import indiv.abko.todo.todo.presentation.exception.ExceptionEnum;
+import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoCreateReq;
+import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoSearchCondition;
+import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoUpdateReq;
+import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoWithCommentsResp;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.repository.TodoRepository;
-import indiv.abko.todo.todo.application.web.dto.todo.TodoListResp;
-import indiv.abko.todo.todo.application.web.dto.todo.TodoResp;
+import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoListResp;
+import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoResp;
 import lombok.RequiredArgsConstructor;
 
 @Service

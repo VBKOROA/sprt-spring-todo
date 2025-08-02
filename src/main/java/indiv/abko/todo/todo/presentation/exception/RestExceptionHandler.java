@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.application.exception;
+package indiv.abko.todo.todo.presentation.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import indiv.abko.todo.todo.application.web.dto.ApiResp;
+import indiv.abko.todo.todo.presentation.rest.dto.ApiResp;
 import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice

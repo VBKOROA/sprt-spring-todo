@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 import indiv.abko.todo.todo.domain.vo.Content;
 import indiv.abko.todo.todo.domain.vo.Password;
-import indiv.abko.todo.todo.application.web.dto.comment.CommentResp;
-import indiv.abko.todo.todo.application.web.dto.comment.CommentWriteReq;
+import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentResp;
+import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentWriteReq;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

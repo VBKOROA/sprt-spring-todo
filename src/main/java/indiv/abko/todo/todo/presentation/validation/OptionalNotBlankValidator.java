@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.application.validation;
+package indiv.abko.todo.todo.presentation.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

@@ -8,7 +8,6 @@ import java.util.stream.IntStream;
 
 import indiv.abko.todo.todo.domain.vo.Content;
 import indiv.abko.todo.todo.domain.vo.Password;
-import indiv.abko.todo.todo.application.service.TodoService;
 import indiv.abko.todo.todo.domain.vo.TodoTitle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-import indiv.abko.todo.todo.application.web.dto.todo.TodoSearchCondition;
+import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoSearchCondition;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.repository.TodoRepository;
 

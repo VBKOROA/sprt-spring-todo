@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.application.web;
+package indiv.abko.todo.todo.presentation.rest;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

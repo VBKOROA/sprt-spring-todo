@@ -1,8 +1,8 @@
-package indiv.abko.todo.todo.application.web.dto;
+package indiv.abko.todo.todo.presentation.rest.dto;
 
 import org.springframework.http.HttpStatus;
 
-import indiv.abko.todo.todo.application.exception.ExceptionEnum;
+import indiv.abko.todo.todo.presentation.exception.ExceptionEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "API 응답 DTO")

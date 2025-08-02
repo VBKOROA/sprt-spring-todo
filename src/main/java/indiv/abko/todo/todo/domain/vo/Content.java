@@ -1,7 +1,7 @@
 package indiv.abko.todo.todo.domain.vo;
 
-import indiv.abko.todo.todo.application.exception.BusinessException;
-import indiv.abko.todo.todo.application.exception.ExceptionEnum;
+import indiv.abko.todo.todo.presentation.exception.BusinessException;
+import indiv.abko.todo.todo.presentation.exception.ExceptionEnum;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;

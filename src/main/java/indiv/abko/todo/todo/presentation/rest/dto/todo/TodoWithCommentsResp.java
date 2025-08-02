@@ -1,7 +1,7 @@
-package indiv.abko.todo.todo.application.web.dto.todo;
+package indiv.abko.todo.todo.presentation.rest.dto.todo;
 
 import java.util.List;
-import indiv.abko.todo.todo.application.web.dto.comment.CommentResp;
+import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentResp;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Todo와 댓글 응답 DTO")

@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.application.validation;
+package indiv.abko.todo.todo.presentation.validation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

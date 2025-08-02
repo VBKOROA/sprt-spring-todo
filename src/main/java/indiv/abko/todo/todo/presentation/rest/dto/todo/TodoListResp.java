@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.application.web.dto.todo;
+package indiv.abko.todo.todo.presentation.rest.dto.todo;
 
 import java.util.List;
 import io.swagger.v3.oas.annotations.media.Schema;

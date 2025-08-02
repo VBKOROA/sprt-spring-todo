@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.application.validation;
+package indiv.abko.todo.todo.presentation.validation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,14 +6,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import jakarta.validation.constraints.Size;
 
-@Target({ElementType.FIELD})
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {})
-@Size(min = 1, max = 200)
-public @interface ValidTodoContent {
-    String message() default "";
+@Constraint(validatedBy = OptionalNotBlankValidator.class)
+public @interface OptionalNotBlank {
+    String message() default "공백이 아니어야 합니다.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

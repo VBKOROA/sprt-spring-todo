@@ -1,15 +1,15 @@
-package indiv.abko.todo.todo.application.web;
+package indiv.abko.todo.todo.presentation.rest;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import indiv.abko.todo.todo.application.web.dto.ApiResp;
-import indiv.abko.todo.todo.application.validation.ShouldBase64;
-import indiv.abko.todo.todo.application.web.dto.todo.TodoCreateReq;
-import indiv.abko.todo.todo.application.web.dto.todo.TodoSearchCondition;
-import indiv.abko.todo.todo.application.web.dto.todo.TodoUpdateReq;
-import indiv.abko.todo.todo.application.web.dto.todo.TodoWithCommentsResp;
+import indiv.abko.todo.todo.presentation.rest.dto.ApiResp;
+import indiv.abko.todo.todo.presentation.validation.ShouldBase64;
+import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoCreateReq;
+import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoSearchCondition;
+import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoUpdateReq;
+import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoWithCommentsResp;
 import indiv.abko.todo.todo.application.service.TodoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,8 +21,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import indiv.abko.todo.todo.application.web.dto.todo.TodoListResp;
-import indiv.abko.todo.todo.application.web.dto.todo.TodoResp;
+import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoListResp;
+import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoResp;
 
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;

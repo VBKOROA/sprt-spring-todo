@@ -1,6 +1,6 @@
-package indiv.abko.todo.todo.application.web.dto.comment;
+package indiv.abko.todo.todo.presentation.rest.dto.comment;
 
-import indiv.abko.todo.todo.application.validation.ValidCommentContent;
+import indiv.abko.todo.todo.presentation.validation.ValidCommentContent;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
