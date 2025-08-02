@@ -2,8 +2,10 @@ package indiv.abko.todo.todo.comment.dto;
 
 import java.time.LocalDateTime;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 
 @Schema(description = "댓글 응답 DTO")
+@Builder
 public record CommentResp(
     @Schema(description = "댓글 ID", example = "1")
     Long id,

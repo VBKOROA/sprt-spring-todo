@@ -2,6 +2,7 @@ package indiv.abko.todo.todo.comment.entity;
 
 import java.time.LocalDateTime;
 
+import indiv.abko.todo.todo.comment.dto.CommentResp;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
@@ -55,5 +56,15 @@ public class Comment {
 
     public void atTodo(Todo todo) {
         this.todo = todo;
+    }
+
+    public CommentResp toCommentResp() {
+        return CommentResp.builder()
+                .id(id)
+                .author(author)
+                .content(content)
+                .createdAt(createdAt)
+                .modifiedAt(modifiedAt)
+                .build();
     }
 }
