@@ -11,7 +11,7 @@ import indiv.abko.todo.todo.comment.dto.CommentResp;
 import indiv.abko.todo.todo.dto.TodoCreateReq;
 import indiv.abko.todo.todo.dto.TodoResp;
 import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
-import indiv.abko.todo.todo.entity.vo.TodoPassword;
+import indiv.abko.todo.global.vo.Password;
 import indiv.abko.todo.todo.entity.vo.TodoTitle;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -45,7 +45,7 @@ public class Todo {
     private String author; // 작성자
 
     @Embedded
-    private TodoPassword password; // 비밀번호
+    private Password password; // 비밀번호
 
     // Todo 엔티티와 댓글 엔티티 간의 연관관계 설정
     @OneToMany(mappedBy = "todo", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
@@ -59,7 +59,7 @@ public class Todo {
     private LocalDateTime modifiedAt;
 
     @Builder
-    public Todo(TodoTitle title, Content content, String author, TodoPassword password) {
+    public Todo(TodoTitle title, Content content, String author, Password password) {
         this.title = title;
         this.content = content;
         this.author = author;
@@ -98,7 +98,7 @@ public class Todo {
                 .title(new TodoTitle(dto.title()))
                 .author(dto.author())
                 .content(new Content(dto.content()))
-                .password(new TodoPassword(dto.password()).encrypted(encrypt))
+                .password(new Password(dto.password()).encrypted(encrypt))
                 .build();
     }
 
