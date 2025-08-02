@@ -130,6 +130,6 @@ public class TodoService {
         final Comment comment = Comment.from(req);
         todo.addComment(comment);
         todoRepo.save(todo);
-        return commentMapper.toCommentResp(comment);
+        return comment.toCommentResp();
     }
 }
