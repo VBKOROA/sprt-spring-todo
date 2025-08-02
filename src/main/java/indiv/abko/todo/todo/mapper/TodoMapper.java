@@ -19,7 +19,7 @@ public interface TodoMapper {
 
     // qualifiedByName으로 "hashPassword"라는 이름의 메서드만 password 필드에 적용
     @Mapping(target = "password", expression = "java(toPassword(req.password(), encrypt))")
-    Todo toTodo(TodoCreateReq req, Encrypt encrypts);
+    Todo toTodo(TodoCreateReq req, Encrypt encrypt);
 
     TodoResp toTodoResp(Todo todo);
 
