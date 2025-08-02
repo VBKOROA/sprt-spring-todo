@@ -15,7 +15,6 @@ import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.dto.TodoUpdateReq;
 import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
 import indiv.abko.todo.todo.entity.Todo;
-import indiv.abko.todo.todo.mapper.TodoMapper;
 import indiv.abko.todo.todo.repository.TodoRepository;
 import indiv.abko.todo.todo.repository.TodoSortBuilder;
 import indiv.abko.todo.todo.repository.TodoSpecBuilder;
@@ -29,7 +28,6 @@ import java.util.Base64;
 @RequiredArgsConstructor
 public class TodoService {
     private final TodoRepository todoRepo;
-    private final TodoMapper todoMapper;
     private final Encrypt encrypt;
     private final CommentMapper commentMapper;
 
