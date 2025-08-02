@@ -32,6 +32,7 @@ public class Comment {
     private String author;
 
     // 비밀번호
+    @Embedded
     private Password password;
 
     // Todo 엔티티와의 연관관계

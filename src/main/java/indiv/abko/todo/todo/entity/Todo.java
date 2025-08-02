@@ -14,6 +14,7 @@ import indiv.abko.todo.todo.dto.TodoWithCommentsResp;
 import indiv.abko.todo.global.vo.Password;
 import indiv.abko.todo.todo.entity.vo.TodoTitle;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -40,6 +41,7 @@ public class Todo {
     @Embedded
     private TodoTitle title; // 일정 제목
 
+    @Embedded
     private Content content; // 일정 내용
 
     private String author; // 작성자
@@ -67,23 +69,23 @@ public class Todo {
     }
 
     public void updatePresented(String title, String author) {
-        if(title != null) {
+        if (title != null) {
             this.title = new TodoTitle(title);
         }
 
-        if(author != null) {
+        if (author != null) {
             this.author = author;
         }
     }
 
     public void addComment(Comment comment) {
-        if(comments.size() == COMMENT_LIMIT) {
+        if (comments.size() == COMMENT_LIMIT) {
             throw new BusinessException(ExceptionEnum.COMMENT_LIMIT_EXCEEDED);
         }
         comments.add(comment);
         comment.atTodo(this);
     }
-    
+
     public static Optional<Todo.Fields> toField(String fieldName) {
         try {
             var field = Todo.Fields.valueOf(fieldName);
@@ -123,5 +125,14 @@ public class Todo {
         return comments.stream()
                 .map(Comment::toCommentResp)
                 .toList();
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public enum JPAPath {
+        id("id"), title("title.title"), content("content.content"), author("author"),
+        password("password.password"), comments("comments"), createdAt("createdAt"), modifiedAt("modifiedAt");
+
+        private final String path;
     }
 }
