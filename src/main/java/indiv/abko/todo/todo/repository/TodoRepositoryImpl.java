@@ -4,6 +4,7 @@ import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.ComparableExpressionBase;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import indiv.abko.todo.todo.dto.TodoSearchCondition;
 import indiv.abko.todo.todo.entity.Todo;
@@ -12,12 +13,18 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 import static indiv.abko.todo.todo.entity.QTodo.todo;
 
 @Repository
 @RequiredArgsConstructor
 public class TodoRepositoryImpl implements TodoRepositoryCustom {
+    private static final String SEPARATOR = "_";
+    private static final int PROPERTY_IDX = 0;
+    private static final int ORDER_IDX = 1;
+    private static final int VALID_SORT_CONDITION_LENGTH = 2;
+    private static final OrderSpecifier<?> DEFAULT_ORDER = new OrderSpecifier<>(Order.DESC, todo.modifiedAt);
 
     private final JPAQueryFactory queryFactory;
 
@@ -26,42 +33,43 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom {
         return queryFactory
                 .selectFrom(todo)
                 .where(
-                        authorLike(condition.author()),
-                        titleLike(condition.title()),
-                        contentLike(condition.content())
+                        like(condition.author(), todo.author),
+                        like(condition.title(), todo.title.title),
+                        like(condition.content(), todo.content.content)
                 )
                 .orderBy(getOrderBy(condition.orderBy()))
                 .fetch();
     }
 
-    private BooleanExpression authorLike(String author) {
-        return StringUtils.hasText(author) ? todo.author.like("%" + author + "%") : null;
-    }
-
-    private BooleanExpression titleLike(String title) {
-        return StringUtils.hasText(title) ? todo.title.title.like("%" + title + "%") : null;
-    }
-
-    private BooleanExpression contentLike(String content) {
-        return StringUtils.hasText(content) ? todo.content.content.like("%" + content + "%") : null;
+    private BooleanExpression like(String value, StringPath path) {
+        return StringUtils.hasText(value) ?
+                path.like("%" + value + "%") : null;
     }
 
     private OrderSpecifier<?> getOrderBy(String sort) {
-        if (!StringUtils.hasText(sort)) {
-            return new OrderSpecifier<>(Order.DESC, todo.modifiedAt);
+        var sortCondtion = parseValidSortString(sort);
+        if (sortCondtion.isEmpty()) {
+            return DEFAULT_ORDER;
         }
+        return createOrderSpecifierFrom(sortCondtion.get());
+    }
 
-        String[] sortCondition = sort.split("_");
-        if (sortCondition.length != 2) {
-            return new OrderSpecifier<>(Order.DESC, todo.modifiedAt);
-        }
-
-        String property = sortCondition[0];
-        Order direction = "desc".equalsIgnoreCase(sortCondition[1]) ? Order.DESC : Order.ASC;
-
+    private OrderSpecifier<?> createOrderSpecifierFrom(String[] sortCondition) {
+        String property = sortCondition[PROPERTY_IDX];
+        Order direction = "desc".equalsIgnoreCase(sortCondition[ORDER_IDX]) ?
+                Order.DESC : Order.ASC;
         ComparableExpressionBase<?> path = getPath(property);
-
         return new OrderSpecifier<>(direction, path);
+    }
+
+    private Optional<String[]> parseValidSortString(String sort) {
+        if (StringUtils.hasText(sort)) {
+            String[] sortCondition = sort.split(SEPARATOR);
+            if (sortCondition.length == VALID_SORT_CONDITION_LENGTH) {
+                return Optional.of(sortCondition);
+            }
+        }
+        return Optional.empty();
     }
 
     private ComparableExpressionBase<?> getPath(String property) {
@@ -71,7 +79,6 @@ public class TodoRepositoryImpl implements TodoRepositoryCustom {
             case "content" -> todo.content.content;
             case "author" -> todo.author;
             case "createdAt" -> todo.createdAt;
-            case "modifiedAt" -> todo.modifiedAt;
             default -> todo.modifiedAt;
         };
     }
