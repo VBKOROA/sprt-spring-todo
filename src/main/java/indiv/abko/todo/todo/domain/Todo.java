@@ -1,10 +1,9 @@
 package indiv.abko.todo.todo.domain;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import indiv.abko.todo.todo.domain.common.BaseTimeEntity;
 import indiv.abko.todo.todo.domain.vo.Content;
 import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentResp;
 import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoCreateReq;
@@ -13,9 +12,6 @@ import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoWithCommentsResp;
 import indiv.abko.todo.todo.domain.vo.Password;
 import indiv.abko.todo.todo.domain.vo.TodoTitle;
 import jakarta.persistence.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import indiv.abko.todo.todo.presentation.exception.BusinessException;
 import indiv.abko.todo.todo.presentation.exception.ExceptionEnum;
 import lombok.Builder;
@@ -27,8 +23,7 @@ import lombok.experimental.FieldNameConstants;
 @Getter
 @NoArgsConstructor
 @FieldNameConstants(asEnum = true)
-@EntityListeners(AuditingEntityListener.class)
-public class Todo {
+public class Todo extends BaseTimeEntity {
     private static final int COMMENT_LIMIT = 10;
 
     @Id
@@ -49,13 +44,6 @@ public class Todo {
     // Todo 엔티티와 댓글 엔티티 간의 연관관계 설정
     @OneToMany(mappedBy = "todo", cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>(); // 댓글 목록
-
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    private LocalDateTime modifiedAt;
 
     @Builder
     public Todo(final TodoTitle title, final Content content, final String author, final Password password) {
@@ -98,8 +86,8 @@ public class Todo {
                 .title(title.getTitle())
                 .content(content.getContent())
                 .author(author)
-                .createdAt(createdAt)
-                .modifiedAt(modifiedAt)
+                .createdAt(getCreatedAt())
+                .modifiedAt(getModifiedAt())
                 .build();
     }
 

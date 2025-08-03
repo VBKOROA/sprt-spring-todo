@@ -2,6 +2,7 @@ package indiv.abko.todo.todo.domain;
 
 import java.time.LocalDateTime;
 
+import indiv.abko.todo.todo.domain.common.BaseTimeEntity;
 import indiv.abko.todo.todo.domain.vo.Content;
 import indiv.abko.todo.todo.domain.vo.Password;
 import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentResp;
@@ -17,8 +18,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @Getter
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class Comment {
+public class Comment extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,13 +38,6 @@ public class Comment {
     @ManyToOne
     private Todo todo;
 
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    private LocalDateTime modifiedAt;
-
     @Builder
     public Comment(final Content content, final String author, final Password password) {
         this.content = content;
@@ -61,8 +54,8 @@ public class Comment {
                 .id(id)
                 .author(author)
                 .content(content.getContent())
-                .createdAt(createdAt)
-                .modifiedAt(modifiedAt)
+                .createdAt(getCreatedAt())
+                .modifiedAt(getModifiedAt())
                 .build();
     }
 
