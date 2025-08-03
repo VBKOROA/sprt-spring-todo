@@ -7,7 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import indiv.abko.todo.todo.presentation.rest.dto.ApiResp;
+import indiv.abko.todo.global.dto.ApiResp;
 import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice

@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import indiv.abko.todo.todo.presentation.rest.dto.ApiResp;
+import indiv.abko.todo.global.dto.ApiResp;
 import indiv.abko.todo.todo.presentation.validation.ShouldBase64;
 import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoCreateReq;
 import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoSearchCondition;

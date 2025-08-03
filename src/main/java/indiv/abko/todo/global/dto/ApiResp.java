@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.presentation.rest.dto;
+package indiv.abko.todo.global.dto;
 
 import org.springframework.http.HttpStatus;
 

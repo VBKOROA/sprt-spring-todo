@@ -1,6 +1,6 @@
 package indiv.abko.todo.todo.application.web;
 
-import indiv.abko.todo.todo.presentation.rest.dto.ApiResp;
+import indiv.abko.todo.global.dto.ApiResp;
 import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoCreateReq;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
