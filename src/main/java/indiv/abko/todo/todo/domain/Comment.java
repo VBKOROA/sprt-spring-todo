@@ -48,22 +48,4 @@ public class Comment extends BaseTimeEntity {
     public void atTodo(final Todo todo) {
         this.todo = todo;
     }
-
-    public CommentResp toCommentResp() {
-        return CommentResp.builder()
-                .id(id)
-                .author(author)
-                .content(content.getContent())
-                .createdAt(getCreatedAt())
-                .modifiedAt(getModifiedAt())
-                .build();
-    }
-
-    public static Comment from(final CommentWriteReq req, final Password encodedPassword) {
-        return Comment.builder()
-                .author(req.author())
-                .content(new Content(req.content()))
-                .password(encodedPassword)
-                .build();
-    }
 }

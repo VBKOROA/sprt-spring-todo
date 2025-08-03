@@ -1,0 +1,43 @@
+package indiv.abko.todo.todo.application.mapper;
+
+import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
+import indiv.abko.todo.todo.domain.Comment;
+import indiv.abko.todo.todo.domain.Todo;
+import indiv.abko.todo.todo.domain.vo.Content;
+import indiv.abko.todo.todo.domain.vo.Password;
+import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentResp;
+import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentWriteReq;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+@RequiredArgsConstructor
+public class CommentMapper {
+    private final PasswordEncoder passwordEncoder;
+
+    public List<CommentResp> toCommentResps(final List<Comment> comments) {
+        return comments.stream()
+                .map(this::toCommentResp)
+                .toList();
+    }
+
+    public CommentResp toCommentResp(final Comment comment) {
+        return CommentResp.builder()
+                .id(comment.getId())
+                .author(comment.getAuthor())
+                .content(comment.getContent().getContent())
+                .createdAt(comment.getCreatedAt())
+                .modifiedAt(comment.getModifiedAt())
+                .build();
+    }
+
+    public Comment toComment(final CommentWriteReq req) {
+        return Comment.builder()
+                .author(req.author())
+                .content(new Content(req.content()))
+                .password(passwordEncoder.encode(req.password()))
+                .build();
+    }
+}

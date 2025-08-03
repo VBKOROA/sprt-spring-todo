@@ -1,6 +1,7 @@
 package indiv.abko.todo.todo.application.service;
 
-import indiv.abko.todo.todo.application.mapper.TodoDomainMapper;
+import indiv.abko.todo.todo.application.mapper.CommentMapper;
+import indiv.abko.todo.todo.application.mapper.TodoMapper;
 import indiv.abko.todo.todo.application.port.out.PasswordDecoder;
 import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
@@ -28,7 +29,8 @@ public class TodoService {
     private final TodoRepository todoRepo;
     private final PasswordEncoder passwordEncoder;
     private final PasswordDecoder passwordDecoder;
-    private final TodoDomainMapper todoDomainMapper;
+    private final TodoMapper todoMapper;
+    private final CommentMapper commentMapper;
 
     /**
      * 주어진 요청 데이터로 새로운 Todo 항목을 생성한다.
@@ -38,9 +40,9 @@ public class TodoService {
      */
     @Transactional
     public TodoResp create(final TodoCreateReq todoReq) {
-        final Todo todo = todoDomainMapper.toTodo(todoReq);
+        final Todo todo = todoMapper.toTodo(todoReq);
         final Todo result = todoRepo.save(todo);
-        return todoDomainMapper.toTodoResp(result);
+        return todoMapper.toTodoResp(result);
     }
 
     /**
@@ -54,7 +56,7 @@ public class TodoService {
     public TodoWithCommentsResp getTodoWithComments(final Long id) {
         final Todo todo = todoRepo.findByIdWithComments(id)
                 .orElseThrow(() -> new BusinessException(TodoExceptionEnum.TODO_NOT_FOUND));
-        return todoDomainMapper.toTodoWithCommentsResp(todo);
+        return todoMapper.toTodoWithCommentsResp(todo);
     }
 
     private Todo retrieveOrThrow(final Long id) {
@@ -72,7 +74,7 @@ public class TodoService {
     public TodoListResp fetchFilteredTodos(final TodoSearchCondition condition) {
         final var todos = todoRepo.search(condition);
         return new TodoListResp(todos.stream()
-            .map(todoDomainMapper::toTodoResp)
+            .map(todoMapper::toTodoResp)
             .toList());
     }
 
@@ -89,7 +91,7 @@ public class TodoService {
         final Todo todo = retrieveOrThrow(id);
         shouldHaveAuth(todo, updateReq.password());
         todo.updatePresented(updateReq.title(), updateReq.author());
-        return todoDomainMapper.toTodoResp(todo);
+        return todoMapper.toTodoResp(todo);
     }
 
     /**
@@ -119,12 +121,11 @@ public class TodoService {
     @Transactional
     public CommentResp addComment(final Long todoId, final CommentWriteReq req) {
         final Todo todo = retrieveOrThrow(todoId);
-        final Password encodedPassword = passwordEncoder.encode(req.password());
-        final Comment comment = Comment.from(req, encodedPassword);
+        final Comment comment = commentMapper.toComment(req);
         todo.addComment(comment);
         todoRepo.save(todo);
         final Comment savedComment = todo.getLastComment();
-        return savedComment.toCommentResp();
+        return commentMapper.toCommentResp(savedComment);
     }
 
     private void shouldHaveAuth(final Todo todo, final String rawPassword) {

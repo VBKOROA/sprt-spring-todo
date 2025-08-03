@@ -1,7 +1,6 @@
 package indiv.abko.todo.todo.application.mapper;
 
 import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
-import indiv.abko.todo.todo.domain.Comment;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.vo.Content;
 import indiv.abko.todo.todo.domain.vo.TodoTitle;
@@ -16,8 +15,9 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class TodoDomainMapper {
+public class TodoMapper {
     private final PasswordEncoder passwordEncoder;
+    private final CommentMapper commentMapper;
 
     public Todo toTodo(final TodoCreateReq dto) {
         return Todo.builder()
@@ -41,13 +41,7 @@ public class TodoDomainMapper {
 
     public TodoWithCommentsResp toTodoWithCommentsResp(Todo todo) {
         final TodoResp todoResp = toTodoResp(todo);
-        final List<CommentResp> commentResps = toCommentResps(todo);
+        final List<CommentResp> commentResps = commentMapper.toCommentResps(todo.getComments());
         return new TodoWithCommentsResp(todoResp, commentResps);
-    }
-
-    private List<CommentResp> toCommentResps(Todo todo) {
-        return todo.getComments().stream()
-                .map(Comment::toCommentResp)
-                .toList();
     }
 }
