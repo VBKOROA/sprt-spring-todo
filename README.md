@@ -93,7 +93,7 @@
     git clone https://github.com/VBKOROA/sprt-spring-todo.git
     ```
 2.  **데이터베이스 설정**
-    - `src/main/resources/application.properties` (또는 `application.yml`) 파일을 생성하고, 본인의 MySQL 데이터베이스 정보를 입력하세요.
+    - `src/main/resources/init-db.sql` 을 실행하세요.
 3.  **애플리케이션 실행**
     ```bash
     ./gradlew bootRun
