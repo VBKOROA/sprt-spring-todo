@@ -18,8 +18,8 @@ public record ApiResp<T> (
         return new ApiResp<>(HttpStatus.OK, null, data);
     }
 
-    public static <T> ApiResp<T> error(BusinessExceptionEnum e, T data) {
-        return new ApiResp<>(e.getStatus(), e.getMessage(), data);
+    public static <T> ApiResp<T> error(BusinessExceptionEnum e) {
+        return new ApiResp<>(e.getStatus(), e.getMessage(), null);
     }
 
     public static <T> ApiResp<T> created(T data) {

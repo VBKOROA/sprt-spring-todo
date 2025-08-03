@@ -17,7 +17,7 @@ public class RestExceptionHandler {
         BusinessExceptionEnum businessExceptionEnum = e.getBusinessExceptionEnum();
         HttpStatus status = businessExceptionEnum.getStatus();
 
-        ApiResp<?> response = ApiResp.error(businessExceptionEnum, e.getData());
+        ApiResp<?> response = ApiResp.error(businessExceptionEnum);
 
         return new ResponseEntity<>(response, status);
     }
@@ -30,7 +30,7 @@ public class RestExceptionHandler {
         // singleError가 null인 경우는 없지만
         // 만약 없다면 알 수 없는 오류 처리
         if(singleError == null) {
-            var apiResponse = ApiResp.error(GlobalExceptionEnum.UNKNOWN_ERROR, "알 수 없는 오류가 발생했습니다.");
+            var apiResponse = ApiResp.error(GlobalExceptionEnum.UNKNOWN_ERROR);
             return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -46,7 +46,7 @@ public class RestExceptionHandler {
         var constraints = e.getConstraintViolations();
 
         if(constraints.isEmpty()) {
-            var apiResponse = ApiResp.error(GlobalExceptionEnum.UNKNOWN_ERROR, "알 수 없는 오류가 발생했습니다.");
+            var apiResponse = ApiResp.error(GlobalExceptionEnum.UNKNOWN_ERROR);
             return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
