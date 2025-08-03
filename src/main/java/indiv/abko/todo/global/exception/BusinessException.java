@@ -4,8 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class BusinessException extends RuntimeException {
-    private BusinessExceptionEnum businessExceptionEnum = GlobalExceptionEnum.UNKNOWN_ERROR;
-    private Object data;
+    private BusinessExceptionEnum businessExceptionEnum;
 
     public BusinessException(BusinessExceptionEnum e) {
         super();
