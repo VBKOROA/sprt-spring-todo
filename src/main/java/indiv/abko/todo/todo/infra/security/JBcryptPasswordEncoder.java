@@ -1,7 +1,7 @@
 package indiv.abko.todo.todo.infra.security;
 
 import indiv.abko.todo.todo.domain.vo.Password;
-import indiv.abko.todo.todo.application.service.PasswordEncoder;
+import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 

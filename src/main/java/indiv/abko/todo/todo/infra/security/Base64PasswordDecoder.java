@@ -1,6 +1,6 @@
 package indiv.abko.todo.todo.infra.security;
 
-import indiv.abko.todo.todo.application.service.PasswordDecoder;
+import indiv.abko.todo.todo.application.port.out.PasswordDecoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Base64;
