@@ -10,7 +10,7 @@ public enum GlobalExceptionEnum implements BusinessExceptionEnum{
     private final HttpStatus status;
     private final String message;
 
-    GlobalExceptionEnum(HttpStatus status, String message) {
+    GlobalExceptionEnum(final HttpStatus status, final String message) {
         this.status = status;
         this.message = message;
     }

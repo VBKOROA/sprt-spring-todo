@@ -28,7 +28,7 @@ public class TodoMapper {
                 .build();
     }
 
-    public TodoResp toTodoResp(Todo todo) {
+    public TodoResp toTodoResp(final Todo todo) {
         return TodoResp.builder()
                 .id(todo.getId())
                 .title(todo.getTitle().getTitle())
@@ -39,7 +39,7 @@ public class TodoMapper {
                 .build();
     }
 
-    public TodoWithCommentsResp toTodoWithCommentsResp(Todo todo) {
+    public TodoWithCommentsResp toTodoWithCommentsResp(final Todo todo) {
         final TodoResp todoResp = toTodoResp(todo);
         final List<CommentResp> commentResps = commentMapper.toCommentResps(todo.getComments());
         return new TodoWithCommentsResp(todoResp, commentResps);

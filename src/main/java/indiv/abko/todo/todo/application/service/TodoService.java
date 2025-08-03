@@ -5,7 +5,6 @@ import indiv.abko.todo.todo.application.mapper.TodoMapper;
 import indiv.abko.todo.todo.application.port.out.PasswordDecoder;
 import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
-import indiv.abko.todo.todo.domain.vo.Password;
 import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentResp;
 import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentWriteReq;
 import indiv.abko.todo.todo.domain.Comment;

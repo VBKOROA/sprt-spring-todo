@@ -18,7 +18,7 @@ public enum TodoExceptionEnum implements BusinessExceptionEnum {
     private final HttpStatus status;
     private final String message;
 
-    TodoExceptionEnum(HttpStatus status, String message) {
+    TodoExceptionEnum(final HttpStatus status, final String message) {
         this.status = status;
         this.message = message;
     }

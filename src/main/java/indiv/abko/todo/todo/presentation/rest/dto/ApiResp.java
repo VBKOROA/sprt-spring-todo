@@ -19,14 +19,14 @@ public record ApiResp<T> (
     }
 
     public static <T> ApiResp<T> error(BusinessExceptionEnum e, T data) {
-        return new ApiResp<T>(e.getStatus(), e.getMessage(), data);
+        return new ApiResp<>(e.getStatus(), e.getMessage(), data);
     }
 
     public static <T> ApiResp<T> created(T data) {
-        return new ApiResp<T>(HttpStatus.CREATED, null, data);
+        return new ApiResp<>(HttpStatus.CREATED, null, data);
     }
 
     public static ApiResp<Void> error(HttpStatus status, String message) {
-        return new ApiResp<Void>(status, message, null);
+        return new ApiResp<>(status, message, null);
     }
 }

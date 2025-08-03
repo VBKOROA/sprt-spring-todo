@@ -2,9 +2,7 @@ package indiv.abko.todo.todo.application.mapper;
 
 import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.Comment;
-import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.vo.Content;
-import indiv.abko.todo.todo.domain.vo.Password;
 import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentResp;
 import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentWriteReq;
 import lombok.RequiredArgsConstructor;
