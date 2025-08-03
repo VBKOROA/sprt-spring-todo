@@ -1,7 +1,8 @@
 package indiv.abko.todo.todo.domain.vo;
 
-import indiv.abko.todo.todo.presentation.exception.BusinessException;
-import indiv.abko.todo.todo.presentation.exception.ExceptionEnum;
+import indiv.abko.todo.global.exception.BusinessException;
+import indiv.abko.todo.global.exception.BusinessExceptionEnum;
+import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -23,7 +24,7 @@ public class Password {
 
     private void shouldValid(final String password) {
         if(StringUtils.hasText(password) == false)  {
-            throw new BusinessException(ExceptionEnum.TODO_PASSWORD_REQUIRED);
+            throw new BusinessException(TodoExceptionEnum.TODO_PASSWORD_REQUIRED);
         }
     }
 }

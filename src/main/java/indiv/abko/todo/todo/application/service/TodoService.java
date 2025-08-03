@@ -3,6 +3,7 @@ package indiv.abko.todo.todo.application.service;
 import indiv.abko.todo.todo.application.mapper.TodoDomainMapper;
 import indiv.abko.todo.todo.application.port.out.PasswordDecoder;
 import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
+import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
 import indiv.abko.todo.todo.domain.vo.Password;
 import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentResp;
 import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentWriteReq;
@@ -10,8 +11,7 @@ import indiv.abko.todo.todo.domain.Comment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import indiv.abko.todo.todo.presentation.exception.BusinessException;
-import indiv.abko.todo.todo.presentation.exception.ExceptionEnum;
+import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoCreateReq;
 import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoSearchCondition;
 import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoUpdateReq;
@@ -53,13 +53,13 @@ public class TodoService {
     @Transactional(readOnly = true)
     public TodoWithCommentsResp getTodoWithComments(final Long id) {
         final Todo todo = todoRepo.findByIdWithComments(id)
-                .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(TodoExceptionEnum.TODO_NOT_FOUND));
         return todoDomainMapper.toTodoWithCommentsResp(todo);
     }
 
     private Todo retrieveOrThrow(final Long id) {
         return todoRepo.findById(id)
-                .orElseThrow(() -> new BusinessException(ExceptionEnum.TODO_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(TodoExceptionEnum.TODO_NOT_FOUND));
     }
 
     /**
@@ -129,7 +129,7 @@ public class TodoService {
 
     private void shouldHaveAuth(final Todo todo, final String rawPassword) {
         if(passwordEncoder.matches(rawPassword, todo.getPassword()) == false) {
-            throw new BusinessException(ExceptionEnum.TODO_PERMISSION_DENIED);
+            throw new BusinessException(TodoExceptionEnum.TODO_PERMISSION_DENIED);
         }
     }
 }

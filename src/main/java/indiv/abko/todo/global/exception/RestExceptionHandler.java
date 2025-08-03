@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.presentation.exception;
+package indiv.abko.todo.global.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +14,10 @@ import jakarta.validation.ConstraintViolationException;
 public class RestExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ApiResp<?>> handleBusinessExcpetion(BusinessException e) {
-        ExceptionEnum exceptionEnum = e.getExceptionEnum();
-        HttpStatus status = exceptionEnum.getStatus();
+        BusinessExceptionEnum businessExceptionEnum = e.getBusinessExceptionEnum();
+        HttpStatus status = businessExceptionEnum.getStatus();
 
-        ApiResp<?> response = ApiResp.error(exceptionEnum, e.getData());
+        ApiResp<?> response = ApiResp.error(businessExceptionEnum, e.getData());
 
         return new ResponseEntity<>(response, status);
     }
@@ -30,7 +30,7 @@ public class RestExceptionHandler {
         // singleError가 null인 경우는 없지만
         // 만약 없다면 알 수 없는 오류 처리
         if(singleError == null) {
-            var apiResponse = ApiResp.error(ExceptionEnum.UNKNOWN_ERROR, "알 수 없는 오류가 발생했습니다.");
+            var apiResponse = ApiResp.error(GlobalExceptionEnum.UNKNOWN_ERROR, "알 수 없는 오류가 발생했습니다.");
             return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -46,7 +46,7 @@ public class RestExceptionHandler {
         var constraints = e.getConstraintViolations();
 
         if(constraints.isEmpty()) {
-            var apiResponse = ApiResp.error(ExceptionEnum.UNKNOWN_ERROR, "알 수 없는 오류가 발생했습니다.");
+            var apiResponse = ApiResp.error(GlobalExceptionEnum.UNKNOWN_ERROR, "알 수 없는 오류가 발생했습니다.");
             return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

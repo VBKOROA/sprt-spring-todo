@@ -2,7 +2,7 @@ package indiv.abko.todo.todo.presentation.rest.dto;
 
 import org.springframework.http.HttpStatus;
 
-import indiv.abko.todo.todo.presentation.exception.ExceptionEnum;
+import indiv.abko.todo.global.exception.BusinessExceptionEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "API 응답 DTO")
@@ -18,7 +18,7 @@ public record ApiResp<T> (
         return new ApiResp<>(HttpStatus.OK, null, data);
     }
 
-    public static <T> ApiResp<T> error(ExceptionEnum e, T data) {
+    public static <T> ApiResp<T> error(BusinessExceptionEnum e, T data) {
         return new ApiResp<T>(e.getStatus(), e.getMessage(), data);
     }
 

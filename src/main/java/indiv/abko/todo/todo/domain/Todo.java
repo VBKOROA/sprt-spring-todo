@@ -4,16 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import indiv.abko.todo.todo.domain.common.BaseTimeEntity;
+import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
 import indiv.abko.todo.todo.domain.vo.Content;
-import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentResp;
-import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoCreateReq;
-import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoResp;
-import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoWithCommentsResp;
 import indiv.abko.todo.todo.domain.vo.Password;
 import indiv.abko.todo.todo.domain.vo.TodoTitle;
 import jakarta.persistence.*;
-import indiv.abko.todo.todo.presentation.exception.BusinessException;
-import indiv.abko.todo.todo.presentation.exception.ExceptionEnum;
+import indiv.abko.todo.global.exception.BusinessException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -65,7 +61,7 @@ public class Todo extends BaseTimeEntity {
 
     public void addComment(final Comment comment) {
         if (comments.size() == COMMENT_LIMIT) {
-            throw new BusinessException(ExceptionEnum.COMMENT_LIMIT_EXCEEDED);
+            throw new BusinessException(TodoExceptionEnum.COMMENT_LIMIT_EXCEEDED);
         }
         comments.add(comment);
         comment.atTodo(this);

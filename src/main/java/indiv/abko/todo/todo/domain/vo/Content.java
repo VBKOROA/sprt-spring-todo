@@ -1,7 +1,8 @@
 package indiv.abko.todo.todo.domain.vo;
 
-import indiv.abko.todo.todo.presentation.exception.BusinessException;
-import indiv.abko.todo.todo.presentation.exception.ExceptionEnum;
+import indiv.abko.todo.global.exception.BusinessException;
+import indiv.abko.todo.global.exception.BusinessExceptionEnum;
+import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -23,13 +24,13 @@ public class Content {
 
     private void shouldValid(final String content) {
         if(StringUtils.hasText(content) == false)  {
-            throw new BusinessException(ExceptionEnum.CONTENT_REQUIRED);
+            throw new BusinessException(TodoExceptionEnum.CONTENT_REQUIRED);
         }
 
         final boolean notValid = !(1 <= content.length() && content.length() <= 200);
 
         if(notValid) {
-            throw new BusinessException(ExceptionEnum.CONTENT_LENGTH_NOT_VALID);
+            throw new BusinessException(TodoExceptionEnum.CONTENT_LENGTH_NOT_VALID);
         }
     }
 }
