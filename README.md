@@ -92,10 +92,10 @@
     git clone https://github.com/VBKOROA/sprt-spring-todo.git
     ```
 2.  **데이터베이스 설정**
-    - `src/main/resources/application.properties` (또는 `application.yml`) 파일을 생성하고, 본인의 MySQL 데이터베이스 정보를 입력하세요.
+    - `src/main/resources/init-db.sql` 을 관리자 계정으로 실행하세요.
 3.  **애플리케이션 실행**
     ```bash
-    ./gradlew bootRun
+    ./gradlew bootRun --args='--spring.profiles.active=prod'
     ```
 4.  **Swagger API 문서 확인**
     - 애플리케이션 실행 후, 웹 브라우저에서 `http://localhost:8080/swagger-ui/index.html` 로 접속하여 API 문서를 확인할 수 있습니다.
