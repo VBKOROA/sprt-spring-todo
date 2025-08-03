@@ -39,10 +39,9 @@
 
 ## 🔬 테스트 전략
 
-코드의 신뢰성과 설계의 견고함을 보장하기 위해 단위 테스트와 통합 테스트를 작성했습니다.
+코드의 신뢰성과 설계의 견고함을 보장하기 위해 통합 테스트를 작성했습니다.
 
 - **통합 테스트 (`@SpringBootTest`)**: API 계층부터 데이터베이스까지 시스템의 전체 흐름을 검증하여 각 계층의 연동과 비즈니스 로직의 정확성을 보장합니다.
-- **단위 테스트**: 외부 의존성이 적은 특정 컴포넌트(예: 값 객체)의 논리적 정확성을 독립적으로 검증하여 안정성을 높입니다.
 
 ## 🛠️ 적용 기술
 
@@ -52,7 +51,7 @@
 | **Language** | `Java` | 17 | LTS 버전의 Java |
 | **Database** | `Spring Data JPA`, `MySQL`, `H2` | | ORM을 통한 객체지향적 데이터 관리 (테스트에는 H2 사용) |
 | **Query** | `QueryDSL` | 5.0.0 | 타입-세이프(Type-Safe) 동적 쿼리 작성 |
-| **Testing** | `JUnit 5`, `AssertJ`, `@SpringBootTest` | | 통합/단위 테스트를 통한 코드 신뢰성 및 설계 증명 |
+| **Testing** | `JUnit 5`, `AssertJ`, `@SpringBootTest` | | 통합 테스트를 통한 코드 신뢰성 및 설계 증명 |
 | **Code-Gen** | `Lombok` | | 보일러플레이트 코드 자동 생성 및 제거 |
 | **Security** | `jBCrypt` | 0.4 | 강력한 해시 함수를 사용한 안전한 비밀번호 저장 |
 | **Build Tool** | `Gradle` | | 유연하고 빠른 빌드 자동화 도구 |
@@ -66,17 +65,22 @@
 │   └── main
 │       └── java
 │           └── indiv/abko/todo
+│               ├── global          # 🌍 전역 설정 및 예외 처리
+│               │   ├── config
+│               │   └── exception
 │               ├── todo
 │               │   ├── application   # 🧠 Use-Case 계층 (비즈니스 로직 흐름 제어)
+│               │   │   ├── mapper
+│               │   │   ├── port
 │               │   │   └── service
-│               │   ├── domain        # 🏛️ 핵심 도메인 모델 (Entity, VO, Repository Interface)
+│               │   ├── domain        # 🏛️ 핵심 도메인 모델 (엔티티 / 레포지토리 / VO / 예외)
+│               │   │   ├── exception
 │               │   │   ├── repository
 │               │   │   └── vo
 │               │   ├── infra         # 💾 외부 시스템 연동 (DB, Security 등)
 │               │   │   ├── persistence
 │               │   │   └── security
 │               │   └── presentation  # 📡 API 엔드포인트 및 DTO, 유효성 검사
-│               │       ├── exception
 │               │       ├── rest
 │               │       └── validation
 │               └── TodoApplication.java
@@ -94,10 +98,10 @@
     git clone https://github.com/VBKOROA/sprt-spring-todo.git
     ```
 2.  **데이터베이스 설정**
-    - `src/main/resources/application.properties` (또는 `application.yml`) 파일을 생성하고, 본인의 MySQL 데이터베이스 정보를 입력하세요.
+    - `src/main/resources/init-db.sql` 을 관리자 계정으로 실행하세요.
 3.  **애플리케이션 실행**
     ```bash
-    ./gradlew bootRun
+    ./gradlew bootRun --args='--spring.profiles.active=prod'
     ```
 4.  **Swagger API 문서 확인**
     - 애플리케이션 실행 후, 웹 브라우저에서 `http://localhost:8080/swagger-ui/index.html` 로 접속하여 API 문서를 확인할 수 있습니다.
