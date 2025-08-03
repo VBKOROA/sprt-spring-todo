@@ -71,38 +71,6 @@ public class Todo extends BaseTimeEntity {
         comment.atTodo(this);
     }
 
-    public static Todo from(final TodoCreateReq dto, final Password encryptedPassword) {
-        return Todo.builder()
-                .title(new TodoTitle(dto.title()))
-                .author(dto.author())
-                .content(new Content(dto.content()))
-                .password(encryptedPassword)
-                .build();
-    }
-
-    public TodoResp toTodoResp() {
-        return TodoResp.builder()
-                .id(id)
-                .title(title.getTitle())
-                .content(content.getContent())
-                .author(author)
-                .createdAt(getCreatedAt())
-                .modifiedAt(getModifiedAt())
-                .build();
-    }
-
-    public TodoWithCommentsResp toTodoWithCommentsResp() {
-        final TodoResp todoResp = toTodoResp();
-        final List<CommentResp> commentResps = toCommentResps();
-        return new TodoWithCommentsResp(todoResp, commentResps);
-    }
-
-    private List<CommentResp> toCommentResps() {
-        return comments.stream()
-                .map(Comment::toCommentResp)
-                .toList();
-    }
-
     public Comment getLastComment() {
         final int lastIdx = comments.size() - 1;
         return comments.get(lastIdx);
