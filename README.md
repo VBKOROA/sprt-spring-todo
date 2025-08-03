@@ -68,7 +68,7 @@
 │               ├── global          # 🌍 전역 설정 및 예외 처리
 │               │   ├── config
 │               │   └── exception
-│               ├── todo
+│               ├── todo            # 📝 Todo 컨텍스트
 │               │   ├── application   # 🧠 Use-Case 계층 (비즈니스 로직 흐름 제어)
 │               │   │   ├── mapper
 │               │   │   ├── port
