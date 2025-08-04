@@ -43,9 +43,11 @@
 
 ## 🔬 테스트 전략
 
-코드의 신뢰성과 설계의 견고함을 보장하기 위해 통합 테스트를 작성했습니다.
+코드의 신뢰성과 설계의 견고함을 보장하기 위해, 각 계층의 책임에 맞는 테스트를 작성하여 프로젝트의 안정성을 다각도로 검증합니다.
 
-- **통합 테스트 (`@SpringBootTest`)**: API 계층부터 데이터베이스까지 시스템의 전체 흐름을 검증하여 각 계층의 연동과 비즈니스 로직의 정확성을 보장합니다.
+- **도메인 단위 테스트 (`@Test`)**: 순수한 도메인 객체(`Todo`)의 비즈니스 로직(댓글 추가, 개수 제한 등)을 외부 의존성 없이 검증합니다.
+- **애플리케이션 단위 테스트 (`@ExtendWith(MockitoExtension.class)`)**: `Mockito`로 외부 의존성을 Mocking하여, 서비스 계층(`TodoService`)의 비즈니스 로직(수정/삭제 시 인가 처리 등)을 순수하게 검증합니다.
+- **인프라 통합 테스트 (`@DataJpaTest`)**: 인메모리 DB(H2)를 사용하여, 데이터베이스 접근 계층(`TodoQDSLRepository`)의 QueryDSL 동적 쿼리 및 정렬 로직을 검증합니다.
 
 ## 🛠️ 적용 기술
 
@@ -55,7 +57,7 @@
 | **Language** | `Java` | 17 | LTS 버전의 Java |
 | **Database** | `Spring Data JPA`, `MySQL`, `H2` | | ORM을 통한 객체지향적 데이터 관리 (테스트에는 H2 사용) |
 | **Query** | `QueryDSL` | 5.0.0 | 타입-세이프(Type-Safe) 동적 쿼리 작성 |
-| **Testing** | `JUnit 5`, `AssertJ`, `@SpringBootTest` | | 통합 테스트를 통한 코드 신뢰성 및 설계 증명 |
+| **Testing** | `JUnit 5`, `AssertJ`, `Mockito`, `@DataJpaTest` | | 계층별 단위/통합 테스트를 통한 코드 신뢰성 및 설계 증명 |
 | **Code-Gen** | `Lombok` | | 보일러플레이트 코드 자동 생성 및 제거 |
 | **Security** | `jBCrypt` | 0.4 | 강력한 해시 함수를 사용한 안전한 비밀번호 저장 |
 | **Build Tool** | `Gradle` | | 유연하고 빠른 빌드 자동화 도구 |
@@ -72,7 +74,7 @@
 │               ├── global          # 🌍 전역 설정 및 예외 처리
 │               │   ├── config
 │               │   └── exception
-                │   └── dto         # API 기본 응답 구조
+│               │   └── dto         # API 기본 응답 구조
 │               ├── todo            # 📝 Todo 컨텍스트
 │               │   ├── application   # 🧠 Use-Case 계층 (비즈니스 로직 흐름 제어)
 │               │   │   ├── mapper      # DTO <-> Domain 변환
