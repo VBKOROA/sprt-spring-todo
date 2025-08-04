@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import indiv.abko.todo.todo.domain.common.BaseTimeEntity;
 import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
 import indiv.abko.todo.todo.domain.vo.Content;
 import indiv.abko.todo.todo.domain.vo.Password;
@@ -16,7 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Todo extends BaseTimeEntity {
+public class Todo {
     private static final int COMMENT_LIMIT = 10;
 
     private Long id;
@@ -28,14 +27,6 @@ public class Todo extends BaseTimeEntity {
     private List<Comment> comments = new ArrayList<>(); // 댓글 목록
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-
-    @Builder
-    public Todo(final TodoTitle title, final Content content, final String author, final Password password) {
-        this.title = title;
-        this.content = content;
-        this.author = author;
-        this.password = password;
-    }
 
     public void updatePresented(final String title, final String author) {
         if (title != null) {

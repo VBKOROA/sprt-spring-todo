@@ -1,6 +1,5 @@
 package indiv.abko.todo.todo.infra.persistence;
 
-import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.infra.persistence.entity.TodoJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

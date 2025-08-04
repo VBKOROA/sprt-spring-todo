@@ -1,15 +1,7 @@
 package indiv.abko.todo.todo.infra.persistence.entity;
 
-import indiv.abko.todo.global.exception.BusinessException;
-import indiv.abko.todo.todo.domain.Comment;
-import indiv.abko.todo.todo.domain.common.BaseTimeEntity;
-import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
-import indiv.abko.todo.todo.domain.vo.Content;
-import indiv.abko.todo.todo.domain.vo.Password;
-import indiv.abko.todo.todo.domain.vo.TodoTitle;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.FieldNameConstants;
 
 import java.util.ArrayList;
 import java.util.List;

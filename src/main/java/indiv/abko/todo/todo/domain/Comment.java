@@ -1,6 +1,5 @@
 package indiv.abko.todo.todo.domain;
 
-import indiv.abko.todo.todo.domain.common.BaseTimeEntity;
 import indiv.abko.todo.todo.domain.vo.Content;
 import indiv.abko.todo.todo.domain.vo.Password;
 import lombok.*;
@@ -11,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Comment extends BaseTimeEntity {
+public class Comment {
     private Long id;
     private Content content;
     private String author;

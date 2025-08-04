@@ -1,9 +1,5 @@
 package indiv.abko.todo.todo.infra.persistence.entity;
 
-import indiv.abko.todo.todo.domain.Todo;
-import indiv.abko.todo.todo.domain.common.BaseTimeEntity;
-import indiv.abko.todo.todo.domain.vo.Content;
-import indiv.abko.todo.todo.domain.vo.Password;
 import jakarta.persistence.*;
 import lombok.*;
 
