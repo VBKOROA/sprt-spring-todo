@@ -5,13 +5,14 @@ import indiv.abko.todo.todo.domain.common.BaseTimeEntity;
 import indiv.abko.todo.todo.domain.vo.Content;
 import indiv.abko.todo.todo.domain.vo.Password;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Table(name = "comment")
 public class CommentJpaEntity extends BaseTimeJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,12 +29,5 @@ public class CommentJpaEntity extends BaseTimeJpaEntity {
 
     // Todo 엔티티와의 연관관계
     @ManyToOne
-    private Todo todo;
-
-    @Builder
-    public CommentJpaEntity(final String content, final String author, final String password) {
-        this.content = content;
-        this.author = author;
-        this.password = password;
-    }
+    private TodoJpaEntity todo;
 }

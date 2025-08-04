@@ -53,13 +53,18 @@ public class TodoService {
      */
     @Transactional(readOnly = true)
     public TodoWithCommentsResp getTodoWithComments(final Long id) {
-        final Todo todo = todoRepo.findByIdWithComments(id)
+        final Todo todo = todoRepo.findAggregate(id)
                 .orElseThrow(() -> new BusinessException(TodoExceptionEnum.TODO_NOT_FOUND));
         return todoMapper.toTodoWithCommentsResp(todo);
     }
 
-    private Todo retrieveOrThrow(final Long id) {
-        return todoRepo.findById(id)
+    private Todo retrieveSummaryOrThrow(final Long id) {
+        return todoRepo.findSummary(id)
+                .orElseThrow(() -> new BusinessException(TodoExceptionEnum.TODO_NOT_FOUND));
+    }
+
+    private Todo retrieveAggregateOrThrow(final Long id) {
+        return todoRepo.findAggregate(id)
                 .orElseThrow(() -> new BusinessException(TodoExceptionEnum.TODO_NOT_FOUND));
     }
 
@@ -71,7 +76,7 @@ public class TodoService {
      */
     @Transactional(readOnly = true)
     public TodoListResp fetchFilteredTodos(final TodoSearchCondition condition) {
-        final var todos = todoRepo.search(condition);
+        final var todos = todoRepo.searchSummaries(condition);
         return new TodoListResp(todos.stream()
             .map(todoMapper::toTodoResp)
             .toList());
@@ -87,9 +92,10 @@ public class TodoService {
      */
     @Transactional
     public TodoResp updateTodo(final Long id, final TodoUpdateReq updateReq) {
-        final Todo todo = retrieveOrThrow(id);
+        final Todo todo = retrieveAggregateOrThrow(id);
         shouldHaveAuth(todo, updateReq.password());
         todo.updatePresented(updateReq.title(), updateReq.author());
+        todoRepo.save(todo);
         return todoMapper.toTodoResp(todo);
     }
 
@@ -104,7 +110,7 @@ public class TodoService {
     @Transactional
     public void deleteTodo(final Long id, final String encodedPassword) {
         final String decodedPassword = passwordDecoder.decode(encodedPassword);
-        final Todo todo = retrieveOrThrow(id);
+        final Todo todo = retrieveSummaryOrThrow(id);
         shouldHaveAuth(todo, decodedPassword);
         todoRepo.delete(todo);
     }
@@ -119,11 +125,11 @@ public class TodoService {
      */
     @Transactional
     public CommentResp addComment(final Long todoId, final CommentWriteReq req) {
-        final Todo todo = retrieveOrThrow(todoId);
+        final Todo todo = retrieveAggregateOrThrow(todoId);
         final Comment comment = commentMapper.toComment(req);
         todo.addComment(comment);
-        todoRepo.save(todo);
-        final Comment savedComment = todo.getLastComment();
+        final Todo savedTodo = todoRepo.save(todo);
+        final Comment savedComment = savedTodo.getLastComment();
         return commentMapper.toCommentResp(savedComment);
     }
 

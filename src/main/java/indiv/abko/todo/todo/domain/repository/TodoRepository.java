@@ -7,6 +7,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TodoRepository {
-    Optional<Todo> findByIdWithComments(Long id);
-    List<Todo> search(final TodoSearchCondition condition);
+    Optional<Todo> findAggregate(Long id);
+    List<Todo> searchSummaries(final TodoSearchCondition condition);
+
+    Todo save(Todo todo);
+
+    Optional<Todo> findSummary(Long id);
+
+    void delete(Todo todo);
 }
