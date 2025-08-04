@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.infra.persistence;
+package indiv.abko.todo.global.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

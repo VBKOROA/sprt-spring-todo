@@ -1,17 +1,18 @@
 package indiv.abko.todo.todo.domain.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoSearchCondition;
 import indiv.abko.todo.todo.domain.Todo;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
+public interface TodoRepository {
+    Optional<Todo> findAggregate(Long id);
+    List<Todo> searchSummaries(final TodoSearchCondition condition);
 
-public interface TodoRepository extends JpaRepository<Todo, Long>, TodoRepositoryCustom {
-    @Query("""
-        SELECT t FROM Todo t LEFT JOIN FETCH t.comments c
-        WHERE t.id = :id
-    """)
-    Optional<Todo> findByIdWithComments(@Param("id") Long id);
+    Todo save(Todo todo);
+
+    Optional<Todo> findSummary(Long id);
+
+    void delete(Todo todo);
 }

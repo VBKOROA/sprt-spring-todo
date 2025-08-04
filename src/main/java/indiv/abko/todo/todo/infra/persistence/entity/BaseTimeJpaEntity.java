@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.domain.common;
+package indiv.abko.todo.todo.infra.persistence.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class BaseTimeEntity {
+public class BaseTimeJpaEntity {
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
