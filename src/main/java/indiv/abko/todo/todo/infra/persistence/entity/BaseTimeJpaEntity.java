@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
-public class BaseTimeJpaEntity {
+public abstract class BaseTimeJpaEntity {
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
