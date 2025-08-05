@@ -1,5 +1,6 @@
 package indiv.abko.todo.todo.application.usecase;
 
+import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import indiv.abko.todo.todo.application.port.in.command.CreateTodoCommand;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CreateTodoUseCase {
     private final TodoRepository todoRepo;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 새로운 Todo 항목을 생성하고 저장소에 저장한다.
@@ -23,10 +25,11 @@ public class CreateTodoUseCase {
      */
     @Transactional
     public Todo execute(final CreateTodoCommand createCommand) {
+        final var encodedPassword = passwordEncoder.encode(createCommand.password());
         final Todo todo = Todo.builder().author(createCommand.author())
                 .content(new Content(createCommand.content()))
                 .title(new TodoTitle(createCommand.title()))
-                .password(new Password(createCommand.password())).build();
+                .password(encodedPassword).build();
         todoRepo.save(todo);
         return todo;
     }
