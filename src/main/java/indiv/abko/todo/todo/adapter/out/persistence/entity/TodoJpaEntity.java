@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.infra.persistence.entity;
+package indiv.abko.todo.todo.adapter.out.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

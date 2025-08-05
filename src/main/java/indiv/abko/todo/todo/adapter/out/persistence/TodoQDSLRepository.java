@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.infra.persistence;
+package indiv.abko.todo.todo.adapter.out.persistence;
 
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -6,14 +6,14 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.ComparableExpressionBase;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoSearchCondition;
-import indiv.abko.todo.todo.infra.persistence.entity.TodoJpaEntity;
+import indiv.abko.todo.todo.adapter.out.persistence.entity.TodoJpaEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 
-import static indiv.abko.todo.todo.infra.persistence.entity.QTodoJpaEntity.todoJpaEntity;
+import static indiv.abko.todo.todo.adapter.out.persistence.entity.QTodoJpaEntity.todoJpaEntity;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,7 +25,6 @@ public class TodoQDSLRepository {
     private static final OrderSpecifier<?> DEFAULT_ORDER = new OrderSpecifier<>(Order.DESC, todoJpaEntity.modifiedAt);
 
     private final JPAQueryFactory queryFactory;
-    private final TodoJpaRepository todoJpaRepository;
 
     public List<TodoJpaEntity> search(final TodoSearchCondition condition) {
         return queryFactory

@@ -1,10 +1,10 @@
-package indiv.abko.todo.todo.infra.persistence.mapper;
+package indiv.abko.todo.todo.adapter.out.persistence.mapper;
 
+import indiv.abko.todo.todo.adapter.out.persistence.entity.CommentJpaEntity;
 import indiv.abko.todo.todo.domain.Comment;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.vo.Content;
 import indiv.abko.todo.todo.domain.vo.Password;
-import indiv.abko.todo.todo.infra.persistence.entity.CommentJpaEntity;
 import org.springframework.stereotype.Component;
 
 @Component

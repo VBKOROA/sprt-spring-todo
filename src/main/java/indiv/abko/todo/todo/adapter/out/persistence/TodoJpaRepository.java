@@ -1,10 +1,9 @@
-package indiv.abko.todo.todo.infra.persistence;
+package indiv.abko.todo.todo.adapter.out.persistence;
 
-import indiv.abko.todo.todo.infra.persistence.entity.TodoJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
+import indiv.abko.todo.todo.adapter.out.persistence.entity.TodoJpaEntity;
 import java.util.Optional;
 
 public interface TodoJpaRepository extends JpaRepository<TodoJpaEntity,Long> {

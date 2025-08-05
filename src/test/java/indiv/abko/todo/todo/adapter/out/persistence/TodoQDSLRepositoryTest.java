@@ -1,9 +1,9 @@
-package indiv.abko.todo.todo.infra.persistence;
+package indiv.abko.todo.todo.adapter.out.persistence;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import indiv.abko.todo.global.config.QueryDslConfig;
 import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoSearchCondition;
-import indiv.abko.todo.todo.infra.persistence.entity.TodoJpaEntity;
+import indiv.abko.todo.todo.adapter.out.persistence.entity.TodoJpaEntity;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
