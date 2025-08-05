@@ -27,6 +27,7 @@ public class CreateTodoUseCase {
                 .content(new Content(createCommand.content()))
                 .title(new TodoTitle(createCommand.title()))
                 .password(new Password(createCommand.password())).build();
-        return todoRepo.save(todo);
+        todoRepo.save(todo);
+        return todo;
     }
 }

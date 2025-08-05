@@ -38,7 +38,7 @@ public class AddCommentUseCase {
             .password(new Password(command.password()))
             .build();
         todo.addComment(comment);
-        final Todo savedTodo = todoRepo.save(todo);
+        final Todo savedTodo = todoRepo.saveComment(todo);
         return savedTodo.getLastComment();
     }
 }

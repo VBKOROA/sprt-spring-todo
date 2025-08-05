@@ -10,9 +10,12 @@ public interface TodoRepository {
     Optional<Todo> findAggregate(Long id);
     List<Todo> searchSummaries(final SearchTodosCommand searchCommand);
 
-    Todo save(Todo todo);
+    void save(Todo todo);
+    Todo saveComment(Todo todo);
 
     Optional<Todo> findSummary(Long id);
 
     void delete(Todo todo);
+
+    void update(Todo todo);
 }

@@ -31,7 +31,15 @@ public class TodoRepositoryAdapter implements TodoRepository {
     }
 
     @Override
-    public Todo save(final Todo todo) {
+    public void save(final Todo todo) {
+        final TodoJpaEntity todoEntity = todoJpaRepository.save(todoEntityMapper.toEntity(todo));
+        todo.updateIdViaRepository(todoEntity.getId());
+        todo.updateCreatedAtViaRepository(todoEntity.getCreatedAt());
+        todo.updateModifiedAtViaRepository(todoEntity.getModifiedAt());
+    }
+
+    @Override
+    public Todo saveComment(final Todo todo) {
         final TodoJpaEntity todoEntity = todoJpaRepository.save(todoEntityMapper.toEntity(todo));
         return todoEntityMapper.toAggregate(todoEntity);
     }
@@ -45,5 +53,11 @@ public class TodoRepositoryAdapter implements TodoRepository {
     public void delete(final Todo todo) {
         final TodoJpaEntity todoEntity = todoEntityMapper.toEntity(todo);
         todoJpaRepository.delete(todoEntity);
+    }
+
+    @Override
+    public void update(Todo todo) {
+        final TodoJpaEntity todoEntity = todoJpaRepository.save(todoEntityMapper.toEntity(todo));
+        todo.updateModifiedAtViaRepository(todoEntity.getModifiedAt());
     }
 }

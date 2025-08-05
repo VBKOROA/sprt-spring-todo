@@ -29,6 +29,18 @@ public class Todo {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
+    public void updateIdViaRepository(Long id) {
+        this.id = id;
+    }
+
+    public void updateCreatedAtViaRepository(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void updateModifiedAtViaRepository(LocalDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
     public void updatePresented(final String title, final String author) {
         if (title != null) {
             this.title = new TodoTitle(title);
