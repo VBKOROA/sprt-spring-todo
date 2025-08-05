@@ -1,7 +1,6 @@
 package indiv.abko.todo.todo.adapter.in.rest.mapper;
 
 import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoResp;
-import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.Todo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,8 +10,6 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class TodoMapper {
-    private final PasswordEncoder passwordEncoder;
-    private final CommentMapper commentMapper;
 
     public TodoResp toTodoResp(final Todo todo) {
         return TodoResp.builder()
