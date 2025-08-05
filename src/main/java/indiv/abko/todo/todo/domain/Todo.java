@@ -7,7 +7,7 @@ import java.util.List;
 import indiv.abko.todo.todo.domain.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
 import indiv.abko.todo.todo.domain.vo.ContentVO;
-import indiv.abko.todo.todo.domain.vo.Password;
+import indiv.abko.todo.todo.domain.vo.PasswordVO;
 import indiv.abko.todo.todo.domain.vo.TodoTitle;
 import indiv.abko.todo.global.exception.BusinessException;
 import lombok.*;
@@ -23,7 +23,7 @@ public class Todo {
     private TodoTitle title; // 일정 제목
     private ContentVO content; // 일정 내용
     private String author; // 작성자
-    private Password password; // 비밀번호
+    private PasswordVO password; // 비밀번호
     @Builder.Default
     private List<Comment> comments = new ArrayList<>(); // 댓글 목록
     private LocalDateTime createdAt;

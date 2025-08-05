@@ -6,7 +6,7 @@ import indiv.abko.todo.todo.domain.port.out.PasswordDecoder;
 import indiv.abko.todo.todo.domain.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
-import indiv.abko.todo.todo.domain.vo.Password;
+import indiv.abko.todo.todo.domain.vo.PasswordVO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +41,7 @@ class DeleteTodoUseCaseTest {
         // given
         DeleteTodoCommand command = new DeleteTodoCommand(1L, "encodedPassword");
         String decodedPassword = "password";
-        Password passwordVO = new Password("encodedPasswordValue"); // 실제 인코딩된 값
+        PasswordVO passwordVO = new PasswordVO("encodedPasswordValue"); // 실제 인코딩된 값
         Todo todo = Todo.builder().password(passwordVO).build();
 
         given(passwordDecoder.decode(command.encodedPassword())).willReturn(decodedPassword);
@@ -74,7 +74,7 @@ class DeleteTodoUseCaseTest {
         // given
         DeleteTodoCommand command = new DeleteTodoCommand(1L, "encodedPassword");
         String decodedPassword = "wrong_password";
-        Password passwordVO = new Password("encodedPasswordValue");
+        PasswordVO passwordVO = new PasswordVO("encodedPasswordValue");
         Todo todo = Todo.builder().password(passwordVO).build();
 
         given(passwordDecoder.decode(command.encodedPassword())).willReturn(decodedPassword);

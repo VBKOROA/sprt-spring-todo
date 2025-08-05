@@ -6,7 +6,7 @@ import indiv.abko.todo.todo.domain.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Comment;
 import indiv.abko.todo.todo.domain.Todo;
-import indiv.abko.todo.todo.domain.vo.Password;
+import indiv.abko.todo.todo.domain.vo.PasswordVO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +41,7 @@ class AddCommentUseCaseTest {
         // given
         AddCommentCommand command = new AddCommentCommand(1L, "content", "author", "password");
         Todo todo = Todo.builder().id(1L).build();
-        Password encodedPassword = new Password("encodedPassword");
+        PasswordVO encodedPassword = new PasswordVO("encodedPassword");
 
         given(todoRepository.findAggregate(command.todoId())).willReturn(Optional.of(todo));
         given(passwordEncoder.encode(anyString())).willReturn(encodedPassword);

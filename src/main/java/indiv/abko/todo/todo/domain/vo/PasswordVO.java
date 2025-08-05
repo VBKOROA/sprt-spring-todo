@@ -12,10 +12,10 @@ import org.springframework.util.StringUtils;
 @Getter
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Password {
+public class PasswordVO {
     private String password;
 
-    public Password(final String password) {
+    public PasswordVO(final String password) {
         shouldValid(password);
         this.password = password;
     }

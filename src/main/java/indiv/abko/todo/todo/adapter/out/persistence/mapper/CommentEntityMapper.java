@@ -4,7 +4,7 @@ import indiv.abko.todo.todo.adapter.out.persistence.entity.CommentJpaEntity;
 import indiv.abko.todo.todo.domain.Comment;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.vo.ContentVO;
-import indiv.abko.todo.todo.domain.vo.Password;
+import indiv.abko.todo.todo.domain.vo.PasswordVO;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,7 +18,7 @@ public class CommentEntityMapper {
                 .todo(todo)
                 .author(commentJpaEntity.getAuthor())
                 .content(new ContentVO(commentJpaEntity.getContent()))
-                .password(new Password(commentJpaEntity.getPassword()))
+                .password(new PasswordVO(commentJpaEntity.getPassword()))
                 .build();
     }
 

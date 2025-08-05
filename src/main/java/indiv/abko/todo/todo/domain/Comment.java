@@ -1,7 +1,7 @@
 package indiv.abko.todo.todo.domain;
 
 import indiv.abko.todo.todo.domain.vo.ContentVO;
-import indiv.abko.todo.todo.domain.vo.Password;
+import indiv.abko.todo.todo.domain.vo.PasswordVO;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -14,7 +14,7 @@ public class Comment {
     private Long id;
     private ContentVO content;
     private String author;
-    private Password password;
+    private PasswordVO password;
     private Todo todo;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;

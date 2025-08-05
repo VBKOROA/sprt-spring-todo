@@ -4,7 +4,7 @@ import indiv.abko.todo.todo.application.port.in.command.CreateTodoCommand;
 import indiv.abko.todo.todo.domain.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
-import indiv.abko.todo.todo.domain.vo.Password;
+import indiv.abko.todo.todo.domain.vo.PasswordVO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +34,7 @@ class CreateTodoUseCaseTest {
     void 할일을_성공적으로_생성해야한다() {
         // given
         CreateTodoCommand command = new CreateTodoCommand("title", "content", "author", "password");
-        Password encodedPassword = new Password("encodedPassword");
+        PasswordVO encodedPassword = new PasswordVO("encodedPassword");
 
         given(passwordEncoder.encode(command.password())).willReturn(encodedPassword);
         given(todoRepository.save(any(Todo.class))).willAnswer(invocation -> invocation.getArgument(0));

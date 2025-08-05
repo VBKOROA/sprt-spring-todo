@@ -5,7 +5,7 @@ import indiv.abko.todo.todo.application.port.in.command.UpdateTodoCommand;
 import indiv.abko.todo.todo.domain.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
-import indiv.abko.todo.todo.domain.vo.Password;
+import indiv.abko.todo.todo.domain.vo.PasswordVO;
 import indiv.abko.todo.todo.domain.vo.TodoTitle;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ class UpdateTodoUseCaseTest {
     void updateTodo_success() {
         // given
         UpdateTodoCommand command = new UpdateTodoCommand(1L, "updated title", "updated author", "password");
-        Password passwordVO = new Password("encodedPassword");
+        PasswordVO passwordVO = new PasswordVO("encodedPassword");
         Todo todo = Todo.builder()
                 .id(1L)
                 .password(passwordVO)
@@ -77,7 +77,7 @@ class UpdateTodoUseCaseTest {
     void 수정시_비밀번호가_일치하지_않으면_예외가_발생해야한다() {
         // given
         UpdateTodoCommand command = new UpdateTodoCommand(1L, "updated title", "updated author", "wrong_password");
-        Password passwordVO = new Password("encodedPassword");
+        PasswordVO passwordVO = new PasswordVO("encodedPassword");
         Todo todo = Todo.builder().id(1L).password(passwordVO).build();
 
         given(todoRepository.findAggregate(command.id())).willReturn(Optional.of(todo));
