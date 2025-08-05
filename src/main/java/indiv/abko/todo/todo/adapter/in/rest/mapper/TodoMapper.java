@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.application.service.mapper;
+package indiv.abko.todo.todo.adapter.in.rest.mapper;
 
 import indiv.abko.todo.todo.adapter.in.rest.dto.comment.CommentResp;
 import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoCreateReq;

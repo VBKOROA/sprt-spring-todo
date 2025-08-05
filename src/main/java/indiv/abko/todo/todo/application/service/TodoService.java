@@ -8,10 +8,11 @@ import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoResp;
 import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoSearchCondition;
 import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoUpdateReq;
 import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoWithCommentsResp;
+import indiv.abko.todo.todo.adapter.in.rest.mapper.CommentMapper;
+import indiv.abko.todo.todo.adapter.in.rest.mapper.TodoMapper;
 import indiv.abko.todo.todo.application.port.out.PasswordDecoder;
 import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
-import indiv.abko.todo.todo.application.service.mapper.CommentMapper;
-import indiv.abko.todo.todo.application.service.mapper.TodoMapper;
+import indiv.abko.todo.todo.application.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
 import indiv.abko.todo.todo.domain.Comment;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.todo.domain.Todo;
-import indiv.abko.todo.todo.domain.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
