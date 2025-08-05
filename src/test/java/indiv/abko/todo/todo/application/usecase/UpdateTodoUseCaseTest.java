@@ -49,7 +49,7 @@ class UpdateTodoUseCaseTest {
         Todo result = updateTodoUseCase.execute(command);
 
         // then
-        verify(todoRepository).update(any(Todo.class));
+        verify(todoRepository).save(any(Todo.class));
         assertThat(result.getTitle().getTitle()).isEqualTo(command.title());
         assertThat(result.getAuthor()).isEqualTo(command.author());
     }

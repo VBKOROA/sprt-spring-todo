@@ -45,7 +45,7 @@ class TodoQDSLRepositoryTest {
         SearchTodosCommand command = SearchTodosCommand.builder().title("제목2").build();
 
         // when
-        List<TodoJpaEntity> result = todoQDSLRepository.search(command);
+        List<TodoJpaEntity> result = todoQDSLRepository.search(command.toCriteria());
 
         // then
         assertThat(result).hasSize(1);
@@ -59,7 +59,7 @@ class TodoQDSLRepositoryTest {
         SearchTodosCommand command = SearchTodosCommand.builder().build();
 
         // when
-        List<TodoJpaEntity> result = todoQDSLRepository.search(command);
+        List<TodoJpaEntity> result = todoQDSLRepository.search(command.toCriteria());
 
         // then
         assertThat(result).hasSize(3);
@@ -72,7 +72,7 @@ class TodoQDSLRepositoryTest {
         SearchTodosCommand command = SearchTodosCommand.builder().title("존재하지 않는 제목").build();
 
         // when
-        List<TodoJpaEntity> result = todoQDSLRepository.search(command);
+        List<TodoJpaEntity> result = todoQDSLRepository.search(command.toCriteria());
 
         // then
         assertThat(result).isEmpty();
@@ -85,7 +85,7 @@ class TodoQDSLRepositoryTest {
         SearchTodosCommand command = SearchTodosCommand.builder().orderBy("createdAt_asc").build();
 
         // when
-        List<TodoJpaEntity> result = todoQDSLRepository.search(command);
+        List<TodoJpaEntity> result = todoQDSLRepository.search(command.toCriteria());
 
         // then
         assertThat(result).hasSize(3);
@@ -101,7 +101,7 @@ class TodoQDSLRepositoryTest {
         SearchTodosCommand command = SearchTodosCommand.builder().orderBy("invalidProperty_desc").build();
 
         // when
-        List<TodoJpaEntity> result = todoQDSLRepository.search(command);
+        List<TodoJpaEntity> result = todoQDSLRepository.search(command.toCriteria());
 
         // then
         assertThat(result).hasSize(3);
@@ -116,7 +116,7 @@ class TodoQDSLRepositoryTest {
         SearchTodosCommand command = SearchTodosCommand.builder().orderBy("title_").build();
 
         // when
-        List<TodoJpaEntity> result = todoQDSLRepository.search(command);
+        List<TodoJpaEntity> result = todoQDSLRepository.search(command.toCriteria());
 
         // then
         assertThat(result).hasSize(3);
