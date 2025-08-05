@@ -1,5 +1,9 @@
 package indiv.abko.todo.todo.adapter.in.rest;
 
+import indiv.abko.todo.todo.adapter.in.rest.mapper.CommentMapper;
+import indiv.abko.todo.todo.adapter.in.rest.mapper.TodoMapper;
+import indiv.abko.todo.todo.application.port.in.TodoUseCaseFacade;
+import indiv.abko.todo.todo.application.port.in.command.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +16,6 @@ import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoSearchCondition;
 import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoUpdateReq;
 import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoWithCommentsResp;
 import indiv.abko.todo.todo.adapter.in.rest.validation.ShouldBase64;
-import indiv.abko.todo.todo.application.service.TodoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -42,7 +45,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Validated
 @Tag(name = "Todo API", description = "할일 관리 시스템의 Todo 관련 API")
 public class TodoController {
-    private final TodoService todoService;
+    private final TodoUseCaseFacade todoUseCaseFacade;
+    private final TodoMapper todoMapper;
+    private final CommentMapper commentMapper;
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
@@ -56,9 +61,14 @@ public class TodoController {
             ))
     })
     public ApiResp<TodoResp> createTodo(@RequestBody @Valid TodoCreateReq createReq) {
-        var todoResponse = todoService.create(createReq);
-
-        return ApiResp.created(todoResponse);
+        var command = CreateTodoCommand.builder()
+                .title(createReq.title())
+                .author(createReq.author())
+                .password(createReq.password())
+                .content(createReq.content())
+                .build();
+        var createdTodo = todoUseCaseFacade.createTodo(command);
+        return ApiResp.created(todoMapper.toTodoResp(createdTodo));
     }
 
     // @ModelAttribute: 여러 개의 파라미터를 객체로 바인딩 할 수 있음
@@ -76,7 +86,16 @@ public class TodoController {
             @ModelAttribute 
             @ParameterObject
             TodoSearchCondition condition) {
-        return ApiResp.ok(todoService.fetchFilteredTodos(condition));
+        var command = SearchTodosCommand.builder()
+                .title(condition.title())
+                .author(condition.author())
+                .content(condition.content())
+                .orderBy(condition.orderBy())
+                .build();
+        var todos = todoUseCaseFacade.searchTodos(command);
+        var responseTodos = todoMapper.toTodoResps(todos);
+        var responseData = new TodoListResp(responseTodos);
+        return ApiResp.ok(responseData);
     }
 
 
@@ -93,8 +112,12 @@ public class TodoController {
     public ApiResp<TodoWithCommentsResp> getTodo(
         @PathVariable("id") 
         @Parameter(name = "id", description = "Todo ID") 
-        Long id) {
-        return ApiResp.ok(todoService.getTodoWithComments(id));
+        long id) {
+        var todo = todoUseCaseFacade.getTodo(new GetTodoCommand(id));
+        var responseTodo = todoMapper.toTodoResp(todo);
+        var responseComments = commentMapper.toCommentResps(todo.getComments());
+        var responseData = new TodoWithCommentsResp(responseTodo, responseComments);
+        return ApiResp.ok(responseData);
     }
 
     @PatchMapping("/{id}")
@@ -120,11 +143,18 @@ public class TodoController {
     public ApiResp<TodoResp> updateTodo(
         @PathVariable("id") 
         @Parameter(name = "id", description = "Todo ID") 
-        Long id, 
+        long id,
         @RequestBody 
         @Valid 
         TodoUpdateReq updateReq) {
-        return ApiResp.ok(todoService.updateTodo(id, updateReq));
+        var command =  UpdateTodoCommand.builder()
+                .id(id)
+                .title(updateReq.title())
+                .author(updateReq.author())
+                .password(updateReq.password())
+                .build();
+        var updatedTodo = todoUseCaseFacade.updateTodo(command);
+        return ApiResp.ok(todoMapper.toTodoResp(updatedTodo));
     }
 
     @DeleteMapping("/{id}")
@@ -154,6 +184,10 @@ public class TodoController {
         @RequestHeader("X-Todo-Password") 
         @ShouldBase64 
         String encodedPassword) {
-        todoService.deleteTodo(id, encodedPassword);
+        var command =   DeleteTodoCommand.builder()
+                .id(id)
+                .encodedPassword(encodedPassword)
+                .build();
+        todoUseCaseFacade.deleteTodo(command);
     }
 }
