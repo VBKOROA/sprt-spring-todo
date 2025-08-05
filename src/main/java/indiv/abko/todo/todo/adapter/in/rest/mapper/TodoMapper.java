@@ -39,6 +39,10 @@ public class TodoMapper {
                 .build();
     }
 
+    public List<TodoResp> toTodoResps(final List<Todo> todo) {
+        return todo.stream().map(this::toTodoResp).toList();
+    }
+
     public TodoWithCommentsResp toTodoWithCommentsResp(final Todo todo) {
         final TodoResp todoResp = toTodoResp(todo);
         final List<CommentResp> commentResps = commentMapper.toCommentResps(todo.getComments());
