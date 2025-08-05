@@ -19,15 +19,6 @@ public class TodoMapper {
     private final PasswordEncoder passwordEncoder;
     private final CommentMapper commentMapper;
 
-    public Todo toTodo(final TodoCreateReq dto) {
-        return Todo.builder()
-                .title(new TodoTitle(dto.title()))
-                .author(dto.author())
-                .content(new Content(dto.content()))
-                .password(passwordEncoder.encode(dto.password()))
-                .build();
-    }
-
     public TodoResp toTodoResp(final Todo todo) {
         return TodoResp.builder()
                 .id(todo.getId())
@@ -41,11 +32,5 @@ public class TodoMapper {
 
     public List<TodoResp> toTodoResps(final List<Todo> todo) {
         return todo.stream().map(this::toTodoResp).toList();
-    }
-
-    public TodoWithCommentsResp toTodoWithCommentsResp(final Todo todo) {
-        final TodoResp todoResp = toTodoResp(todo);
-        final List<CommentResp> commentResps = commentMapper.toCommentResps(todo.getComments());
-        return new TodoWithCommentsResp(todoResp, commentResps);
     }
 }

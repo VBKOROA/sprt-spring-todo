@@ -30,9 +30,7 @@ public class TodoEntityMapper {
     public Todo toAggregate(final TodoJpaEntity todoJpaEntity) {
         final Todo todo = toSummary(todoJpaEntity);
         final var comments = todoJpaEntity.getComments().stream()
-                .map(comment -> {
-                    return commentEntityMapper.toDomain(comment, todo);
-                }).toList();
+                .map(comment -> commentEntityMapper.toDomain(comment, todo)).toList();
         todo.initCommentsViaRepository(comments);
         return todo;
     }

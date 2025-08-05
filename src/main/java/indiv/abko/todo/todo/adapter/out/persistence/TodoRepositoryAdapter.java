@@ -1,6 +1,5 @@
 package indiv.abko.todo.todo.adapter.out.persistence;
 
-import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoSearchCondition;
 import indiv.abko.todo.todo.adapter.out.persistence.entity.TodoJpaEntity;
 import indiv.abko.todo.todo.adapter.out.persistence.mapper.TodoEntityMapper;
 import indiv.abko.todo.todo.application.port.in.command.SearchTodosCommand;
