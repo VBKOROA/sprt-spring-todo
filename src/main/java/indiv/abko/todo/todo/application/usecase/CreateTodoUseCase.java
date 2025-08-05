@@ -7,7 +7,7 @@ import indiv.abko.todo.todo.application.port.in.command.CreateTodoCommand;
 import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.vo.ContentVO;
-import indiv.abko.todo.todo.domain.vo.TodoTitle;
+import indiv.abko.todo.todo.domain.vo.TodoTitleVO;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -27,7 +27,7 @@ public class CreateTodoUseCase {
         final var encodedPassword = passwordEncoder.encode(createCommand.password());
         final Todo todo = Todo.builder().author(createCommand.author())
                 .content(new ContentVO(createCommand.content()))
-                .title(new TodoTitle(createCommand.title()))
+                .title(new TodoTitleVO(createCommand.title()))
                 .password(encodedPassword).build();
         return todoRepo.save(todo);
     }

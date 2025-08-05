@@ -11,10 +11,10 @@ import org.springframework.util.StringUtils;
 @Getter
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TodoTitle {
+public class TodoTitleVO {
     private String title;
 
-    public TodoTitle(final String title) {
+    public TodoTitleVO(final String title) {
         shouldValid(title);
         this.title = title;
     }

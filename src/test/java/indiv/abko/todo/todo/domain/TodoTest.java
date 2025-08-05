@@ -4,7 +4,7 @@ import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
 import indiv.abko.todo.todo.domain.vo.ContentVO;
 import indiv.abko.todo.todo.domain.vo.PasswordVO;
-import indiv.abko.todo.todo.domain.vo.TodoTitle;
+import indiv.abko.todo.todo.domain.vo.TodoTitleVO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,7 @@ class TodoTest {
     void 댓글을성공적으로추가해야한다() {
         // given
         Todo todo = Todo.builder()
-                .title(new TodoTitle("테스트 제목"))
+                .title(new TodoTitleVO("테스트 제목"))
                 .content(new ContentVO("테스트 내용"))
                 .password(new PasswordVO("password1234"))
                 .author("user")
@@ -42,7 +42,7 @@ class TodoTest {
     void 댓글최대개수제한을초과하면_예외가발생해야한다() {
         // given
         Todo todo = Todo.builder()
-                .title(new TodoTitle("테스트 제목"))
+                .title(new TodoTitleVO("테스트 제목"))
                 .content(new ContentVO("테스트 내용"))
                 .password(new PasswordVO("password1234"))
                 .author("user")

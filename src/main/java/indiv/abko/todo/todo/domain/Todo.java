@@ -8,7 +8,7 @@ import indiv.abko.todo.todo.domain.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
 import indiv.abko.todo.todo.domain.vo.ContentVO;
 import indiv.abko.todo.todo.domain.vo.PasswordVO;
-import indiv.abko.todo.todo.domain.vo.TodoTitle;
+import indiv.abko.todo.todo.domain.vo.TodoTitleVO;
 import indiv.abko.todo.global.exception.BusinessException;
 import lombok.*;
 
@@ -20,7 +20,7 @@ public class Todo {
     private static final int COMMENT_LIMIT = 10;
 
     private Long id;
-    private TodoTitle title; // 일정 제목
+    private TodoTitleVO title; // 일정 제목
     private ContentVO content; // 일정 내용
     private String author; // 작성자
     private PasswordVO password; // 비밀번호
@@ -35,7 +35,7 @@ public class Todo {
 
     public void updatePresented(final String title, final String author) {
         if (title != null) {
-            this.title = new TodoTitle(title);
+            this.title = new TodoTitleVO(title);
         }
 
         if (author != null) {

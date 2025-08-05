@@ -4,7 +4,7 @@ import indiv.abko.todo.todo.adapter.out.persistence.entity.TodoJpaEntity;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.vo.ContentVO;
 import indiv.abko.todo.todo.domain.vo.PasswordVO;
-import indiv.abko.todo.todo.domain.vo.TodoTitle;
+import indiv.abko.todo.todo.domain.vo.TodoTitleVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,7 @@ public class TodoEntityMapper {
     public Todo toSummary(final TodoJpaEntity todoJpaEntity) {
         return Todo.builder()
                 .id(todoJpaEntity.getId())
-                .title(new TodoTitle(todoJpaEntity.getTitle()))
+                .title(new TodoTitleVO(todoJpaEntity.getTitle()))
                 .content(new ContentVO(todoJpaEntity.getContent()))
                 .author(todoJpaEntity.getAuthor())
                 .password(new PasswordVO(todoJpaEntity.getPassword()))

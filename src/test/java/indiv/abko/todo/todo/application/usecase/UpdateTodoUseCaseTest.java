@@ -6,7 +6,7 @@ import indiv.abko.todo.todo.domain.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.vo.PasswordVO;
-import indiv.abko.todo.todo.domain.vo.TodoTitle;
+import indiv.abko.todo.todo.domain.vo.TodoTitleVO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,7 +43,7 @@ class UpdateTodoUseCaseTest {
         Todo todo = Todo.builder()
                 .id(1L)
                 .password(passwordVO)
-                .title(new TodoTitle("original title"))
+                .title(new TodoTitleVO("original title"))
                 .author("original author")
                 .build();
 
