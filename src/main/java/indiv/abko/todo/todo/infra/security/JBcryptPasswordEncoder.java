@@ -7,10 +7,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JBcryptPasswordEncoder implements PasswordEncoder {
+    @Override
     public Password encode(final String rawPassword) {
         return new Password(BCrypt.hashpw(rawPassword, BCrypt.gensalt()));
     }
 
+    @Override
     public boolean matches(final String rawPassword, final Password password) {
         return BCrypt.checkpw(rawPassword, password.getPassword());
     }
