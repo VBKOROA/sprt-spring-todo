@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
 import indiv.abko.todo.todo.domain.vo.Content;
 import indiv.abko.todo.todo.domain.vo.Password;
@@ -49,5 +50,11 @@ public class Todo {
     public Comment getLastComment() {
         final int lastIdx = comments.size() - 1;
         return comments.get(lastIdx);
+    }
+
+    public void shouldHaveAuth(final String rawPassword, final PasswordEncoder passwordEncoder) {
+        if(password.matches(rawPassword, passwordEncoder) == false) {
+            throw new BusinessException(TodoExceptionEnum.TODO_PERMISSION_DENIED);
+        }
     }
 }

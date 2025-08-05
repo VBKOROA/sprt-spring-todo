@@ -1,5 +1,6 @@
 package indiv.abko.todo.todo.application.service;
 
+import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import indiv.abko.todo.global.exception.BusinessException;
@@ -7,14 +8,13 @@ import indiv.abko.todo.todo.application.port.in.command.UpdateTodoCommand;
 import indiv.abko.todo.todo.application.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
-import indiv.abko.todo.todo.domain.service.TodoAuthValidator;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class UpdateTodoUseCase {
     private final TodoRepository todoRepo;
-    private final TodoAuthValidator todoAuthValidator;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 주어진 ID에 해당하는 Todo 항목을 업데이트한다.
@@ -30,7 +30,7 @@ public class UpdateTodoUseCase {
     @Transactional
     public Todo execute(UpdateTodoCommand updateCommand) {
         final Todo todo = getAggregateOrThrow(updateCommand.id());
-        todoAuthValidator.shouldHaveAuth(todo, updateCommand.password());
+        todo.shouldHaveAuth(updateCommand.password(), passwordEncoder);
         todo.updatePresented(updateCommand.title(), updateCommand.author());
         return todoRepo.save(todo);
     }

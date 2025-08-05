@@ -9,7 +9,6 @@ import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.application.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
-import indiv.abko.todo.todo.domain.service.TodoAuthValidator;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -18,7 +17,6 @@ public class DeleteTodoUseCase {
     private final PasswordDecoder passwordDecoder;
     private final TodoRepository todoRepo;
     private final PasswordEncoder passwordEncoder;
-    private final TodoAuthValidator todoAuthValidator;
 
     /**
      * 주어진 ID와 인코딩된 비밀번호를 사용하여 Todo를 삭제한다.
@@ -32,7 +30,7 @@ public class DeleteTodoUseCase {
         final String decodedPassword = passwordDecoder.decode(command.encodedPassword());
         final Todo todo = todoRepo.findSummary(command.id())
             .orElseThrow(() -> new BusinessException(TodoExceptionEnum.TODO_NOT_FOUND));
-        todoAuthValidator.shouldHaveAuth(todo, decodedPassword);
+        todo.shouldHaveAuth(decodedPassword, passwordEncoder);
         todoRepo.delete(todo);
         return null;
     }
