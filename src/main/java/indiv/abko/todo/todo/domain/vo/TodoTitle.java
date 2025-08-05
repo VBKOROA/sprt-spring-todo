@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.util.StringUtils;
 
 @Getter
-@Embeddable
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class TodoTitle {
