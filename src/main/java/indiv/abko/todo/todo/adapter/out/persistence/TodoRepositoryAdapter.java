@@ -2,7 +2,6 @@ package indiv.abko.todo.todo.adapter.out.persistence;
 
 import indiv.abko.todo.todo.adapter.out.persistence.entity.TodoJpaEntity;
 import indiv.abko.todo.todo.adapter.out.persistence.mapper.TodoEntityMapper;
-import indiv.abko.todo.todo.application.port.in.command.SearchTodosCommand;
 import indiv.abko.todo.todo.domain.SearchTodosCriteria;
 import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
@@ -31,11 +30,9 @@ public class TodoRepositoryAdapter implements TodoRepository {
     }
 
     @Override
-    public void save(final Todo todo) {
+    public Todo save(final Todo todo) {
         final TodoJpaEntity todoEntity = todoJpaRepository.save(todoEntityMapper.toEntity(todo));
-        todo.updateIdViaRepository(todoEntity.getId());
-        todo.updateCreatedAtViaRepository(todoEntity.getCreatedAt());
-        todo.updateModifiedAtViaRepository(todoEntity.getModifiedAt());
+        return todoEntityMapper.toSummary(todoEntity);
     }
 
     @Override
@@ -53,11 +50,5 @@ public class TodoRepositoryAdapter implements TodoRepository {
     public void delete(final Todo todo) {
         final TodoJpaEntity todoEntity = todoEntityMapper.toEntity(todo);
         todoJpaRepository.delete(todoEntity);
-    }
-
-    @Override
-    public void update(Todo todo) {
-        final TodoJpaEntity todoEntity = todoJpaRepository.save(todoEntityMapper.toEntity(todo));
-        todo.updateModifiedAtViaRepository(todoEntity.getModifiedAt());
     }
 }

@@ -32,8 +32,7 @@ public class UpdateTodoUseCase {
         final Todo todo = getAggregateOrThrow(updateCommand.id());
         todo.shouldHaveAuth(updateCommand.password(), passwordEncoder);
         todo.updatePresented(updateCommand.title(), updateCommand.author());
-        todoRepo.update(todo);
-        return todo;
+        return todoRepo.save(todo);
     }
 
     private Todo getAggregateOrThrow(final Long id) {

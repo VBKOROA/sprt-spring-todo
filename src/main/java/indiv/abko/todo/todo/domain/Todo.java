@@ -33,18 +33,6 @@ public class Todo {
         this.comments = new ArrayList<>(comments);
     }
 
-    public void updateIdViaRepository(Long id) {
-        this.id = id;
-    }
-
-    public void updateCreatedAtViaRepository(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void updateModifiedAtViaRepository(LocalDateTime modifiedAt) {
-        this.modifiedAt = modifiedAt;
-    }
-
     public void updatePresented(final String title, final String author) {
         if (title != null) {
             this.title = new TodoTitle(title);
