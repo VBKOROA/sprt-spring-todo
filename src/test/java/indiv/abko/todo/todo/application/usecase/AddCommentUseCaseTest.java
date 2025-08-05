@@ -6,7 +6,6 @@ import indiv.abko.todo.todo.domain.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Comment;
 import indiv.abko.todo.todo.domain.Todo;
-import indiv.abko.todo.todo.domain.vo.Content;
 import indiv.abko.todo.todo.domain.vo.Password;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

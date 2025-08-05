@@ -9,7 +9,7 @@ import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Comment;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
-import indiv.abko.todo.todo.domain.vo.Content;
+import indiv.abko.todo.todo.domain.vo.ContentVO;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -35,7 +35,7 @@ public class AddCommentUseCase {
             .orElseThrow(() -> new BusinessException(TodoExceptionEnum.TODO_NOT_FOUND));
         final var encodedPassword = passwordEncoder.encode(command.password());
         final Comment comment = Comment.builder()
-            .content(new Content(command.content()))
+            .content(new ContentVO(command.content()))
             .author(command.author())
             .password(encodedPassword)
             .build();

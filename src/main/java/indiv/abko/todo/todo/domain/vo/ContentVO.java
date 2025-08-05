@@ -11,10 +11,10 @@ import org.springframework.util.StringUtils;
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Content {
+public class ContentVO {
     private String content;
 
-    public Content(final String content) {
+    public ContentVO(final String content) {
         shouldValid(content);
         this.content = content;
     }

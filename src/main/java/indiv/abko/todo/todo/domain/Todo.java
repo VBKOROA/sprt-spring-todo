@@ -6,7 +6,7 @@ import java.util.List;
 
 import indiv.abko.todo.todo.domain.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
-import indiv.abko.todo.todo.domain.vo.Content;
+import indiv.abko.todo.todo.domain.vo.ContentVO;
 import indiv.abko.todo.todo.domain.vo.Password;
 import indiv.abko.todo.todo.domain.vo.TodoTitle;
 import indiv.abko.todo.global.exception.BusinessException;
@@ -21,7 +21,7 @@ public class Todo {
 
     private Long id;
     private TodoTitle title; // 일정 제목
-    private Content content; // 일정 내용
+    private ContentVO content; // 일정 내용
     private String author; // 작성자
     private Password password; // 비밀번호
     @Builder.Default

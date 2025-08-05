@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import indiv.abko.todo.todo.application.port.in.command.CreateTodoCommand;
 import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
-import indiv.abko.todo.todo.domain.vo.Content;
+import indiv.abko.todo.todo.domain.vo.ContentVO;
 import indiv.abko.todo.todo.domain.vo.TodoTitle;
 import lombok.RequiredArgsConstructor;
 
@@ -26,7 +26,7 @@ public class CreateTodoUseCase {
     public Todo execute(final CreateTodoCommand createCommand) {
         final var encodedPassword = passwordEncoder.encode(createCommand.password());
         final Todo todo = Todo.builder().author(createCommand.author())
-                .content(new Content(createCommand.content()))
+                .content(new ContentVO(createCommand.content()))
                 .title(new TodoTitle(createCommand.title()))
                 .password(encodedPassword).build();
         return todoRepo.save(todo);

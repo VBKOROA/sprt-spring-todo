@@ -3,7 +3,7 @@ package indiv.abko.todo.todo.adapter.out.persistence.mapper;
 import indiv.abko.todo.todo.adapter.out.persistence.entity.CommentJpaEntity;
 import indiv.abko.todo.todo.domain.Comment;
 import indiv.abko.todo.todo.domain.Todo;
-import indiv.abko.todo.todo.domain.vo.Content;
+import indiv.abko.todo.todo.domain.vo.ContentVO;
 import indiv.abko.todo.todo.domain.vo.Password;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,7 @@ public class CommentEntityMapper {
                 .modifiedAt(commentJpaEntity.getModifiedAt())
                 .todo(todo)
                 .author(commentJpaEntity.getAuthor())
-                .content(new Content(commentJpaEntity.getContent()))
+                .content(new ContentVO(commentJpaEntity.getContent()))
                 .password(new Password(commentJpaEntity.getPassword()))
                 .build();
     }

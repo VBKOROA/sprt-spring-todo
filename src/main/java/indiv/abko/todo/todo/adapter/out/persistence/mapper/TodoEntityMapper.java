@@ -2,7 +2,7 @@ package indiv.abko.todo.todo.adapter.out.persistence.mapper;
 
 import indiv.abko.todo.todo.adapter.out.persistence.entity.TodoJpaEntity;
 import indiv.abko.todo.todo.domain.Todo;
-import indiv.abko.todo.todo.domain.vo.Content;
+import indiv.abko.todo.todo.domain.vo.ContentVO;
 import indiv.abko.todo.todo.domain.vo.Password;
 import indiv.abko.todo.todo.domain.vo.TodoTitle;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class TodoEntityMapper {
         return Todo.builder()
                 .id(todoJpaEntity.getId())
                 .title(new TodoTitle(todoJpaEntity.getTitle()))
-                .content(new Content(todoJpaEntity.getContent()))
+                .content(new ContentVO(todoJpaEntity.getContent()))
                 .author(todoJpaEntity.getAuthor())
                 .password(new Password(todoJpaEntity.getPassword()))
                 .createdAt(todoJpaEntity.getCreatedAt())

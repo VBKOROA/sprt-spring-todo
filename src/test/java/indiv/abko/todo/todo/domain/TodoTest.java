@@ -2,7 +2,7 @@ package indiv.abko.todo.todo.domain;
 
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
-import indiv.abko.todo.todo.domain.vo.Content;
+import indiv.abko.todo.todo.domain.vo.ContentVO;
 import indiv.abko.todo.todo.domain.vo.Password;
 import indiv.abko.todo.todo.domain.vo.TodoTitle;
 import org.junit.jupiter.api.DisplayName;
@@ -19,13 +19,13 @@ class TodoTest {
         // given
         Todo todo = Todo.builder()
                 .title(new TodoTitle("테스트 제목"))
-                .content(new Content("테스트 내용"))
+                .content(new ContentVO("테스트 내용"))
                 .password(new Password("password1234"))
                 .author("user")
                 .build();
 
         Comment comment = Comment.builder()
-                .content(new Content("테스트 댓글"))
+                .content(new ContentVO("테스트 댓글"))
                 .author("commenter")
                 .build();
 
@@ -43,18 +43,18 @@ class TodoTest {
         // given
         Todo todo = Todo.builder()
                 .title(new TodoTitle("테스트 제목"))
-                .content(new Content("테스트 내용"))
+                .content(new ContentVO("테스트 내용"))
                 .password(new Password("password1234"))
                 .author("user")
                 .build();
 
         // 10개의 댓글을 미리 추가
         for (int i = 0; i < 10; i++) {
-            todo.addComment(Comment.builder().content(new Content("댓글 " + i)).author("user").build());
+            todo.addComment(Comment.builder().content(new ContentVO("댓글 " + i)).author("user").build());
         }
 
         Comment newComment = Comment.builder()
-                .content(new Content("11번째 댓글"))
+                .content(new ContentVO("11번째 댓글"))
                 .author("commenter")
                 .build();
 
