@@ -1,6 +1,7 @@
 package indiv.abko.todo.todo.domain.vo;
 
 import indiv.abko.todo.global.exception.BusinessException;
+import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
@@ -25,5 +26,9 @@ public class Password {
         if(StringUtils.hasText(password) == false)  {
             throw new BusinessException(TodoExceptionEnum.TODO_PASSWORD_REQUIRED);
         }
+    }
+
+    public boolean matches(final String otherRawPassword, final PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(otherRawPassword, this);
     }
 }
