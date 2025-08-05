@@ -43,6 +43,8 @@ public class TodoEntityMapper {
                 .author(todo.getAuthor())
                 .password(todo.getPassword().getPassword())
                 .content(todo.getContent().getContent())
+                .createdAt(todo.getCreatedAt())
+                .modifiedAt(todo.getModifiedAt())
                 .build();
     }
 }

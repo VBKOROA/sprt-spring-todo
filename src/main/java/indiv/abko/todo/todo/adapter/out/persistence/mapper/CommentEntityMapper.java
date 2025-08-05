@@ -28,6 +28,8 @@ public class CommentEntityMapper {
                 .author(comment.getAuthor())
                 .content(comment.getContent().getContent())
                 .password(comment.getPassword().getPassword())
+                .createdAt(comment.getCreatedAt())
+                .modifiedAt(comment.getModifiedAt())
                 .build();
     }
 }

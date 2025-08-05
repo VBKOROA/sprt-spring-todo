@@ -2,11 +2,12 @@ package indiv.abko.todo.todo.adapter.out.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Table(name = "comment")
 public class CommentJpaEntity extends BaseTimeJpaEntity {
