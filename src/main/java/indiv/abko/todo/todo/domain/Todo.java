@@ -29,6 +29,10 @@ public class Todo {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
+    public void initCommentsViaRepository(List<Comment> comments) {
+        this.comments = new ArrayList<>(comments);
+    }
+
     public void updateIdViaRepository(Long id) {
         this.id = id;
     }
