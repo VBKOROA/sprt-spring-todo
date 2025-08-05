@@ -1,13 +1,8 @@
 package indiv.abko.todo.todo.adapter.in.rest.mapper;
 
-import indiv.abko.todo.todo.adapter.in.rest.dto.comment.CommentResp;
-import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoCreateReq;
 import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoResp;
-import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoWithCommentsResp;
 import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.Todo;
-import indiv.abko.todo.todo.domain.vo.Content;
-import indiv.abko.todo.todo.domain.vo.TodoTitle;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
