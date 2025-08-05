@@ -1,8 +1,10 @@
 package indiv.abko.todo.todo.application.usecase;
 
 import indiv.abko.todo.todo.application.port.in.command.CreateTodoCommand;
+import indiv.abko.todo.todo.domain.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
+import indiv.abko.todo.todo.domain.vo.Password;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -23,14 +26,20 @@ class CreateTodoUseCaseTest {
     @Mock
     private TodoRepository todoRepository;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @Test
     @DisplayName("할일 생성 - 성공")
     void 할일을_성공적으로_생성해야한다() {
         // given
         CreateTodoCommand command = new CreateTodoCommand("title", "content", "author", "password");
+        Password encodedPassword = new Password("encodedPassword");
+
+        given(passwordEncoder.encode(command.password())).willReturn(encodedPassword);
+        given(todoRepository.save(any(Todo.class))).willAnswer(invocation -> invocation.getArgument(0));
 
         // when
-        // execute 메소드는 생성된 todo를 반환하므로, save 호출 시 인자를 캡처하거나 할 필요 없이 반환값을 검증합니다.
         Todo result = createTodoUseCase.execute(command);
 
         // then
@@ -38,7 +47,6 @@ class CreateTodoUseCaseTest {
         assertThat(result.getAuthor()).isEqualTo(command.author());
         assertThat(result.getTitle().getTitle()).isEqualTo(command.title());
         assertThat(result.getContent().getContent()).isEqualTo(command.content());
-        // Password는 보통 직접 비교하지 않지만, 여기서는 로직 검증을 위해 추가
-        assertThat(result.getPassword().getPassword()).isNotNull();
+        assertThat(result.getPassword()).isEqualTo(encodedPassword);
     }
 }

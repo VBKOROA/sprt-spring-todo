@@ -2,6 +2,7 @@ package indiv.abko.todo.todo.application.usecase;
 
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.todo.application.port.in.command.AddCommentCommand;
+import indiv.abko.todo.todo.domain.port.out.PasswordEncoder;
 import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Comment;
 import indiv.abko.todo.todo.domain.Todo;
@@ -19,6 +20,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -31,25 +33,22 @@ class AddCommentUseCaseTest {
     @Mock
     private TodoRepository todoRepository;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @Test
     @DisplayName("댓글 추가 - 성공")
     void addComment_success() {
         // given
         AddCommentCommand command = new AddCommentCommand(1L, "content", "author", "password");
         Todo todo = Todo.builder().id(1L).build();
-        Comment comment = Comment.builder()
-                .content(new Content(command.content()))
-                .author(command.author())
-                .password(new Password(command.password()))
-                .build();
-
+        Password encodedPassword = new Password("encodedPassword");
 
         given(todoRepository.findAggregate(command.todoId())).willReturn(Optional.of(todo));
-        // saveComment는 todo를 반환하고, 반환된 todo의 마지막 댓글을 검증해야 합니다.
+        given(passwordEncoder.encode(anyString())).willReturn(encodedPassword);
         given(todoRepository.saveComment(any(Todo.class))).willAnswer(invocation -> {
-            Todo savedTodo = invocation.getArgument(0);
-            savedTodo.addComment(comment); // 실제 로직처럼 댓글 추가
-            return savedTodo;
+            // UseCase에서 comment를 추가한 todo 객체가 넘어오므로 그대로 반환
+            return invocation.getArgument(0);
         });
 
         // when
@@ -61,6 +60,7 @@ class AddCommentUseCaseTest {
         assertThat(result).isNotNull();
         assertThat(result.getAuthor()).isEqualTo(command.author());
         assertThat(result.getContent().getContent()).isEqualTo(command.content());
+        assertThat(result.getPassword()).isEqualTo(encodedPassword);
     }
 
     @Test

@@ -40,10 +40,16 @@ class UpdateTodoUseCaseTest {
         // given
         UpdateTodoCommand command = new UpdateTodoCommand(1L, "updated title", "updated author", "password");
         Password passwordVO = new Password("encodedPassword");
-        Todo todo = Todo.builder().id(1L).password(passwordVO).title(new TodoTitle("original title")).author("original author").build();
+        Todo todo = Todo.builder()
+                .id(1L)
+                .password(passwordVO)
+                .title(new TodoTitle("original title"))
+                .author("original author")
+                .build();
 
         given(todoRepository.findAggregate(command.id())).willReturn(Optional.of(todo));
         given(passwordEncoder.matches(command.password(), passwordVO)).willReturn(true);
+        given(todoRepository.save(any(Todo.class))).willAnswer(invocation -> invocation.getArgument(0));
 
         // when
         Todo result = updateTodoUseCase.execute(command);
