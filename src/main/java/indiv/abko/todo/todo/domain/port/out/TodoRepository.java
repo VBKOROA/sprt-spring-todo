@@ -1,6 +1,7 @@
 package indiv.abko.todo.todo.domain.port.out;
 
 import indiv.abko.todo.todo.application.port.in.command.SearchTodosCommand;
+import indiv.abko.todo.todo.domain.SearchTodosCriteria;
 import indiv.abko.todo.todo.domain.Todo;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Optional;
 
 public interface TodoRepository {
     Optional<Todo> findAggregate(Long id);
-    List<Todo> searchSummaries(final SearchTodosCommand searchCommand);
+    List<Todo> searchSummaries(SearchTodosCriteria searchCriteria);
 
     void save(Todo todo);
     Todo saveComment(Todo todo);

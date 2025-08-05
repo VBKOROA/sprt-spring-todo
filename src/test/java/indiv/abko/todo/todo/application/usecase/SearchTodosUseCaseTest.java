@@ -1,6 +1,7 @@
 package indiv.abko.todo.todo.application.usecase;
 
 import indiv.abko.todo.todo.application.port.in.command.SearchTodosCommand;
+import indiv.abko.todo.todo.domain.SearchTodosCriteria;
 import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
 import org.junit.jupiter.api.DisplayName;
@@ -31,14 +32,15 @@ class SearchTodosUseCaseTest {
     void 할일_목록을_성공적으로_검색해야한다() {
         // given
         SearchTodosCommand command = new SearchTodosCommand("createdAt", "title", "content", "author");
+        SearchTodosCriteria criteria = command.toCriteria();
         List<Todo> todos = Collections.singletonList(Todo.builder().build());
-        given(todoRepository.searchSummaries(command)).willReturn(todos);
+        given(todoRepository.searchSummaries(criteria)).willReturn(todos);
 
         // when
         List<Todo> result = searchTodosUseCase.execute(command);
 
         // then
-        verify(todoRepository).searchSummaries(command);
+        verify(todoRepository).searchSummaries(criteria);
         assertThat(result).isEqualTo(todos);
     }
 }

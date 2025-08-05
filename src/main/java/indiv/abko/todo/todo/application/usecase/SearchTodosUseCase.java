@@ -23,6 +23,6 @@ public class SearchTodosUseCase {
      */
     @Transactional(readOnly = true)
     public List<Todo> execute(SearchTodosCommand searchCommand) {
-        return todoRepo.searchSummaries(searchCommand);
+        return todoRepo.searchSummaries(searchCommand.toCriteria());
     }
 }

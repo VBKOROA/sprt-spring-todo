@@ -8,6 +8,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoSearchCondition;
 import indiv.abko.todo.todo.adapter.out.persistence.entity.TodoJpaEntity;
 import indiv.abko.todo.todo.application.port.in.command.SearchTodosCommand;
+import indiv.abko.todo.todo.domain.SearchTodosCriteria;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -27,15 +28,15 @@ public class TodoQDSLRepository {
 
     private final JPAQueryFactory queryFactory;
 
-    public List<TodoJpaEntity> search(final SearchTodosCommand fetchCommand) {
+    public List<TodoJpaEntity> search(final SearchTodosCriteria searchCriteria) {
         return queryFactory
                 .selectFrom(todoJpaEntity)
                 .where(
-                        authorLike(fetchCommand.author()),
-                        titleLike(fetchCommand.title()),
-                        contentLike(fetchCommand.content())
+                        authorLike(searchCriteria.author()),
+                        titleLike(searchCriteria.title()),
+                        contentLike(searchCriteria.content())
                 )
-                .orderBy(getOrderBy(fetchCommand.orderBy()))
+                .orderBy(getOrderBy(searchCriteria.orderBy()))
                 .fetch();
     }
 

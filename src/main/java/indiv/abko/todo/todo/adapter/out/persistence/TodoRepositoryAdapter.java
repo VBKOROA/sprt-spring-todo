@@ -3,6 +3,7 @@ package indiv.abko.todo.todo.adapter.out.persistence;
 import indiv.abko.todo.todo.adapter.out.persistence.entity.TodoJpaEntity;
 import indiv.abko.todo.todo.adapter.out.persistence.mapper.TodoEntityMapper;
 import indiv.abko.todo.todo.application.port.in.command.SearchTodosCommand;
+import indiv.abko.todo.todo.domain.SearchTodosCriteria;
 import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,8 @@ public class TodoRepositoryAdapter implements TodoRepository {
     }
 
     @Override
-    public List<Todo> searchSummaries(final SearchTodosCommand fetchCommand) {
-        final var todoEntities = todoQDSLRepository.search(fetchCommand);
+    public List<Todo> searchSummaries(final SearchTodosCriteria searchCriteria) {
+        final var todoEntities = todoQDSLRepository.search(searchCriteria);
         return todoEntities.stream().map(todoEntityMapper::toSummary).toList();
     }
 
