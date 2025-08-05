@@ -1,0 +1,19 @@
+package indiv.abko.todo.todo.adapter.out.security;
+
+import indiv.abko.todo.todo.domain.vo.Password;
+import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
+import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.stereotype.Component;
+
+@Component
+public class JBcryptPasswordEncoder implements PasswordEncoder {
+    @Override
+    public Password encode(final String rawPassword) {
+        return new Password(BCrypt.hashpw(rawPassword, BCrypt.gensalt()));
+    }
+
+    @Override
+    public boolean matches(final String rawPassword, final Password password) {
+        return BCrypt.checkpw(rawPassword, password.getPassword());
+    }
+}

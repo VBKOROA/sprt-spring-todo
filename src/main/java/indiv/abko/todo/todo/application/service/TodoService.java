@@ -1,25 +1,25 @@
 package indiv.abko.todo.todo.application.service;
 
-import indiv.abko.todo.todo.application.mapper.CommentMapper;
-import indiv.abko.todo.todo.application.mapper.TodoMapper;
+import indiv.abko.todo.todo.adapter.in.rest.dto.comment.CommentResp;
+import indiv.abko.todo.todo.adapter.in.rest.dto.comment.CommentWriteReq;
+import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoCreateReq;
+import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoListResp;
+import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoResp;
+import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoSearchCondition;
+import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoUpdateReq;
+import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoWithCommentsResp;
 import indiv.abko.todo.todo.application.port.out.PasswordDecoder;
 import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
+import indiv.abko.todo.todo.application.service.mapper.CommentMapper;
+import indiv.abko.todo.todo.application.service.mapper.TodoMapper;
 import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
-import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentResp;
-import indiv.abko.todo.todo.presentation.rest.dto.comment.CommentWriteReq;
 import indiv.abko.todo.todo.domain.Comment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import indiv.abko.todo.global.exception.BusinessException;
-import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoCreateReq;
-import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoSearchCondition;
-import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoUpdateReq;
-import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoWithCommentsResp;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.repository.TodoRepository;
-import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoListResp;
-import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoResp;
 import lombok.RequiredArgsConstructor;
 
 @Service

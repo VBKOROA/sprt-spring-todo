@@ -1,14 +1,14 @@
 package indiv.abko.todo.todo.application.service;
 
 import indiv.abko.todo.global.exception.BusinessException;
-import indiv.abko.todo.todo.application.mapper.TodoMapper;
+import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoUpdateReq;
 import indiv.abko.todo.todo.application.port.out.PasswordDecoder;
 import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
+import indiv.abko.todo.todo.application.service.mapper.TodoMapper;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.exception.TodoExceptionEnum;
 import indiv.abko.todo.todo.domain.repository.TodoRepository;
 import indiv.abko.todo.todo.domain.vo.Password;
-import indiv.abko.todo.todo.presentation.rest.dto.todo.TodoUpdateReq;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
