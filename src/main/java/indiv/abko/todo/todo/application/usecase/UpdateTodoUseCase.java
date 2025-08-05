@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.application.service;
+package indiv.abko.todo.todo.application.usecase;
 
 import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
 import org.springframework.stereotype.Service;

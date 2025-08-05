@@ -1,9 +1,8 @@
 package indiv.abko.todo.todo.adapter.out.persistence;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import indiv.abko.todo.global.config.QueryDslConfig;
-import indiv.abko.todo.todo.adapter.in.rest.dto.todo.TodoSearchCondition;
 import indiv.abko.todo.todo.adapter.out.persistence.entity.TodoJpaEntity;
+import indiv.abko.todo.todo.application.port.in.command.SearchTodosCommand;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -43,10 +42,10 @@ class TodoQDSLRepositoryTest {
     @DisplayName("동적 검색 - 성공 케이스: 제목으로 검색")
     void 제목으로_할일을검색해야한다() {
         // given
-        TodoSearchCondition condition = new TodoSearchCondition(null, "제목2", null, null);
+        SearchTodosCommand command = SearchTodosCommand.builder().title("제목2").build();
 
         // when
-        List<TodoJpaEntity> result = todoQDSLRepository.search(condition);
+        List<TodoJpaEntity> result = todoQDSLRepository.search(command);
 
         // then
         assertThat(result).hasSize(1);
@@ -57,10 +56,10 @@ class TodoQDSLRepositoryTest {
     @DisplayName("동적 검색 - 성공 케이스: 조건 없음")
     void 조건이없을때_모든할일을조회해야한다() {
         // given
-        TodoSearchCondition condition = new TodoSearchCondition(null, null, null, null);
+        SearchTodosCommand command = SearchTodosCommand.builder().build();
 
         // when
-        List<TodoJpaEntity> result = todoQDSLRepository.search(condition);
+        List<TodoJpaEntity> result = todoQDSLRepository.search(command);
 
         // then
         assertThat(result).hasSize(3);
@@ -70,10 +69,10 @@ class TodoQDSLRepositoryTest {
     @DisplayName("동적 검색 - 결과 없음 케이스: 일치하는 제목 없음")
     void 일치하는제목이없으면_빈리스트를반환해야한다() {
         // given
-        TodoSearchCondition condition = new TodoSearchCondition(null, "존재하지 않는 제목", null, null);
+        SearchTodosCommand command = SearchTodosCommand.builder().title("존재하지 않는 제목").build();
 
         // when
-        List<TodoJpaEntity> result = todoQDSLRepository.search(condition);
+        List<TodoJpaEntity> result = todoQDSLRepository.search(command);
 
         // then
         assertThat(result).isEmpty();
@@ -83,10 +82,10 @@ class TodoQDSLRepositoryTest {
     @DisplayName("정렬 - 성공 케이스: 생성일 오름차순 정렬")
     void 생성일오름차순으로_정렬되어야한다() {
         // given
-        TodoSearchCondition condition = new TodoSearchCondition("createdAt_asc", null, null, null);
+        SearchTodosCommand command = SearchTodosCommand.builder().orderBy("createdAt_asc").build();
 
         // when
-        List<TodoJpaEntity> result = todoQDSLRepository.search(condition);
+        List<TodoJpaEntity> result = todoQDSLRepository.search(command);
 
         // then
         assertThat(result).hasSize(3);
@@ -99,10 +98,10 @@ class TodoQDSLRepositoryTest {
     @DisplayName("정렬 - 엣지 케이스: 유효하지 않은 속성명")
     void 유효하지않은속성명으로정렬요청시_기본정렬이적용되어야한다() {
         // given
-        TodoSearchCondition condition = new TodoSearchCondition("invalidProperty_desc", null, null, null);
+        SearchTodosCommand command = SearchTodosCommand.builder().orderBy("invalidProperty_desc").build();
 
         // when
-        List<TodoJpaEntity> result = todoQDSLRepository.search(condition);
+        List<TodoJpaEntity> result = todoQDSLRepository.search(command);
 
         // then
         assertThat(result).hasSize(3);
@@ -114,10 +113,10 @@ class TodoQDSLRepositoryTest {
     @DisplayName("정렬 - 엣지 케이스: 잘못된 정렬 형식")
     void 잘못된형식으로정렬요청시_기본정렬이적용되어야한다() {
         // given
-        TodoSearchCondition condition = new TodoSearchCondition("title_", null, null, null);
+        SearchTodosCommand command = SearchTodosCommand.builder().orderBy("title_").build();
 
         // when
-        List<TodoJpaEntity> result = todoQDSLRepository.search(condition);
+        List<TodoJpaEntity> result = todoQDSLRepository.search(command);
 
         // then
         assertThat(result).hasSize(3);

@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.application.service;
+package indiv.abko.todo.todo.application.usecase;
 
 import indiv.abko.todo.todo.application.port.in.TodoUseCaseFacade;
 import indiv.abko.todo.todo.application.port.in.command.*;

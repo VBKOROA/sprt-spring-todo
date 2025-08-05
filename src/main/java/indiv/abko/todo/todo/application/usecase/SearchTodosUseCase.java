@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.application.service;
+package indiv.abko.todo.todo.application.usecase;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
