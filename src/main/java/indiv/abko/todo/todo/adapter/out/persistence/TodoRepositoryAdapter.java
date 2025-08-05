@@ -3,7 +3,7 @@ package indiv.abko.todo.todo.adapter.out.persistence;
 import indiv.abko.todo.todo.adapter.out.persistence.entity.TodoJpaEntity;
 import indiv.abko.todo.todo.adapter.out.persistence.mapper.TodoEntityMapper;
 import indiv.abko.todo.todo.application.port.in.command.SearchTodosCommand;
-import indiv.abko.todo.todo.application.port.out.TodoRepository;
+import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

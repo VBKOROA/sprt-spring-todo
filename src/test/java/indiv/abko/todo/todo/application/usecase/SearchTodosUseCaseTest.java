@@ -1,7 +1,7 @@
 package indiv.abko.todo.todo.application.usecase;
 
 import indiv.abko.todo.todo.application.port.in.command.SearchTodosCommand;
-import indiv.abko.todo.todo.application.port.out.TodoRepository;
+import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.application.port.out;
+package indiv.abko.todo.todo.domain.port.out;
 
 import indiv.abko.todo.todo.application.port.in.command.SearchTodosCommand;
 import indiv.abko.todo.todo.domain.Todo;

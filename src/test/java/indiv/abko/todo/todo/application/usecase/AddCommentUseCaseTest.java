@@ -2,7 +2,7 @@ package indiv.abko.todo.todo.application.usecase;
 
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.todo.application.port.in.command.AddCommentCommand;
-import indiv.abko.todo.todo.application.port.out.TodoRepository;
+import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Comment;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.vo.Content;

@@ -1,13 +1,12 @@
 package indiv.abko.todo.todo.application.usecase;
 
-import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
+import indiv.abko.todo.todo.domain.port.out.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import indiv.abko.todo.todo.application.port.in.command.CreateTodoCommand;
-import indiv.abko.todo.todo.application.port.out.TodoRepository;
+import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.vo.Content;
-import indiv.abko.todo.todo.domain.vo.Password;
 import indiv.abko.todo.todo.domain.vo.TodoTitle;
 import lombok.RequiredArgsConstructor;
 

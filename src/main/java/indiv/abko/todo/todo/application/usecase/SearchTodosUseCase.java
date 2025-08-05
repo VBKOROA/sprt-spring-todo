@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.todo.application.port.in.command.SearchTodosCommand;
-import indiv.abko.todo.todo.application.port.out.TodoRepository;
+import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
 import lombok.RequiredArgsConstructor;
 

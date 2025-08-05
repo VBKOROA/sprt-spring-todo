@@ -2,9 +2,9 @@ package indiv.abko.todo.todo.application.usecase;
 
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.todo.application.port.in.command.DeleteTodoCommand;
-import indiv.abko.todo.todo.application.port.out.PasswordDecoder;
-import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
-import indiv.abko.todo.todo.application.port.out.TodoRepository;
+import indiv.abko.todo.todo.domain.port.out.PasswordDecoder;
+import indiv.abko.todo.todo.domain.port.out.PasswordEncoder;
+import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.vo.Password;
 import org.junit.jupiter.api.DisplayName;

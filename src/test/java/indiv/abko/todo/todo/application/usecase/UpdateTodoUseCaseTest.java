@@ -2,8 +2,8 @@ package indiv.abko.todo.todo.application.usecase;
 
 import indiv.abko.todo.global.exception.BusinessException;
 import indiv.abko.todo.todo.application.port.in.command.UpdateTodoCommand;
-import indiv.abko.todo.todo.application.port.out.PasswordEncoder;
-import indiv.abko.todo.todo.application.port.out.TodoRepository;
+import indiv.abko.todo.todo.domain.port.out.PasswordEncoder;
+import indiv.abko.todo.todo.domain.port.out.TodoRepository;
 import indiv.abko.todo.todo.domain.Todo;
 import indiv.abko.todo.todo.domain.vo.Password;
 import indiv.abko.todo.todo.domain.vo.TodoTitle;

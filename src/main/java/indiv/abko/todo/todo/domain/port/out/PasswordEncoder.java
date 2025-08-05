@@ -1,4 +1,4 @@
-package indiv.abko.todo.todo.application.port.out;
+package indiv.abko.todo.todo.domain.port.out;
 
 import indiv.abko.todo.todo.domain.vo.Password;
 
